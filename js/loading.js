@@ -8,6 +8,7 @@ loading.prototype = {
 		{font: '30px Courier', fill: '#ffffff'});
 
 	game.load.image('background','assets/background.png');
+	game.load.image('button', './assets/woodbutton.png');
 
 	},
 
