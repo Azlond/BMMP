@@ -1,17 +1,16 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', {
-	preload : preload,
-	create : create,
-	update : update
-});
+var game = function(game) {
+	console.log("%cThis is where the game action is happening",
+			"color:white; background:red");
+};
 
-function preload() {
+game.prototype = {
 
-}
+	preload : function() {
 
-function create() {
+	},
 
-}
+	create : function() {
 
-function update() {
-	
+	}
+
 }
