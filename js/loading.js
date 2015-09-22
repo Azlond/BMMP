@@ -17,7 +17,7 @@ loading.prototype = {
 	 * Game images
 	 */
 	game.load.tilemap('level1', './assets/maze.json', null, Phaser.Tilemap.TILED_JSON);
-	game.load.image('level1Tiles', './assets/tiles.png');
+	game.load.image('tiles', './assets/tiles.png');
 
 	},
 
