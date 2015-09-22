@@ -1,7 +1,4 @@
-var game = function(game) {
-	console.log("%cThis is where the game action is happening",
-			"color:white; background:red");
-};
+function game() {}
 
 game.prototype = {
 
@@ -10,7 +7,7 @@ game.prototype = {
 	},
 
 	create : function() {
-
+		
 	}
 
 }

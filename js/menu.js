@@ -1,14 +1,23 @@
-var menu = function(game) {}
+function menu() {}
 
 menu.prototype = {
-	create : function() {
-		this.game.add.sprite(0, 0, 'background');
-		var button = this.game.add.button(this.game.world.centerX - 95, 400,
-				'button', this.actionOnClick, this, 2, 1, 0);
-	},
 
-	actionOnClick : function() {
-		this.game.state.start("Game");
-	}
+create:function() {
 
+	var nameLabel = game.add.text(80,80,'Spiel',
+		{font: '50px Arial', fill: '#ffffff'});
+
+	var startLabel = game.add.text(80,game.world.height-100,'press the "W" key to start',
+		{font: '25px Arial', fill: '#ffffff'});
+
+	var wkey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+
+	wkey.onDown.addOnce(this.start,this);
+
+},
+
+start:function() {
+	game.state.start('game');
 }
+
+};
