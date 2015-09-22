@@ -19,7 +19,7 @@ create:function() {
 },
 
 start:function() {
-	game.state.start('game');
+	game.state.start('play');
 }
 
 };

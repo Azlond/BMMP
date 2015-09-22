@@ -1,14 +1,13 @@
-var gameOver = function(game) {
-};
+function gameOver() {}
 
 gameOver.prototype = {
 
 	preload : function() {
 
-	},
+		cursors = game.input.keyboard.createCursorKeys();
 
-	create : function() {
+		var background = game.add.image(-100,0,'background');
 
 	}
 
-}
+};
