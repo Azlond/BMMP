@@ -1,3 +1,8 @@
+/*
+ * Start state - first js-file to be loaded
+ * creates the game and the various states
+ */
+
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
 
 game.state.add('loading', loading);

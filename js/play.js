@@ -1,25 +1,59 @@
-function play() {}
+/*
+ * Play state - where the main action happens.
+ * Levels, Player, Collectables and Enemy interactions are happening here
+ */
 
-var map;
+function play() {
+}
+
+var map; // tilemap, for the platforms
+var player; // the player char itself
 
 play.prototype = {
 
 	create : function() {
 
+		// Physics for the platforms
+		game.physics.startSystem(Phaser.Physics.ARCADE);
+
+		// Keyboard controls
 		cursors = game.input.keyboard.createCursorKeys();
 
-//		var background = game.add.image(0,0,'background');
-		
-		this.map = this.add.tilemap('level1');
-        this.map.addTilesetImage('tiles', 'tiles');
+		// the background of the first level
+		var background = game.add.image(0, 0, 'background');
 
-        this.layer = this.map.createLayer('Tile Layer 1');
-        
-//        var layer = map.createLayer('Tile Layer 1');
+		/*
+		 * adds the tile map to the game !!tilemap json files need to be created
+		 * with the csv preset and not base64 compressed, or this won't work!!
+		 */
+		var map = game.add.tilemap('level1');
 
-		
-//		map.setCollision(20, true, layer);
-		
+		// the second parameter needs to be the same as the one used in
+		// loading.js
+		map.addTilesetImage('fmap-tiles', 'fmap-tiles');
+
+		// map.setCollisionBetween(1, 12);
+
+		// the parameter can be found in the json file
+		var layer = map.createLayer('world1');
+
+		// This resizes the game world to match the layer dimensions
+		layer.resizeWorld();
+
+		/*
+		 * adds the character
+		 */
+		player = game.add.sprite(25, 320, 'char');
+		game.physics.enable(player, Phaser.Physics.ARCADE);
+
+	},
+
+	update : function() {
+
+		/*
+		 * TODO: Implement movement
+		 */
+
 	}
 
 };
