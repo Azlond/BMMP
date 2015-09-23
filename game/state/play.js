@@ -41,34 +41,31 @@ play.prototype = {
 		map.setCollisionBetween(1, 72);
 
 		map.setTileIndexCallback(73, hitCoin, this);
-		
+
 		// the parameter can be found in the json file
 		layer = map.createLayer('world1');
 
 		// This resizes the game world to match the layer dimensions
 		layer.resizeWorld();
 
-
 		/*
 		 * adds the character
 		 */
-		this.astronaut = new Astronaut(this.game, 100, this.game.height/2);
-    	this.game.add.existing(this.astronaut);
+		this.astronaut = new Astronaut(this.game, 100, 270);
+		this.game.add.existing(this.astronaut);
 
-
-    	/**
-		player = game.add.sprite(25, 255, 'char');
-		game.physics.enable(player, Phaser.Physics.ARCADE);
-		player.body.collideWorldBounds = true;
-		player.body.gravity.y = 1000;
-		player.body.maxVelocity.y = 500;
-		**/
+		/**
+		 * player = game.add.sprite(25, 255, 'char');
+		 * game.physics.enable(player, Phaser.Physics.ARCADE);
+		 * player.body.collideWorldBounds = true; player.body.gravity.y = 1000;
+		 * player.body.maxVelocity.y = 500;
+		 */
 
 		this.game.camera.follow(this.astronaut);
 
 		/**
-		* add aliens
-		*/
+		 * add aliens
+		 */
 		this.alien = new Alien(this.game, 700, 600);
 		this.game.add.existing(this.alien);
 
@@ -77,7 +74,8 @@ play.prototype = {
 	update : function() {
 
 		this.game.physics.arcade.collide(this.astronaut, layer);
-		this.game.physics.arcade.collide(this.astronaut, this.alien, collideWithAlien, null, this);
+		this.game.physics.arcade.collide(this.astronaut, this.alien,
+				collideWithAlien, null, this);
 
 		/*
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
@@ -101,11 +99,7 @@ play.prototype = {
 
 function hitCoin(astronaut, tile) {
 
-//	tile.alpha = 0.2;
-
-//	layer.dirty = true;
-
-//	console.log("coin");
+	map.removeTile(tile.x, tile.y, layer);
 
 	return false;
 
@@ -114,9 +108,10 @@ function hitCoin(astronaut, tile) {
 function collideWithAlien(astronaut, alien) {
 
 	lifeCounter--;
-	if(lifeCounter <= 3 && lifeCounter > 0) {
-	console.log(lifeCounter);
-	} if(lifeCounter <= 0) {
+	if (lifeCounter <= 3 && lifeCounter > 0) {
+		console.log(lifeCounter);
+	}
+	if (lifeCounter <= 0) {
 		console.log("LOSE");
 	}
 
