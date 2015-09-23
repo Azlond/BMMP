@@ -30,19 +30,19 @@ play.prototype = {
 		 * adds the tile map to the game !!tilemap json files need to be created
 		 * with the csv preset and not base64 compressed, or this won't work!!
 		 */
-		var map = game.add.tilemap('level1');
+		map = game.add.tilemap('level1');
 
 		// the second parameter needs to be the same as the one used in
 		// loading.js
 		map.addTilesetImage('fmap-tiles', 'fmap-tiles');
 		map.addTilesetImage('coin', 'coin');
 
-		map.setCollisionBetween(1, 72);
+		map.setCollisionBetween(1, 73);
 
 		map.setTileIndexCallback(73, hitCoin, this);
 
 		// the parameter can be found in the json file
-		var layer = map.createLayer('world1');
+		layer = map.createLayer('world1');
 
 		// This resizes the game world to match the layer dimensions
 		layer.resizeWorld();
@@ -50,7 +50,7 @@ play.prototype = {
 		/*
 		 * adds the character
 		 */
-		player = game.add.sprite(25, 230, 'char');
+		player = game.add.sprite(25, 255, 'char');
 		game.physics.enable(player, Phaser.Physics.ARCADE);
 		player.body.collideWorldBounds = true;
 		player.body.gravity.y = 1000;
@@ -80,19 +80,15 @@ play.prototype = {
 			player.body.velocity.y = -700;
 			jumpTimer = game.time.now + 750;
 		}
+
 	}
-
 };
-
-/*
- * from phaser.io/examples/v2/p2-physics/tilemap-gravity
- */
 
 function hitCoin(player, tile) {
 
-	// tile.alpha = 0.2;
+//	tile.alpha = 0.2;
 
-	// layer.dirty = true;
+//	layer.dirty = true;
 
 	console.log("coin");
 
