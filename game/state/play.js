@@ -53,7 +53,8 @@ play.prototype = {
 		 */
 		this.astronaut = new Astronaut(this.game, 100, 100);
 		this.game.add.existing(this.astronaut);
-		this.astronaut.animations.add('walk');
+		this.astronaut.animations.add('walk', [1,2,3,4,5], 20, true);
+		this.astronaut.animations.add('stop', [0], 20, true);
 		this.astronaut.anchor.setTo(0.5,0.5);
 		
 
@@ -85,15 +86,15 @@ play.prototype = {
 		 */
 		if (cursors.left.isDown) {
 			this.astronaut.body.velocity.x = -175;
-			this.astronaut.animations.play('walk',7, true);
+			this.astronaut.animations.play('walk', 7, true);
 			this.astronaut.scale.x = -1;
 		} else if (cursors.right.isDown) {
 			this.astronaut.body.velocity.x = 175;
 			this.astronaut.scale.x = 1;
-			this.astronaut.animations.play('walk',7, true);
+			this.astronaut.animations.play('walk', 7, true);
 		} else {
 			this.astronaut.body.velocity.x = 0;
-			this.astronaut.animations.stop('walk');
+			this.astronaut.animations.play('stop', 7, true);
 		}
 
 		if (cursors.up.isDown && this.astronaut.body.onFloor()
