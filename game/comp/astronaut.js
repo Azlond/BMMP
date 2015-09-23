@@ -6,7 +6,7 @@ var Astronaut = function(game, x, y) {
 
   	this.game.physics.arcade.enableBody(this);
 
-  	this.body.collideWorldBounds = true;
+//  	this.body.collideWorldBounds = true;
 	this.body.gravity.y = 1000;
 	this.body.maxVelocity.y = 500;
 

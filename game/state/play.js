@@ -9,8 +9,9 @@ function play() {
 var map; // tilemap, for the platforms
 var jumpTimer = 0;
 var layer;
-
+var score;
 var lifeCounter = 3;
+var scoreText;
 
 play.prototype = {
 
@@ -24,9 +25,11 @@ play.prototype = {
 		// Keyboard controls
 		cursors = game.input.keyboard.createCursorKeys();
 
-		// the background of the first level
-		this.background = this.game.add.image(0, 0, 'level1background');
-
+		// the backgrounds of the first level
+		this.background3 = this.game.add.image(0, 0, 'level1background3');
+		this.background2 = this.game.add.image(0, 0, 'level1background2');
+		this.background1 = this.game.add.image(0, 0, 'level1background1');
+		this.ground = this.game.add.image(0, 32, 'level1ground');
 		/*
 		 * adds the tile map to the game !!tilemap json files need to be created
 		 * with the csv preset and not base64 compressed, or this won't work!!
@@ -53,10 +56,9 @@ play.prototype = {
 		 */
 		this.astronaut = new Astronaut(this.game, 100, 100);
 		this.game.add.existing(this.astronaut);
-		this.astronaut.animations.add('walk', [1,2,3,4,5], 20, true);
-		this.astronaut.animations.add('stop', [0], 20, true);
-		this.astronaut.anchor.setTo(0.5,0.5);
-		
+		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
+		this.astronaut.animations.add('stop', [ 0 ], 20, true);
+		this.astronaut.anchor.setTo(0.5, 0.5);
 
 		/**
 		 * player = game.add.sprite(25, 255, 'char');
@@ -73,6 +75,13 @@ play.prototype = {
 		this.alien = new Alien(this.game, 700, 600);
 		this.game.add.existing(this.alien);
 
+		score = 0;
+		scoreText = game.add.text(this.astronaut.x-50, 20, 'Score: ' + score, {
+			font : '30px Courier',
+			fill : '#ffffff'
+		});
+		scoreText.fixedToCamera = true;
+
 	},
 
 	update : function() {
@@ -80,7 +89,7 @@ play.prototype = {
 		this.game.physics.arcade.collide(this.astronaut, layer);
 		this.game.physics.arcade.collide(this.astronaut, this.alien,
 				collideWithAlien, null, this);
-
+		
 		/*
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
 		 */
@@ -109,6 +118,9 @@ play.prototype = {
 function hitCoin(astronaut, tile) {
 
 	map.removeTile(tile.x, tile.y, layer);
+
+	score += 1;
+	scoreText.text = 'Score: ' + score;
 
 	return false;
 
