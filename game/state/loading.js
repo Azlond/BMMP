@@ -21,7 +21,9 @@ loading.prototype = {
 		/*
 		 * Menu-state images
 		 */
-		game.load.image('background', 'assets/background.png');
+		game.load.image('level1background', 'assets/Level1/Level1_Ebene3.png');
+		game.load.image('level2background', 'assets/Level2/Level2_Ebene3.png');
+		game.load.image('menubackground', 'assets/menubackground.png')
 		game.load.image('button', './assets/woodbutton.png');
 
 		/*

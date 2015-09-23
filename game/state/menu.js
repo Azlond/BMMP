@@ -10,7 +10,7 @@ menu.prototype = {
 
 	create : function() {
 
-		game.add.sprite(0, 0, 'background'); // adds background
+		game.add.sprite(0, 0, 'menubackground'); // adds background
 
 		/*
 		 * Game Title TODO: Maybe change this to an image later on, to match
