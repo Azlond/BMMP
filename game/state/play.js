@@ -12,6 +12,7 @@ var layer;
 var score;
 var lifeCounter = 3;
 var scoreText;
+var levelNumber = 1;
 
 play.prototype = {
 
@@ -20,36 +21,16 @@ play.prototype = {
 		// Physics for the platforms
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
+		// reduces jump height
 		this.game.physics.arcade.gravity.y = 300;
 
 		// Keyboard controls
 		cursors = game.input.keyboard.createCursorKeys();
 
-		// the backgrounds of the first level
-		this.background3 = this.game.add.image(0, 0, 'level1background3');
-		this.background2 = this.game.add.image(0, 0, 'level1background2');
-		this.background1 = this.game.add.image(0, 0, 'level1background1');
-		this.ground = this.game.add.image(0, 32, 'level1ground');
-		/*
-		 * adds the tile map to the game !!tilemap json files need to be created
-		 * with the csv preset and not base64 compressed, or this won't work!!
-		 */
-		map = game.add.tilemap('level1');
-
-		// the second parameter needs to be the same as the one used in
-		// loading.js
-		map.addTilesetImage('fmap-tiles', 'fmap-tiles');
-		map.addTilesetImage('coin', 'coin');
-
-		map.setCollisionBetween(1, 72);
-
-		map.setTileIndexCallback(73, hitCoin, this);
-
-		// the parameter can be found in the json file
-		layer = map.createLayer('world1');
-
-		// This resizes the game world to match the layer dimensions
-		layer.resizeWorld();
+		// loads the first level
+		// level number has to be increased once the player has reached the
+		// finish line
+		loadLevel(levelNumber, null, null);
 
 		/*
 		 * adds the character
@@ -60,13 +41,6 @@ play.prototype = {
 		this.astronaut.animations.add('stop', [ 0 ], 20, true);
 		this.astronaut.anchor.setTo(0.5, 0.5);
 
-		/**
-		 * player = game.add.sprite(25, 255, 'char');
-		 * game.physics.enable(player, Phaser.Physics.ARCADE);
-		 * player.body.collideWorldBounds = true; player.body.gravity.y = 1000;
-		 * player.body.maxVelocity.y = 500;
-		 */
-
 		this.game.camera.follow(this.astronaut);
 
 		/**
@@ -76,7 +50,7 @@ play.prototype = {
 		this.game.add.existing(this.alien);
 
 		score = 0;
-		scoreText = game.add.text(this.astronaut.x-50, 20, 'Score: ' + score, {
+		scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
 			font : '30px Courier',
 			fill : '#ffffff'
 		});
@@ -86,54 +60,49 @@ play.prototype = {
 
 	update : function() {
 
-		this.game.physics.arcade.collide(this.astronaut, layer);
-		this.game.physics.arcade.collide(this.astronaut, this.alien,
-				collideWithAlien, null, this);
-		
-		/*
-		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 */
-		if (cursors.left.isDown) {
-			this.astronaut.body.velocity.x = -175;
-			this.astronaut.animations.play('walk', 7, true);
-			this.astronaut.scale.x = -1;
-		} else if (cursors.right.isDown) {
-			this.astronaut.body.velocity.x = 175;
-			this.astronaut.scale.x = 1;
-			this.astronaut.animations.play('walk', 7, true);
-		} else {
-			this.astronaut.body.velocity.x = 0;
-			this.astronaut.animations.play('stop', 7, true);
-		}
-
-		if (cursors.up.isDown && this.astronaut.body.onFloor()
-				&& game.time.now > jumpTimer) {
-			this.astronaut.body.velocity.y = -700;
-			jumpTimer = game.time.now + 750;
-		}
+		logic(game, this.astronaut, layer, this.alien, cursors, jumpTimer);
 
 	}
 };
 
-function hitCoin(astronaut, tile) {
+function loadLevel(levelNumber, astronaut, alien) {
 
-	map.removeTile(tile.x, tile.y, layer);
+	// the backgrounds of the first level
+	this.background3 = this.game.add.image(0, 0, 'level' + levelNumber + 'background3');
+	this.background2 = this.game.add.image(0, 0, 'level' + levelNumber + 'background2');
+	this.background1 = this.game.add.image(0, 0, 'level' + levelNumber + 'background1');
+	this.ground = this.game.add.image(0, 32, 'level' + levelNumber + 'ground');
 
-	score += 1;
-	scoreText.text = 'Score: ' + score;
+	/*
+	 * adds the tile map to the game !!tilemap json files need to be created
+	 * with the csv preset and not base64 compressed, or this won't work!!
+	 */
+	map = game.add.tilemap('level' + levelNumber);
 
-	return false;
+	// the second parameter needs to be the same as the one used in
+	// loading.js
+	// TODO: image names need to be adjusted to the level number
+	map.addTilesetImage('fmap-tiles', 'fmap-tiles');
+	map.addTilesetImage('coin', 'coin');
+	map.addTilesetImage('finish', 'finish')
 
-}
+	// TODO: amount of tiles needs to be the same for all levels - should be
+	// default
+	map.setCollisionBetween(1, 72);
 
-function collideWithAlien(astronaut, alien) {
+	map.setTileIndexCallback(73, hitCoin, this);
 
-	lifeCounter--;
-	if (lifeCounter <= 3 && lifeCounter > 0) {
-		console.log(lifeCounter);
-	}
-	if (lifeCounter <= 0) {
-		console.log("LOSE");
+	map.setTileIndexCallback(79, hitFinish, this);
+
+	// the parameter can be found in the json file
+	layer = map.createLayer('world1');
+
+	// This resizes the game world to match the layer dimensions
+	layer.resizeWorld();
+
+	if (astronaut != null) {
+		// astronaut.body.set.x = 100;
+		// astronaut.body.set.y = 100;
 	}
 
 }
