@@ -37,10 +37,10 @@ play.prototype = {
 		map.addTilesetImage('fmap-tiles', 'fmap-tiles');
 		map.addTilesetImage('coin', 'coin');
 
-		map.setCollisionBetween(1, 73);
+		map.setCollisionBetween(1, 72);
 
 		map.setTileIndexCallback(73, hitCoin, this);
-
+		
 		// the parameter can be found in the json file
 		layer = map.createLayer('world1');
 
@@ -90,7 +90,7 @@ function hitCoin(player, tile) {
 
 //	layer.dirty = true;
 
-	console.log("coin");
+//	console.log("coin");
 
 	return false;
 
