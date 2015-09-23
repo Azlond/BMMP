@@ -32,7 +32,7 @@ loading.prototype = {
 		game.load.tilemap('level1', './assets/fmap.json', null,
 				Phaser.Tilemap.TILED_JSON);
 		game.load.image('fmap-tiles', './assets/fmap-tiles.png');
-		game.load.spritesheet('char', './assets/Astronaut.png',54, 132, 6);
+		game.load.spritesheet('char', './assets/Astronaut.png',74, 178, 6);
 		game.load.spritesheet('coin', './assets/coin.png', 32, 32, 6);
 
 
