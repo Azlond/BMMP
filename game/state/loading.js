@@ -31,6 +31,8 @@ loading.prototype = {
 				Phaser.Tilemap.TILED_JSON);
 		game.load.image('fmap-tiles', './assets/fmap-tiles.png');
 		game.load.image('char', './assets/car.png');
+		game.load.spritesheet('coin', './assets/coin.png', 32, 32, 6);
+
 
 	},
 
