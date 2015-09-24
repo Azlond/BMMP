@@ -30,13 +30,15 @@ loading.prototype = {
 		 * Menu-state images
 		 */
 
-		game.load.image('menubackground', './assets/menubackground.png')
-		game.load.image('button', './assets/woodbutton.png');
-		game.load.image('buttonStart', './assets/woodbutton_start.png');
-		game.load.image ('controlpanel', './assets/controlpanel.png');
-		game.load.image ('close', './assets/closebutton.png');
-		game.load.spritesheet ('control', './assets/controlSprite.png',64, 94, 2);
+		game.load.image('menubackground', './assets/menu/menubackground.png')
+		game.load.image('button', './assets/menu/woodbutton.png');
+		game.load.image('buttonStart', './assets/menu/woodbutton_start.png');
+		game.load.image ('controlpanel', './assets/menu/controlpanel.png');
+		game.load.image ('close', './assets/menu/closebutton.png');
+		game.load.spritesheet ('control', './assets/menu/controlSprite.png',64, 94, 2);
 		game.load.audio ('music', './assets/sound/background_music.wav');
+		game.load.image ('charBackground', './assets/menu/characters_background.png');
+		game.load.spritesheet ('character', './assets/menu/Astronaut.png', 31, 	71, 6);
 
 		/*
 		 * backgrounds
