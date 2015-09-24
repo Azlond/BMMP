@@ -6,7 +6,7 @@
          "name":"Bildebene 1",
          "opacity":1,
          "type":"imagelayer",
-         "visible":false,
+         "visible":true,
          "width":75,
          "x":0,
          "y":0
@@ -17,7 +17,7 @@
          "name":"Bildebene 2",
          "opacity":1,
          "type":"imagelayer",
-         "visible":false,
+         "visible":true,
          "width":75,
          "x":0,
          "y":0
@@ -28,7 +28,7 @@
          "name":"Bildebene 3",
          "opacity":1,
          "type":"imagelayer",
-         "visible":false,
+         "visible":true,
          "width":75,
          "x":0,
          "y":0
@@ -39,7 +39,7 @@
          "name":"Bildebene 4",
          "opacity":1,
          "type":"imagelayer",
-         "visible":false,
+         "visible":true,
          "width":75,
          "x":4,
          "y":-1
@@ -79,23 +79,6 @@
          "tilecount":20,
          "tileheight":32,
          "tilewidth":32
-        }, 
-        {
-         "firstgid":21,
-         "image":"..\/..\/..\/level1_tilemap.png",
-         "imageheight":128,
-         "imagewidth":160,
-         "margin":0,
-         "name":"level1_tilemap",
-         "properties":
-            {
-
-            },
-         "spacing":0,
-         "tilecount":20,
-         "tileheight":32,
-         "tilewidth":32,
-         "transparentcolor":"#fffcfc"
         }],
  "tilewidth":32,
  "version":1,
