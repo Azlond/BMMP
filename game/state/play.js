@@ -10,13 +10,15 @@ var map; // tilemap, for the platforms
 var jumpTimer = 0;
 var layer;
 var score;
+var oldScore;
 var lifeCounter;
 var scoreText;
-var levelNumber = 1;
+var levelNumber = 2;
 
 var finalLevel = 3;
 var lifeTimer;
 var soundOn = true;
+var fallen;
 
 play.prototype = {
 
@@ -31,6 +33,8 @@ play.prototype = {
 		// Keyboard controls
 		cursors = game.input.keyboard.createCursorKeys();
 
+		score = 0;
+
 		// loads the first level
 		// level number has to be increased once the player has reached the
 		// finish line
@@ -41,14 +45,6 @@ play.prototype = {
 		 */
 		this.alien = new Alien(this.game, 700, 350);
 		this.game.add.existing(this.alien);
-
-		score = 0;
-		scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score,
-				{
-					font : '30px Courier',
-					fill : '#ffffff'
-				});
-		scoreText.fixedToCamera = true;
 
 		/*
 		 * add tools
@@ -85,15 +81,11 @@ play.prototype = {
 
 		this.game.physics.arcade.collide(this.astronaut, layer);
 		this.game.physics.arcade.collide(this.alien, layer);
-		this.game.physics.arcade.overlap(this.astronaut, this.alien,
-				this.collideWithAlien, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, this.alien, this.collideWithAlien, null, this);
 
-		this.game.physics.arcade.overlap(this.astronaut,
-				this.collectscrewdriver, this.collectTools, null, this);
-		this.game.physics.arcade.overlap(this.astronaut, this.collectwrench,
-				this.collectTools, null, this);
-		this.game.physics.arcade.overlap(this.astronaut, this.collectpliers,
-				this.collectTools, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, this.collectscrewdriver, this.collectTools, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, this.collectwrench, this.collectTools, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, this.collectpliers, this.collectTools, null, this);
 
 		/*
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
@@ -111,18 +103,29 @@ play.prototype = {
 			this.astronaut.animations.play('stop', 7, true);
 		}
 
-		if (cursors.up.isDown && this.astronaut.body.onFloor()
-				&& game.time.now > jumpTimer) {
+		if (cursors.up.isDown && this.astronaut.body.onFloor() && game.time.now > jumpTimer) {
 			this.astronaut.body.velocity.y = -700;
 			jumpTimer = game.time.now + 750;
 		}
 
 		if (lifeCounter == 0) {
 			this.astronaut.kill();
-			game.add.text(game.width / 2, game.height / 2, 'Game Over...', {
+
+			var gameOverText = game.add.text(this.game.camera.x, this.game.camera.y, 'Game Over...', {
 				font : '50px Courier',
 				fill : '#8B1A1A'
 			});
+
+			gameOverText.fixedToCamera = true;
+		}
+
+		if (this.astronaut.body.y > 600 && !fallen) {
+			lifeCounter--;
+			console.log(lifeCounter);
+			fallen = true;
+			if (lifeCounter != 0) {
+				this.loadLevel("restart");
+			}
 		}
 
 	},
@@ -142,20 +145,19 @@ play.prototype = {
 		}
 
 		lifeTimer = 0;
+		fallen = false;
 
 		if (string != "restart") {
 			lifeCounter = 3;
+			console.log("not restarting");
+			oldScore = score;
 		}
 
 		// the backgrounds of the first level
-		this.background3 = this.game.add.image(0, 0, 'level' + levelNumber
-				+ 'background3');
-		this.background2 = this.game.add.image(0, 0, 'level' + levelNumber
-				+ 'background2');
-		this.background1 = this.game.add.image(0, 0, 'level' + levelNumber
-				+ 'background1');
-		this.ground = this.game.add.image(0, 32, 'level' + levelNumber
-				+ 'ground');
+		this.background3 = this.game.add.image(0, 0, 'level' + levelNumber + 'background3');
+		this.background31 = this.game.add.image(2400, 0, 'level'+levelNumber + 'background31');
+		this.background2 = this.game.add.image(0, 0, 'level' + levelNumber + 'background2');
+		this.background1 = this.game.add.image(0, 0, 'level' + levelNumber + 'background1');
 
 		/*
 		 * adds the tile map to the game !!tilemap json files need to be created
@@ -169,24 +171,30 @@ play.prototype = {
 		// map.addTilesetImage('fmap-tiles', 'fmap-tiles');
 		// map.addTilesetImage('coin', 'coin');
 		// map.addTilesetImage('finish', 'finish')
-		map.addTilesetImage('level1_tilemap', 'level1_tilemap');
+		// map.addTilesetImage('level1_tilemap', 'level1_tilemap');
+		map.addTilesetImage('level2_tilemap', 'level2_tilemap');
+		map.addTilesetImage('level2_tilemap_ground', 'level2_tilemap_ground');
 
 		// TODO: amount of tiles needs to be the same for all levels - should be
 		// default
-		map.setCollisionBetween(1, 20);
+		map.setCollisionBetween(1, 40);
 
 		map.forEach(function(t) {
 			if (t) {
 				t.collideDown = false;
+				t.collideLeft = false;
+				t.collideRight = false;
 			}
 		}, game, 0, 0, map.width, map.height, layer);
 
-		// map.setTileIndexCallback(73, this.hitCoin, this);
+		map.setCollision(41);
+
+		map.setTileIndexCallback(40, this.collectElement, this);
 		//
 		// map.setTileIndexCallback(79, this.hitFinish, this);
 
 		// the parameter can be found in the json file
-		layer = map.createLayer('Kachelebene 2');
+		layer = map.createLayer('Kachelebene 1');
 
 		// This resizes the game world to match the layer dimensions
 		layer.resizeWorld();
@@ -202,9 +210,18 @@ play.prototype = {
 
 		this.game.camera.follow(this.astronaut);
 
+		score = oldScore;
+		
+		scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
+			font : '30px Courier',
+			fill : '#ffffff'
+		});
+		scoreText.fixedToCamera = true;
 	},
 
-	hitCoin : function(astronaut, tile) {
+	collectElement : function(astronaut, tile) {
+
+		console.log("jojo");
 
 		map.removeTile(tile.x, tile.y, layer);
 
