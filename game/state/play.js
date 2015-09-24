@@ -175,9 +175,11 @@ play.prototype = {
 			console.log("LOSE");
 		}
 
-	},
+	}
 
-	collectTools:function(astronaut, tools) {
+};
+
+function collectTools(astronaut, tools) {
 
 	if(tools == this.collectpliers) {
 		console.log("pliers")
@@ -204,4 +206,3 @@ play.prototype = {
 		this.wrench.fixedToCamera = true;
 	}
 	}
-};
