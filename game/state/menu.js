@@ -41,6 +41,9 @@ menu.prototype = {
 	};
 
 function actionOnClick() {
+	if (soundOn) {
+		sound.fadeOut	();
+	}
 	game.state.start('intro'); // starts the game
 }
 
