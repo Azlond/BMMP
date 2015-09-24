@@ -47,15 +47,16 @@ loading.prototype = {
 		/*
 		 * Game-state
 		 */
-		game.load.tilemap('level1', './assets/tiled-test.json', null,
+		game.load.tilemap('level1', './assets/Tilemap/level1_ground_test.json', null,
 				Phaser.Tilemap.TILED_JSON);
 		game.load.tilemap('level2', './assets/tiled-test2.json', null,
 				Phaser.Tilemap.TILED_JSON);
 		
 		game.load.image('fmap-tiles', './assets/fmap-tiles.png');
-		game.load.spritesheet('char', './assets/Astronaut.png', 51, 117, 6);
+		game.load.spritesheet('char', './assets/Astronaut.png', 31, 71, 6);
 		game.load.spritesheet('coin', './assets/coin.png', 32, 32, 6);
 		game.load.image('finish', './assets/finish.png');
+		game.load.image('level1_tilemap', './assets/Tilemap/level1_tilemap.png');
 
 	},
 

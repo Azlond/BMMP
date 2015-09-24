@@ -124,20 +124,21 @@ play.prototype = {
 		// the second parameter needs to be the same as the one used in
 		// loading.js
 		// TODO: image names need to be adjusted to the level number
-		map.addTilesetImage('fmap-tiles', 'fmap-tiles');
-		map.addTilesetImage('coin', 'coin');
-		map.addTilesetImage('finish', 'finish')
+//		map.addTilesetImage('fmap-tiles', 'fmap-tiles');
+//		map.addTilesetImage('coin', 'coin');
+//		map.addTilesetImage('finish', 'finish')
+		map.addTilesetImage('level1_tilemap', 'level1_tilemap');
 
 		// TODO: amount of tiles needs to be the same for all levels - should be
 		// default
-		map.setCollisionBetween(1, 72);
+		map.setCollisionBetween(1, 20);
 
-		map.setTileIndexCallback(73, this.hitCoin, this);
-
-		map.setTileIndexCallback(79, this.hitFinish, this);
+//		map.setTileIndexCallback(73, this.hitCoin, this);
+//
+//		map.setTileIndexCallback(79, this.hitFinish, this);
 
 		// the parameter can be found in the json file
-		layer = map.createLayer('world1');
+		layer = map.createLayer('Kachelebene 2');
 
 		// This resizes the game world to match the layer dimensions
 		layer.resizeWorld();
