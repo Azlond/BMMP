@@ -10,9 +10,10 @@ var map; // tilemap, for the platforms
 var jumpTimer = 0;
 var layer;
 var score;
-var lifeCounter = 3;
+var lifeCounter;
 var scoreText;
 var levelNumber = 1;
+var lifeTimer;
 
 play.prototype = {
 
@@ -30,12 +31,12 @@ play.prototype = {
 		// loads the first level
 		// level number has to be increased once the player has reached the
 		// finish line
-		this.loadLevel();
+		this.loadLevel("");
 
 		/**
 		 * add aliens
 		 */
-		this.alien = new Alien(this.game, 700, 600);
+		this.alien = new Alien(this.game, 700, 350);
 		this.game.add.existing(this.alien);
 
 		score = 0;
@@ -80,7 +81,8 @@ play.prototype = {
 		// logic(game, this.astronaut, layer, this.alien, cursors, jumpTimer);
 
 		this.game.physics.arcade.collide(this.astronaut, layer);
-		this.game.physics.arcade.collide(this.astronaut, this.alien,
+		this.game.physics.arcade.collide(this.alien, layer);
+		this.game.physics.arcade.overlap(this.astronaut, this.alien,
 				this.collideWithAlien, null, this);
 
 		this.game.physics.arcade.overlap(this.astronaut,
@@ -112,9 +114,17 @@ play.prototype = {
 			jumpTimer = game.time.now + 750;
 		}
 
+		if (lifeCounter == 0) {
+			this.astronaut.kill();
+			game.add.text(game.width/2, game.height/2, 'Game Over...', {
+				font : '50px Courier',
+				fill : '#8B1A1A'
+			});
+		}
+
 	},
 
-	loadLevel : function() {
+	loadLevel : function(string) {
 
 		if (this.astronaut != null) {
 			this.astronaut.kill();
@@ -126,6 +136,12 @@ play.prototype = {
 
 		if (layer != null) {
 			layer.destroy();
+		}
+
+		lifeTimer = 0;
+		
+		if (string != "restart") {
+			lifeCounter = 3;
 		}
 
 		// the backgrounds of the first level
@@ -199,17 +215,20 @@ play.prototype = {
 	hitFinish : function(astronaut, finish) {
 		console.log("Level finished!");
 		levelNumber += 1;
-		this.loadLevel();
+		this.loadLevel("");
 	},
 
 	collideWithAlien : function(astronaut, alien) {
+		if (game.time.now > lifeTimer) {
+			lifeCounter--;
+			if (lifeCounter <= 3 && lifeCounter > 0) {
+				console.log(lifeCounter);
+			}
+			if (lifeCounter <= 0) {
+				console.log("LOSE");
+			}
 
-		lifeCounter--;
-		if (lifeCounter <= 3 && lifeCounter > 0) {
-			console.log(lifeCounter);
-		}
-		if (lifeCounter <= 0) {
-			console.log("LOSE");
+			lifeTimer = game.time.now + 750;
 		}
 
 	},
