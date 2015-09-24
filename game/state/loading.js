@@ -58,6 +58,8 @@ loading.prototype = {
 		game.load.image('finish', './assets/finish.png');
 		game.load.image('level1_tilemap', './assets/Tilemap/level1_tilemap.png');
 
+		game.load.spritesheet('tools','./assets/Tools/alles.png',59,38,6);
+
 	},
 
 	create : function() {

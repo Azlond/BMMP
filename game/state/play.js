@@ -56,6 +56,10 @@ play.prototype = {
 		this.game.physics.arcade.collide(this.astronaut, this.alien,
 				this.collideWithAlien, null, this);
 
+		this.game.physics.arcade.overlap(this.astronaut, this.collectscrewdriver, collectTools, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, this.collectwrench, collectTools, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, this.collectpliers, collectTools, null, this);
+
 		/*
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
 		 */
@@ -171,5 +175,33 @@ play.prototype = {
 			console.log("LOSE");
 		}
 
+	},
+
+	collectTools:function(astronaut, tools) {
+
+	if(tools == this.collectpliers) {
+		console.log("pliers")
+		this.collectpliers.kill();
+		this.nopliers.kill();
+		this.pliers = new Tools(this.game, 230, 15, 0);
+		this.game.add.existing(this.pliers);
+		this.pliers.fixedToCamera = true;
+	}
+	if(tools == this.collectscrewdriver) {
+		console.log("screwdriver")
+		this.collectscrewdriver.kill();
+		this.noscrewdriver.kill();
+		this.screwdriver = new Tools(this.game, 290, 15, 4);
+		this.game.add.existing(this.screwdriver);
+		this.screwdriver.fixedToCamera = true;
+	}
+	if(tools == this.collectwrench) {
+		console.log("wrench")
+		this.collectwrench.kill();
+		this.nowrench.kill();
+		this.wrench = new Tools(this.game, 260, 15, 2);
+		this.game.add.existing(this.wrench);
+		this.wrench.fixedToCamera = true;
+	}
 	}
 };
