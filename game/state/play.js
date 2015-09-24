@@ -65,7 +65,7 @@ play.prototype = {
 
 		this.game.physics.arcade.collide(this.astronaut, layer);
 		this.game.physics.arcade.collide(this.astronaut, this.alien,
-				collideWithAlien, null, this);
+				this.collideWithAlien, null, this);
 
 		/*
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
