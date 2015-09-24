@@ -40,12 +40,6 @@ play.prototype = {
 		// finish line
 		this.loadLevel("");
 
-		/**
-		 * add aliens
-		 */
-		this.alien = new Alien(this.game, 700, 350);
-		this.game.add.existing(this.alien);
-
 	},
 
 	update : function() {
@@ -216,6 +210,12 @@ play.prototype = {
 			fill : '#ffffff'
 		});
 		scoreText.fixedToCamera = true;
+
+		/**
+		 * add aliens
+		 */
+		this.alien = new Alien(this.game, 700, 350);
+		this.game.add.existing(this.alien);
 	},
 
 	collectElement : function(astronaut, tile) {
