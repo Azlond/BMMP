@@ -63,12 +63,15 @@ play.prototype = {
 
 		this.collectpliers = new Tools(this.game, 200, 400, 0);
 		this.game.add.existing(this.collectpliers);
+		this.collectpliers.body.allowGravity = false;
 		
 		this.collectwrench = new Tools(this.game, 111, 400, 2);
 		this.game.add.existing(this.collectwrench);
+		this.collectwrench.body.allowGravity = false;
 
 		this.collectscrewdriver = new Tools(this.game, 111, 400, 4);
 		this.game.add.existing(this.collectscrewdriver);
+		this.collectscrewdriver.body.allowGravity = false;
 
 	},
 
@@ -80,9 +83,9 @@ play.prototype = {
 		this.game.physics.arcade.collide(this.astronaut, this.alien,
 				this.collideWithAlien, null, this);
 
-		this.game.physics.arcade.overlap(this.astronaut, this.collectscrewdriver, collectTools, null, this);
-		this.game.physics.arcade.overlap(this.astronaut, this.collectwrench, collectTools, null, this);
-		this.game.physics.arcade.overlap(this.astronaut, this.collectpliers, collectTools, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, this.collectscrewdriver, this.collectTools, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, this.collectwrench, this.collectTools, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, this.collectpliers, this.collectTools, null, this);
 
 		/*
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
@@ -199,11 +202,9 @@ play.prototype = {
 			console.log("LOSE");
 		}
 
-	}
+	},
 
-};
-
-function collectTools(astronaut, tools) {
+	collectTools:function(astronaut, tools) {
 
 	if(tools == this.collectpliers) {
 		console.log("pliers")
@@ -230,3 +231,6 @@ function collectTools(astronaut, tools) {
 		this.wrench.fixedToCamera = true;
 	}
 	}
+
+};
+
