@@ -41,10 +41,12 @@ menu.prototype = {
 	};
 
 function actionOnClick() {
+
+	game.state.start('intro');
 	if (soundOn) {
-		sound.fadeOut	();
+		sound.stop ();
 	}
-	game.state.start('intro'); // starts the game
+	 // starts the game
 }
 
 function openOption () {

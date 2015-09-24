@@ -3,18 +3,19 @@ function intro() {
 }
 
 var introFinished = false;
+var video;
 
 intro.prototype = {
 	create : function() {
-		this.video = this.game.add.video('intro');
+		video = this.game.add.video('intro');
 
-		this.video.play(true);
+		video.play(true);
 
-		this.video.loop = false;
+		video.loop = false;
 
-		this.video.onComplete.add(handleComplete);
+		video.onComplete.add(handleComplete);
 
-		this.video.addToWorld(400, 300, 0.5, 0.5);
+		video.addToWorld(400, 300, 0.5, 0.5);
 	},
 
 	update : function() {
@@ -29,5 +30,10 @@ function handleComplete() {
 	if (!introFinished) {
 		game.state.start('play');
 		introFinished = true;
+		video.stop(true);
+	}
+
+	if (soundOn) {
+		sound.play();
 	}
 }
