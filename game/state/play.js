@@ -13,8 +13,12 @@ var score;
 var lifeCounter;
 var scoreText;
 var levelNumber = 1;
+<<<<<<< Updated upstream
 var finalLevel = 3;
 var lifeTimer;
+=======
+var soundOn = true;
+>>>>>>> Stashed changes
 
 play.prototype = {
 
