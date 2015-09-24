@@ -94,10 +94,14 @@ play.prototype = {
 			this.astronaut.body.velocity.x = -175;
 			this.astronaut.animations.play('walk', 7, true);
 			this.astronaut.scale.x = -1;
+			this.background2.x += 0.25;
+			this.background1.x += 0.3;
 		} else if (cursors.right.isDown) {
 			this.astronaut.body.velocity.x = 175;
 			this.astronaut.scale.x = 1;
 			this.astronaut.animations.play('walk', 7, true);
+			this.background2.x -= 0.25;
+			this.background1.x -= 0.3;
 		} else {
 			this.astronaut.body.velocity.x = 0;
 			this.astronaut.animations.play('stop', 7, true);
@@ -110,6 +114,8 @@ play.prototype = {
 
 		if (lifeCounter == 0) {
 			this.astronaut.kill();
+			
+			this.game.add.image(0, 0, 'gameOver');
 
 			var gameOverText = game.add.text(this.game.camera.x, this.game.camera.y, 'Game Over...', {
 				font : '50px Courier',
@@ -155,7 +161,6 @@ play.prototype = {
 
 		// the backgrounds of the first level
 		this.background3 = this.game.add.image(0, 0, 'level' + levelNumber + 'background3');
-		this.background31 = this.game.add.image(2400, 0, 'level'+levelNumber + 'background31');
 		this.background2 = this.game.add.image(0, 0, 'level' + levelNumber + 'background2');
 		this.background1 = this.game.add.image(0, 0, 'level' + levelNumber + 'background1');
 
@@ -211,7 +216,7 @@ play.prototype = {
 		this.game.camera.follow(this.astronaut);
 
 		score = oldScore;
-		
+
 		scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
 			font : '30px Courier',
 			fill : '#ffffff'
@@ -220,8 +225,6 @@ play.prototype = {
 	},
 
 	collectElement : function(astronaut, tile) {
-
-		console.log("jojo");
 
 		map.removeTile(tile.x, tile.y, layer);
 
