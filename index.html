@@ -24,19 +24,30 @@
     			position:absolute;
     			margin-top:-250px;
     			margin-left:20px;
+
     			animation-duration: 3s;
   				animation-name: slidein;
   				animation-iteration-count: infinite;
   				animation-direction: alternate;
+
 			}
 			@keyframes slidein {
   			from {
     			margin-top:-300px;
-  			}
+    		}
 
   			to {
     			margin-top: -100px;
+    		}
+
+    		@-webkit-keyframes rotate {
+  			from {
+    			-webkit-transform: rotate(0deg);
   			}
+  			to { 
+   				-webkit-transform: rotate(360deg);
+  			}
+			}
 		</style>
 
 		<link rel="shortcut icon" href="assets/icon.png" type="image/png"/>
@@ -60,8 +71,8 @@
 	</head>
 	<body>
 		<div id="game"></div>
-		<div id="planet">
-			<a id="planet" href="assets/stars.png"><img src="assets/planet.gif" title="Credits" alt="Bild kann nicht angezeigt werden"></a>
+		<div id="planet" padding-left:250px>
+			<a id="planet" href="assets/smiley.png"><img src="assets/planet.gif" title="Credits" alt="Bild kann nicht angezeigt werden"></a>
 		</div>
 	</body>
 </html>
