@@ -46,33 +46,6 @@ play.prototype = {
 		this.alien = new Alien(this.game, 700, 350);
 		this.game.add.existing(this.alien);
 
-		/*
-		 * add tools
-		 */
-		this.nopliers = new Tools(this.game, 230, 15, 1);
-		this.game.add.existing(this.nopliers);
-		this.nopliers.fixedToCamera = true;
-
-		this.nowrench = new Tools(this.game, 260, 15, 3);
-		this.game.add.existing(this.nowrench);
-		this.nowrench.fixedToCamera = true;
-
-		this.noscrewdriver = new Tools(this.game, 290, 15, 5);
-		this.game.add.existing(this.noscrewdriver);
-		this.noscrewdriver.fixedToCamera = true;
-
-		this.collectpliers = new Tools(this.game, 200, 400, 0);
-		this.game.add.existing(this.collectpliers);
-		this.collectpliers.body.allowGravity = false;
-
-		this.collectwrench = new Tools(this.game, 111, 400, 2);
-		this.game.add.existing(this.collectwrench);
-		this.collectwrench.body.allowGravity = false;
-
-		this.collectscrewdriver = new Tools(this.game, 111, 400, 4);
-		this.game.add.existing(this.collectscrewdriver);
-		this.collectscrewdriver.body.allowGravity = false;
-
 	},
 
 	update : function() {
@@ -197,6 +170,33 @@ play.prototype = {
 
 		// This resizes the game world to match the layer dimensions
 		layer.resizeWorld();
+
+		/*
+		 * add tools
+		 */
+		this.nopliers = new Tools(this.game, 230, 15, 1);
+		this.game.add.existing(this.nopliers);
+		this.nopliers.fixedToCamera = true;
+
+		this.nowrench = new Tools(this.game, 260, 15, 3);
+		this.game.add.existing(this.nowrench);
+		this.nowrench.fixedToCamera = true;
+
+		this.noscrewdriver = new Tools(this.game, 290, 15, 5);
+		this.game.add.existing(this.noscrewdriver);
+		this.noscrewdriver.fixedToCamera = true;
+
+		this.collectpliers = new Tools(this.game, 200, 400, 0);
+		this.game.add.existing(this.collectpliers);
+		this.collectpliers.body.allowGravity = false;
+
+		this.collectwrench = new Tools(this.game, 111, 400, 2);
+		this.game.add.existing(this.collectwrench);
+		this.collectwrench.body.allowGravity = false;
+
+		this.collectscrewdriver = new Tools(this.game, 111, 400, 4);
+		this.game.add.existing(this.collectscrewdriver);
+		this.collectscrewdriver.body.allowGravity = false;
 
 		/*
 		 * adds the character
