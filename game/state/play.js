@@ -13,6 +13,7 @@ var score;
 var lifeCounter;
 var scoreText;
 var levelNumber = 1;
+var finalLevel = 3;
 var lifeTimer;
 
 play.prototype = {
@@ -116,7 +117,7 @@ play.prototype = {
 
 		if (lifeCounter == 0) {
 			this.astronaut.kill();
-			game.add.text(game.width/2, game.height/2, 'Game Over...', {
+			game.add.text(game.width / 2, game.height / 2, 'Game Over...', {
 				font : '50px Courier',
 				fill : '#8B1A1A'
 			});
@@ -139,7 +140,7 @@ play.prototype = {
 		}
 
 		lifeTimer = 0;
-		
+
 		if (string != "restart") {
 			lifeCounter = 3;
 		}
@@ -213,9 +214,16 @@ play.prototype = {
 	},
 
 	hitFinish : function(astronaut, finish) {
-		console.log("Level finished!");
-		levelNumber += 1;
-		this.loadLevel("");
+		if (levelNumber != finalLevel) {
+			console.log("Level finished!");
+			levelNumber += 1;
+			this.loadLevel("");
+		} else {
+			game.add.text(game.width / 2, game.height / 2, 'You win!', {
+				font : '50px Courier',
+				fill : '#8B1A1A'
+			});
+		}
 	},
 
 	collideWithAlien : function(astronaut, alien) {
