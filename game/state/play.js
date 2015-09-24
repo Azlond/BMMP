@@ -13,7 +13,7 @@ var score;
 var oldScore;
 var lifeCounter;
 var scoreText;
-var levelNumber = 2;
+var levelNumber = 1;
 
 var finalLevel = 3;
 var lifeTimer;
@@ -29,9 +29,6 @@ play.prototype = {
 
 		// reduces jump height
 		this.game.physics.arcade.gravity.y = 300;
-
-		// Keyboard controls
-		cursors = game.input.keyboard.createCursorKeys();
 
 		score = 0;
 
@@ -177,8 +174,8 @@ play.prototype = {
 		// map.addTilesetImage('coin', 'coin');
 		// map.addTilesetImage('finish', 'finish')
 		// map.addTilesetImage('level1_tilemap', 'level1_tilemap');
-		map.addTilesetImage('level2_tilemap', 'level2_tilemap');
-		map.addTilesetImage('level2_tilemap_ground', 'level2_tilemap_ground');
+		map.addTilesetImage('level1_tilemap', 'level1_tilemap');
+//		map.addTilesetImage('level2_tilemap_ground', 'level2_tilemap_ground');
 
 		// TODO: amount of tiles needs to be the same for all levels - should be
 		// default

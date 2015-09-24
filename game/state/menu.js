@@ -31,7 +31,7 @@ menu.prototype = {
 };
 
 function actionOnClick() {
-	game.state.start('play'); // starts the game
+	game.state.start('intro'); // starts the game
 }
 
 function openOption () {

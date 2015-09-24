@@ -5,6 +5,8 @@
 function loading() {
 }
 
+var cursors
+
 loading.prototype = {
 
 	preload : function() {
@@ -17,6 +19,12 @@ loading.prototype = {
 			font : '30px Courier',
 			fill : '#ffffff'
 		});
+
+		/*
+		 * Intro
+		 */
+
+		game.load.video('intro', './assets/Intro.mp4');
 
 		/*
 		 * Menu-state images
@@ -55,9 +63,11 @@ loading.prototype = {
 		game.load.image('level2_tilemap_ground', './assets/Tilemap/level2_tilemap_ground.png');
 
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
-		
-		
+
 		game.load.image('gameOver', './assets/gameOver.jpg');
+
+		// Keyboard controls
+		cursors = game.input.keyboard.createCursorKeys();
 
 	},
 
