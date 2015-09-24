@@ -13,7 +13,7 @@ var score;
 var oldScore;
 var lifeCounter;
 var scoreText;
-var levelNumber = 1;
+var levelNumber = 2;
 
 var finalLevel = 3;
 var lifeTimer;
@@ -31,6 +31,9 @@ play.prototype = {
 		this.game.physics.arcade.gravity.y = 300;
 
 		score = 0;
+
+		// Keyboard controls
+		cursors = game.input.keyboard.createCursorKeys();
 
 		// loads the first level
 		// level number has to be increased once the player has reached the
@@ -111,7 +114,7 @@ play.prototype = {
 
 		if (lifeCounter == 0) {
 			this.astronaut.kill();
-			
+
 			this.game.add.image(0, 0, 'gameOver');
 
 			var gameOverText = game.add.text(this.game.camera.x, this.game.camera.y, 'Game Over...', {
@@ -152,7 +155,6 @@ play.prototype = {
 
 		if (string != "restart") {
 			lifeCounter = 3;
-			console.log("not restarting");
 			oldScore = score;
 		}
 
@@ -170,12 +172,9 @@ play.prototype = {
 		// the second parameter needs to be the same as the one used in
 		// loading.js
 		// TODO: image names need to be adjusted to the level number
-		// map.addTilesetImage('fmap-tiles', 'fmap-tiles');
-		// map.addTilesetImage('coin', 'coin');
-		// map.addTilesetImage('finish', 'finish')
 		// map.addTilesetImage('level1_tilemap', 'level1_tilemap');
-		map.addTilesetImage('level1_tilemap', 'level1_tilemap');
-//		map.addTilesetImage('level2_tilemap_ground', 'level2_tilemap_ground');
+		map.addTilesetImage('level' + levelNumber + '_tilemap', 'level' + levelNumber + '_tilemap');
+		map.addTilesetImage('level' + levelNumber + '_tilemap_ground', 'level' + levelNumber + '_tilemap_ground');
 
 		// TODO: amount of tiles needs to be the same for all levels - should be
 		// default
@@ -192,8 +191,6 @@ play.prototype = {
 		map.setCollision(41);
 
 		map.setTileIndexCallback(40, this.collectElement, this);
-		//
-		// map.setTileIndexCallback(79, this.hitFinish, this);
 
 		// the parameter can be found in the json file
 		layer = map.createLayer('Kachelebene 1');

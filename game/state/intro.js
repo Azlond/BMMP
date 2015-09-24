@@ -1,6 +1,9 @@
 function intro() {
 
 }
+
+var introFinished = false;
+
 intro.prototype = {
 	create : function() {
 		this.video = this.game.add.video('intro');
@@ -23,5 +26,8 @@ intro.prototype = {
 }
 
 function handleComplete() {
-	game.state.start('play');
+	if (!introFinished) {
+		game.state.start('play');
+		introFinished = true;
+	}
 }

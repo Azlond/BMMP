@@ -71,9 +71,6 @@ loading.prototype = {
 
 		game.load.image('gameOver', './assets/gameOver.jpg');
 
-		// Keyboard controls
-		cursors = game.input.keyboard.createCursorKeys();
-
 	},
 
 	create : function() {
