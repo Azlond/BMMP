@@ -32,17 +32,6 @@ play.prototype = {
 		// finish line
 		this.loadLevel();
 
-		/*
-		 * adds the character
-		 */
-		this.astronaut = new Astronaut(this.game, 100, 100);
-		this.game.add.existing(this.astronaut);
-		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
-		this.astronaut.animations.add('stop', [ 0 ], 20, true);
-		this.astronaut.anchor.setTo(0.5, 0.5);
-
-		this.game.camera.follow(this.astronaut);
-
 		/**
 		 * add aliens
 		 */
@@ -92,6 +81,19 @@ play.prototype = {
 	},
 
 	loadLevel : function() {
+
+		if (this.astronaut != null) {
+			this.astronaut.kill();
+		}
+
+		if (map != null) {
+			map.destroy();
+		}
+
+		if (layer != null) {
+			layer.destroy();
+		}
+
 		// the backgrounds of the first level
 		this.background3 = this.game.add.image(0, 0, 'level' + levelNumber
 				+ 'background3');
@@ -101,6 +103,17 @@ play.prototype = {
 				+ 'background1');
 		this.ground = this.game.add.image(0, 32, 'level' + levelNumber
 				+ 'ground');
+
+		/*
+		 * adds the character
+		 */
+		this.astronaut = new Astronaut(this.game, 100, 100);
+		this.game.add.existing(this.astronaut);
+		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
+		this.astronaut.animations.add('stop', [ 0 ], 20, true);
+		this.astronaut.anchor.setTo(0.5, 0.5);
+
+		this.game.camera.follow(this.astronaut);
 
 		/*
 		 * adds the tile map to the game !!tilemap json files need to be created
@@ -128,11 +141,6 @@ play.prototype = {
 
 		// This resizes the game world to match the layer dimensions
 		layer.resizeWorld();
-
-		if (this.astronaut != null) {
-			// astronaut.body.set.x = 100;
-			// astronaut.body.set.y = 100;
-		}
 	},
 
 	hitCoin : function(astronaut, tile) {
