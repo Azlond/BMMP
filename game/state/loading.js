@@ -32,6 +32,11 @@ loading.prototype = {
 
 		game.load.image('menubackground', './assets/menubackground.png')
 		game.load.image('button', './assets/woodbutton.png');
+		game.load.image('buttonStart', './assets/woodbutton_start.png');
+		game.load.image ('controlpanel', './assets/controlpanel.png');
+		game.load.image ('close', './assets/closebutton.png');
+		game.load.spritesheet ('control', './assets/controlSprite.png',64, 94, 2);
+		game.load.audio ('music', './assets/sound/background_music.wav');
 
 		/*
 		 * backgrounds
