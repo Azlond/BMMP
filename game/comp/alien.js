@@ -7,7 +7,7 @@ var Alien = function(game, x, y) {
  	this.game.physics.arcade.enableBody(this);
 
   	this.body.collideWorldBounds = true;
-	this.body.velocity.x = -10
+	this.body.velocity.x = -50
 
 };
 

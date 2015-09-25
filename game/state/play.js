@@ -106,6 +106,17 @@ play.prototype = {
 			console.log("X: " + this.astronaut.body.x + " Y: " + this.astronaut.body.y);
 		}
 
+		if (game.physics.arcade.distanceBetween(this.astronaut, this.alien) < 500) {
+			// astronaut on the left side				
+			if(this.astronaut.position.x < this.alien.position.x) {
+				this.alien.scale.x = -1;
+			}
+			// astronaut on the right side
+			if(this.astronaut.position.x > this.alien.position.x) {
+				this.alien.scale.x = 1;
+			} 
+		}
+
 	},
 
 	loadLevel : function(string) {
@@ -307,8 +318,8 @@ play.prototype = {
 
 			lifeTimer = game.time.now + 750;
 		}
-
 	},
+
 
 	collectTools : function(astronaut, tools) {
 
