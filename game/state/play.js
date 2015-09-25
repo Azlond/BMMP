@@ -110,22 +110,17 @@ play.prototype = {
 			console.log("X: " + this.astronaut.body.x + " Y: " + this.astronaut.body.y);
 		}
 
-		if (this.isCompleted) {
-			this.rocket.y -= 5;
-			console.log("rocket moving");
-		}
-
 		if (this.rocket.body.y <= -420) {
 			this.rocketGone = true;
 		}
 
-		if (this.rocketGone && this.isCompleted) {
+		if (this.rocketGone) {
 			this.loadLevel("");
 		}
 
 		if (pathCounter >= 0) {
 			pathCounter++;
-			console.log(pathCounter);
+			// console.log(pathCounter);
 		}
 		if (pathCounter >= 300) {
 			if (this.alien.scale.x == -1 && this.alien.body.velocity.x == -50) {
@@ -175,7 +170,6 @@ play.prototype = {
 		this.background3 = this.game.add.image(0, 0, 'level' + levelNumber + 'background3');
 		this.background2 = this.game.add.image(0, 0, 'level' + levelNumber + 'background2');
 		this.background1 = this.game.add.image(0, 0, 'level' + levelNumber + 'background1');
-		this.isCompleted = false;
 		this.rocketGone = false;
 		/*
 		 * adds the tile map to the game !!tilemap json files need to be created
@@ -337,26 +331,22 @@ play.prototype = {
 
 	hitFinish : function(astronaut, finish) {
 
-		console.log("here");
-		console.log(toolsCollected);
-		console.log(this.isCompleted);
-
-		if (levelNumber != finalLevel && toolsCollected == 3 && !this.isCompleted) {
+		if (levelNumber != finalLevel && toolsCollected == 3) {
 			console.log("Level finished!");
 			levelNumber += 1;
 			this.astronaut.kill();
 			this.rocket.body.immovable = false;
-			this.isCompleted = true;
+			this.rocket.body.velocity.y = -150;
 
 			// this.loadLevel("");
-		} else if (toolsCollected == 3 && !this.isCompleted) {
+		} else if (toolsCollected == 3) {
 			game.add.text(game.width / 2, game.height / 2, 'You win!', {
 				font : '50px Courier',
 				fill : '#8B1A1A'
 			});
 			this.astronaut.kill();
 			this.rocket.body.immovable = false;
-			this.isCompleted = true;
+			this.rocket.body.velocity.y = -150;
 		}
 	},
 
