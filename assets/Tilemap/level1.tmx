@@ -14,6 +14,9 @@
    </objectgroup>
   </tile>
  </tileset>
+ <tileset firstgid="21" name="level1_tilemap_ground" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="level1_tilemap_ground.png" trans="fffcfc" width="32" height="32"/>
+ </tileset>
  <imagelayer name="Bildebene 1">
   <image source="../Level1/Level1_Ebene3.png"/>
  </imagelayer>
