@@ -169,7 +169,7 @@ play.prototype = {
 		// the backgrounds of the first level
 		this.background3 = this.game.add.image(0, 0, 'level' + levelNumber + 'background3');
 		this.background2 = this.game.add.image(0, 0, 'level' + levelNumber + 'background2');
-		this.background1 = this.game.add.image(0, 0, 'level' + levelNumber + 'background1');
+		this.background1 = this.game.add.image(-15, 0, 'level' + levelNumber + 'background1');
 		this.rocketGone = false;
 		/*
 		 * adds the tile map to the game !!tilemap json files need to be created
