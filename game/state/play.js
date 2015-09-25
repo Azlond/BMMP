@@ -306,6 +306,9 @@ play.prototype = {
 		this.game.physics.arcade.enableBody(this.rocket);
 		this.rocket.body.allowGravity = false;
 		this.rocket.body.immovable = true;
+		this.rocket.animations.add('empty', [ 0 ], 1, true);
+		this.rocket.animations.add('full', [ 1 ], 1, true);
+		this.rocket.animations.play('empty');
 
 		/*
 		 * adds the character
@@ -331,7 +334,7 @@ play.prototype = {
 		 */
 		this.alien = new Alien(this.game, 700, 350);
 		this.game.add.existing(this.alien);
-		this.alien.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
+		this.alien.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
 		this.alien.anchor.setTo(0.5, 0.5);
 		this.alien.animations.play('walk');
 
@@ -355,10 +358,12 @@ play.prototype = {
 			this.astronaut.kill();
 			this.rocket.body.immovable = false;
 			this.rocket.body.velocity.y = -150;
+			this.rocket.animations.play('full');
 		} else if (toolsCollected == 3) {
 			this.astronaut.kill();
 			this.rocket.body.immovable = false;
 			this.rocket.body.velocity.y = -150;
+			this.rocket.animations.play('full');
 		}
 	},
 
