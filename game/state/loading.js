@@ -67,18 +67,18 @@ loading.prototype = {
 		game.load.tilemap('level3', './assets/Tilemap/level3_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.tilemap('level4', './assets/Tilemap/level4_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 
-		game.load.spritesheet('char', './assets/Astronaut.png', 31, 71, 6);
 		game.load.image('level1_tilemap', './assets/Tilemap/level1_tilemap.png');
 		game.load.image('level1_tilemap_ground', './assets/Tilemap/level1_tilemap_ground.png');
 		game.load.image('level2_tilemap', './assets/Tilemap/level2_tilemap.png');
-		game.load.image('level2_tilemap_ground', './assets/Tilemap/level2_tilemap_ground.png');
+		game.load.image('level2_tilemap_ground', './assets/Tilemap/level2_tilemap_ground.png')		
 		game.load.image('level3_tilemap', './assets/Tilemap/level3_tilemap.png');
 		game.load.image('level3_tilemap_ground', './assets/Tilemap/level3_tilemap_ground.png');
 		game.load.image('level4_tilemap', './assets/Tilemap/level4_tilemap.png');
 		game.load.image('level4_tilemap_ground', './assets/Tilemap/level4_tilemap_ground.png');
 
-		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
 
+		game.load.spritesheet('char', './assets/Astronaut.png', 31, 71, 6);
+		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
 		game.load.image('gameOver', './assets/gameOver.jpg');
 
 	},

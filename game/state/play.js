@@ -107,14 +107,14 @@ play.prototype = {
 		}
 
 		if (game.physics.arcade.distanceBetween(this.astronaut, this.alien) < 500) {
-			// astronaut on the left side				
-			if(this.astronaut.position.x < this.alien.position.x) {
+			// astronaut on the left side
+			if (this.astronaut.position.x < this.alien.position.x) {
 				this.alien.scale.x = -1;
 			}
 			// astronaut on the right side
-			if(this.astronaut.position.x > this.alien.position.x) {
+			if (this.astronaut.position.x > this.alien.position.x) {
 				this.alien.scale.x = 1;
-			} 
+			}
 		}
 
 	},
@@ -173,11 +173,7 @@ play.prototype = {
 
 		map.setCollision(41);
 
-		if (levelNumber != 4) {
-			map.setTileIndexCallback(40, this.collectElement, this);
-		} else {
-			map.setTileIndexCallback(41, this.collectElement, this);
-		}
+		map.setTileIndexCallback(40, this.collectElement, this);
 
 		// the parameter can be found in the json file
 		layer = map.createLayer('Kachelebene 1');
@@ -319,7 +315,6 @@ play.prototype = {
 			lifeTimer = game.time.now + 750;
 		}
 	},
-
 
 	collectTools : function(astronaut, tools) {
 
