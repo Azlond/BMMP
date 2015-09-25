@@ -13,7 +13,7 @@ var score;
 var oldScore;
 var lifeCounter;
 var scoreText;
-var levelNumber = 4;
+var levelNumber = 1;
 
 var finalLevel = 4;
 var lifeTimer;
@@ -34,6 +34,7 @@ play.prototype = {
 
 		// Keyboard controls
 		cursors = game.input.keyboard.createCursorKeys();
+		fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
 		// loads the first level
 		// level number has to be increased once the player has reached the
@@ -99,6 +100,10 @@ play.prototype = {
 			if (lifeCounter != 0) {
 				this.loadLevel("restart");
 			}
+		}
+
+		if (fireButton.isDown) {
+			console.log("X: " + this.astronaut.body.x + " Y: " + this.astronaut.body.y);
 		}
 
 	},
@@ -194,9 +199,10 @@ play.prototype = {
 			this.game.add.existing(this.collectwrench);
 			this.collectwrench.body.allowGravity = false;
 
-			this.collectscrewdriver = new Tools(this.game, level2screw[0], level2screw[1], 4);
+			this.collectscrewdriver = new Tools(this.game, level1screw[0], level1screw[1], 4);
 			this.game.add.existing(this.collectscrewdriver);
 			this.collectscrewdriver.body.allowGravity = false;
+			break;
 		case 2:
 			this.collectpliers = new Tools(this.game, level2pliers[0], level2pliers[1], 0);
 			this.game.add.existing(this.collectpliers);
@@ -209,6 +215,7 @@ play.prototype = {
 			this.collectscrewdriver = new Tools(this.game, level2screw[0], level2screw[1], 4);
 			this.game.add.existing(this.collectscrewdriver);
 			this.collectscrewdriver.body.allowGravity = false;
+			break;
 		case 3:
 			this.collectpliers = new Tools(this.game, level3pliers[0], level3pliers[1], 0);
 			this.game.add.existing(this.collectpliers);
@@ -221,6 +228,7 @@ play.prototype = {
 			this.collectscrewdriver = new Tools(this.game, level3screw[0], level3screw[1], 4);
 			this.game.add.existing(this.collectscrewdriver);
 			this.collectscrewdriver.body.allowGravity = false;
+			break;
 		case 4:
 			this.collectpliers = new Tools(this.game, level4pliers[0], level4pliers[1], 0);
 			this.game.add.existing(this.collectpliers);
@@ -233,6 +241,7 @@ play.prototype = {
 			this.collectscrewdriver = new Tools(this.game, level4screw[0], level4screw[1], 4);
 			this.game.add.existing(this.collectscrewdriver);
 			this.collectscrewdriver.body.allowGravity = false;
+			break;
 		default:
 		}
 
