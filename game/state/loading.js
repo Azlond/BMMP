@@ -82,7 +82,7 @@ loading.prototype = {
 		game.load.image('rocketPlayer', './assets/rocket_player.png');
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
 		game.load.image('gameOver', './assets/gameOver.jpg');
-		game.load.spritesheet('alien','./assets/alien.png');
+		game.load.spritesheet('alien','./assets/alien.png', 64, 64, 8);
 
 	},
 

@@ -2,7 +2,7 @@ var Alien = function(game, x, y) {
 
 	this.game = game;
 
-  	Phaser.Sprite.call(this, this.game, x, y, 'char');
+  	Phaser.Sprite.call(this, this.game, x, y, 'alien');
 
  	this.game.physics.arcade.enableBody(this);
 

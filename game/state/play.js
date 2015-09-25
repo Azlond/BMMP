@@ -57,45 +57,13 @@ play.prototype = {
 		this.rocket.body.allowGravity = false;
 		this.rocket.body.immovable = true;
 
-		/*
-		 * adds the character
-		 */
-		this.astronaut = new Astronaut(this.game, 100, 450);
-		this.game.add.existing(this.astronaut);
-		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
-		this.astronaut.animations.add('stop', [ 0 ], 20, true);
-		this.astronaut.anchor.setTo(0.5, 0.5);
-
-		this.game.camera.follow(this.astronaut);
-
 		score = oldScore;
 
 		scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
 			font : '30px Courier',
 			fill : '#ffffff'
 		});
-		scoreText.fixedToCamera = true;
-
-		/**
-		 * add aliens
-		 */
-		this.alien = new Alien(this.game, 700, 350);
-		this.game.add.existing(this.alien);
-
-		/*
-		 * add tools
-		 */
-		this.nopliers = new Tools(this.game, 230, 15, 1);
-		this.game.add.existing(this.nopliers);
-		this.nopliers.fixedToCamera = true;
-
-		this.nowrench = new Tools(this.game, 260, 15, 3);
-		this.game.add.existing(this.nowrench);
-		this.nowrench.fixedToCamera = true;
-
-		this.noscrewdriver = new Tools(this.game, 290, 15, 5);
-		this.game.add.existing(this.noscrewdriver);
-		this.noscrewdriver.fixedToCamera = true;
+		scoreText.fixedToCamera = true;		
 
 	},
 
@@ -260,6 +228,21 @@ play.prototype = {
 		// This resizes the game world to match the layer dimensions
 		layer.resizeWorld();
 
+		/*
+		 * add tools
+		 */
+		this.nopliers = new Tools(this.game, 230, 15, 1);
+		this.game.add.existing(this.nopliers);
+		this.nopliers.fixedToCamera = true;
+
+		this.nowrench = new Tools(this.game, 260, 15, 3);
+		this.game.add.existing(this.nowrench);
+		this.nowrench.fixedToCamera = true;
+
+		this.noscrewdriver = new Tools(this.game, 290, 15, 5);
+		this.game.add.existing(this.noscrewdriver);
+		this.noscrewdriver.fixedToCamera = true;
+
 		switch (levelNumber) {
 		case 1:
 			this.collectpliers = new Tools(this.game, level1pliers[0], level1pliers[1], 0);
@@ -354,6 +337,9 @@ play.prototype = {
 		 */
 		this.alien = new Alien(this.game, 700, 350);
 		this.game.add.existing(this.alien);
+		this.alien.animations.add('walk', [1,2,3,4,5,6,7], 20, true);
+		this.alien.animations.add('stop', [0],20,true);
+		this.alien.anchor.setTo(0.5,0.5);
 
 	},
 
