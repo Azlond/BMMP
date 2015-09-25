@@ -42,12 +42,9 @@ play.prototype = {
 		// level number has to be increased once the player has reached the
 		// finish line
 		this.loadLevel("");
-
 	},
 
 	update : function() {
-
-		// logic(game, this.astronaut, layer, this.alien, cursors, jumpTimer);
 
 		this.game.physics.arcade.collide(this.astronaut, layer);
 		this.game.physics.arcade.collide(this.alien, layer);
@@ -115,7 +112,14 @@ play.prototype = {
 		}
 
 		if (this.rocketGone) {
-			this.loadLevel("");
+			if (levelNumber == finalLevel) {
+				game.add.text(game.width / 2, game.height / 2, 'You win!', {
+					font : '50px Courier',
+					fill : '#8B1A1A'
+				});
+			} else {
+				this.loadLevel("");
+			}
 		}
 
 		if (pathCounter >= 0) {
@@ -156,6 +160,18 @@ play.prototype = {
 
 		if (toolsCollected != 0) {
 			toolsCollected = 0;
+		}
+
+		if (this.nopliers != null) {
+			this.nopliers.kill();
+		}
+
+		if (this.nowrench != null) {
+			this.nowrench.kill();
+		}
+
+		if (this.noscrewdriver != null) {
+			this.noscrewdriver.kill();
 		}
 
 		lifeTimer = 0;
@@ -315,9 +331,9 @@ play.prototype = {
 		 */
 		this.alien = new Alien(this.game, 700, 350);
 		this.game.add.existing(this.alien);
-		this.alien.animations.add('walk', [1,2,3,4,5,6,7], 20, true);
-		this.alien.animations.add('stop', [0],20,true);
-		this.alien.anchor.setTo(0.5,0.5);
+		this.alien.animations.add('walk', [ 1, 2, 3, 4, 5, 6, 7 ], 20, true);
+		this.alien.animations.add('stop', [ 0 ], 20, true);
+		this.alien.anchor.setTo(0.5, 0.5);
 
 	},
 
@@ -335,18 +351,11 @@ play.prototype = {
 	hitFinish : function(astronaut, finish) {
 
 		if (levelNumber != finalLevel && toolsCollected == 3) {
-			console.log("Level finished!");
 			levelNumber += 1;
 			this.astronaut.kill();
 			this.rocket.body.immovable = false;
 			this.rocket.body.velocity.y = -150;
-
-			// this.loadLevel("");
 		} else if (toolsCollected == 3) {
-			game.add.text(game.width / 2, game.height / 2, 'You win!', {
-				font : '50px Courier',
-				fill : '#8B1A1A'
-			});
 			this.astronaut.kill();
 			this.rocket.body.immovable = false;
 			this.rocket.body.velocity.y = -150;
