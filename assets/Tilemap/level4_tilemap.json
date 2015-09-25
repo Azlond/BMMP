@@ -72,11 +72,11 @@
         }, 
         {
          "firstgid":2,
-         "image":"level4_tilemap_white.png",
+         "image":"level4_tilemap.png",
          "imageheight":128,
          "imagewidth":320,
          "margin":0,
-         "name":"level4_tilemap_white",
+         "name":"level4_tilemap",
          "properties":
             {
 

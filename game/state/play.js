@@ -13,9 +13,9 @@ var score;
 var oldScore;
 var lifeCounter;
 var scoreText;
-var levelNumber = 2;
+var levelNumber = 4;
 
-var finalLevel = 3;
+var finalLevel = 4;
 var lifeTimer;
 var soundOn = true;
 var fallen;
@@ -145,7 +145,7 @@ play.prototype = {
 
 		// TODO: amount of tiles needs to be the same for all levels - should be
 		// default
-		map.setCollisionBetween(1, 40);
+		map.setCollisionBetween(1, 39);
 
 		map.forEach(function(t) {
 			if (t) {
@@ -157,7 +157,11 @@ play.prototype = {
 
 		map.setCollision(41);
 
-		map.setTileIndexCallback(40, this.collectElement, this);
+		if (levelNumber != 4) {
+			map.setTileIndexCallback(40, this.collectElement, this);
+		} else {
+			map.setTileIndexCallback(41, this.collectElement, this);
+		}
 
 		// the parameter can be found in the json file
 		layer = map.createLayer('Kachelebene 1');
@@ -180,17 +184,57 @@ play.prototype = {
 		this.game.add.existing(this.noscrewdriver);
 		this.noscrewdriver.fixedToCamera = true;
 
-		this.collectpliers = new Tools(this.game, 200, 400, 0);
-		this.game.add.existing(this.collectpliers);
-		this.collectpliers.body.allowGravity = false;
+		switch (levelNumber) {
+		case 1:
+			this.collectpliers = new Tools(this.game, level1pliers[0], level1pliers[1], 0);
+			this.game.add.existing(this.collectpliers);
+			this.collectpliers.body.allowGravity = false;
 
-		this.collectwrench = new Tools(this.game, 111, 400, 2);
-		this.game.add.existing(this.collectwrench);
-		this.collectwrench.body.allowGravity = false;
+			this.collectwrench = new Tools(this.game, level1wrench[0], level1wrench[1], 2);
+			this.game.add.existing(this.collectwrench);
+			this.collectwrench.body.allowGravity = false;
 
-		this.collectscrewdriver = new Tools(this.game, 111, 400, 4);
-		this.game.add.existing(this.collectscrewdriver);
-		this.collectscrewdriver.body.allowGravity = false;
+			this.collectscrewdriver = new Tools(this.game, level2screw[0], level2screw[1], 4);
+			this.game.add.existing(this.collectscrewdriver);
+			this.collectscrewdriver.body.allowGravity = false;
+		case 2:
+			this.collectpliers = new Tools(this.game, level2pliers[0], level2pliers[1], 0);
+			this.game.add.existing(this.collectpliers);
+			this.collectpliers.body.allowGravity = false;
+
+			this.collectwrench = new Tools(this.game, level2wrench[0], level2wrench[1], 2);
+			this.game.add.existing(this.collectwrench);
+			this.collectwrench.body.allowGravity = false;
+
+			this.collectscrewdriver = new Tools(this.game, level2screw[0], level2screw[1], 4);
+			this.game.add.existing(this.collectscrewdriver);
+			this.collectscrewdriver.body.allowGravity = false;
+		case 3:
+			this.collectpliers = new Tools(this.game, level3pliers[0], level3pliers[1], 0);
+			this.game.add.existing(this.collectpliers);
+			this.collectpliers.body.allowGravity = false;
+
+			this.collectwrench = new Tools(this.game, level3wrench[0], level3wrench[1], 2);
+			this.game.add.existing(this.collectwrench);
+			this.collectwrench.body.allowGravity = false;
+
+			this.collectscrewdriver = new Tools(this.game, level3screw[0], level3screw[1], 4);
+			this.game.add.existing(this.collectscrewdriver);
+			this.collectscrewdriver.body.allowGravity = false;
+		case 4:
+			this.collectpliers = new Tools(this.game, level4pliers[0], level4pliers[1], 0);
+			this.game.add.existing(this.collectpliers);
+			this.collectpliers.body.allowGravity = false;
+
+			this.collectwrench = new Tools(this.game, level4wrench[0], level4wrench[1], 2);
+			this.game.add.existing(this.collectwrench);
+			this.collectwrench.body.allowGravity = false;
+
+			this.collectscrewdriver = new Tools(this.game, level4screw[0], level4screw[1], 4);
+			this.game.add.existing(this.collectscrewdriver);
+			this.collectscrewdriver.body.allowGravity = false;
+		default:
+		}
 
 		/*
 		 * adds the character
