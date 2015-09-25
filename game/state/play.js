@@ -13,6 +13,7 @@ var score;
 var oldScore;
 var lifeCounter;
 var scoreText;
+var pathCounter = 0;
 var levelNumber = 1;
 
 var finalLevel = 4;
@@ -106,14 +107,20 @@ play.prototype = {
 			console.log("X: " + this.astronaut.body.x + " Y: " + this.astronaut.body.y);
 		}
 
-		if (game.physics.arcade.distanceBetween(this.astronaut, this.alien) < 500) {
-			// astronaut on the left side
-			if (this.astronaut.position.x < this.alien.position.x) {
-				this.alien.scale.x = -1;
-			}
-			// astronaut on the right side
-			if (this.astronaut.position.x > this.alien.position.x) {
+		if(pathCounter >= 0) {		
+			pathCounter++;
+			console.log(pathCounter);
+		}
+		if(pathCounter >= 300) {
+			if (this.alien.scale.x == -1 && this.alien.body.velocity.x == -50) {
+				pathCounter = 0;
 				this.alien.scale.x = 1;
+				this.alien.body.velocity.x = 50;
+			}
+			else if (this.alien.scale.x == 1 && this.alien.body.velocity.x == 50) {
+				pathCounter = 0;
+				this.alien.scale.x = -1;
+				this.alien.body.velocity.x = -50;
 			}
 		}
 
@@ -173,28 +180,17 @@ play.prototype = {
 
 		map.setCollision(41);
 
-		map.setTileIndexCallback(40, this.collectElement, this);
+		if (levelNumber != 4) {
+			map.setTileIndexCallback(40, this.collectElement, this);
+		} else {
+			map.setTileIndexCallback(41, this.collectElement, this);
+		}
 
 		// the parameter can be found in the json file
 		layer = map.createLayer('Kachelebene 1');
 
 		// This resizes the game world to match the layer dimensions
 		layer.resizeWorld();
-
-		/*
-		 * add tools
-		 */
-		this.nopliers = new Tools(this.game, 230, 15, 1);
-		this.game.add.existing(this.nopliers);
-		this.nopliers.fixedToCamera = true;
-
-		this.nowrench = new Tools(this.game, 260, 15, 3);
-		this.game.add.existing(this.nowrench);
-		this.nowrench.fixedToCamera = true;
-
-		this.noscrewdriver = new Tools(this.game, 290, 15, 5);
-		this.game.add.existing(this.noscrewdriver);
-		this.noscrewdriver.fixedToCamera = true;
 
 		switch (levelNumber) {
 		case 1:
@@ -252,30 +248,6 @@ play.prototype = {
 		default:
 		}
 
-		/*
-		 * adds the character
-		 */
-		this.astronaut = new Astronaut(this.game, 100, 450);
-		this.game.add.existing(this.astronaut);
-		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
-		this.astronaut.animations.add('stop', [ 0 ], 20, true);
-		this.astronaut.anchor.setTo(0.5, 0.5);
-
-		this.game.camera.follow(this.astronaut);
-
-		score = oldScore;
-
-		scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
-			font : '30px Courier',
-			fill : '#ffffff'
-		});
-		scoreText.fixedToCamera = true;
-
-		/**
-		 * add aliens
-		 */
-		this.alien = new Alien(this.game, 700, 350);
-		this.game.add.existing(this.alien);
 	},
 
 	collectElement : function(astronaut, tile) {
@@ -316,6 +288,7 @@ play.prototype = {
 		}
 	},
 
+
 	collectTools : function(astronaut, tools) {
 
 		if (tools == this.collectpliers) {
@@ -345,3 +318,4 @@ play.prototype = {
 	}
 
 };
+
