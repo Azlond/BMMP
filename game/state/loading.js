@@ -81,11 +81,8 @@ loading.prototype = {
 		game.load.spritesheet('rocket', './assets/rocket_spritesheet.png', 154, 412, 2);
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
 		game.load.image('gameOver', './assets/gameOver.jpg');
-<<<<<<< Updated upstream
 		game.load.spritesheet('alien','./assets/alien.png', 64, 64, 8);
-=======
 		game.load.spritesheet ('tank', './assets/Status/oxygenStatusSprite.png', 44, 85);
->>>>>>> Stashed changes
 
 	},
 
