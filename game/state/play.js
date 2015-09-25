@@ -20,6 +20,7 @@ var finalLevel = 4;
 var lifeTimer;
 var soundOn = true;
 var fallen;
+var toolsCollected = 0;
 
 play.prototype = {
 
@@ -50,7 +51,9 @@ play.prototype = {
 
 		this.game.physics.arcade.collide(this.astronaut, layer);
 		this.game.physics.arcade.collide(this.alien, layer);
+		this.game.physics.arcade.collide(this.rocket, layer);
 		this.game.physics.arcade.overlap(this.astronaut, this.alien, this.collideWithAlien, null, this);
+		this.game.physics.arcade.collide(this.astronaut, this.rocket, this.hitFinish, null, this);
 
 		this.game.physics.arcade.overlap(this.astronaut, this.collectscrewdriver, this.collectTools, null, this);
 		this.game.physics.arcade.overlap(this.astronaut, this.collectwrench, this.collectTools, null, this);
@@ -107,17 +110,29 @@ play.prototype = {
 			console.log("X: " + this.astronaut.body.x + " Y: " + this.astronaut.body.y);
 		}
 
-		if(pathCounter >= 0) {		
+		if (this.isCompleted) {
+			this.rocket.y -= 5;
+			console.log("rocket moving");
+		}
+
+		if (this.rocket.body.y <= -420) {
+			this.rocketGone = true;
+		}
+
+		if (this.rocketGone && this.isCompleted) {
+			this.loadLevel("");
+		}
+
+		if (pathCounter >= 0) {
 			pathCounter++;
 			console.log(pathCounter);
 		}
-		if(pathCounter >= 300) {
+		if (pathCounter >= 300) {
 			if (this.alien.scale.x == -1 && this.alien.body.velocity.x == -50) {
 				pathCounter = 0;
 				this.alien.scale.x = 1;
 				this.alien.body.velocity.x = 50;
-			}
-			else if (this.alien.scale.x == 1 && this.alien.body.velocity.x == 50) {
+			} else if (this.alien.scale.x == 1 && this.alien.body.velocity.x == 50) {
 				pathCounter = 0;
 				this.alien.scale.x = -1;
 				this.alien.body.velocity.x = -50;
@@ -140,6 +155,14 @@ play.prototype = {
 			layer.destroy();
 		}
 
+		if (this.rocket != null) {
+			this.rocket.kill();
+		}
+
+		if (toolsCollected != 0) {
+			toolsCollected = 0;
+		}
+
 		lifeTimer = 0;
 		fallen = false;
 
@@ -152,7 +175,8 @@ play.prototype = {
 		this.background3 = this.game.add.image(0, 0, 'level' + levelNumber + 'background3');
 		this.background2 = this.game.add.image(0, 0, 'level' + levelNumber + 'background2');
 		this.background1 = this.game.add.image(0, 0, 'level' + levelNumber + 'background1');
-
+		this.isCompleted = false;
+		this.rocketGone = false;
 		/*
 		 * adds the tile map to the game !!tilemap json files need to be created
 		 * with the csv preset and not base64 compressed, or this won't work!!
@@ -180,17 +204,28 @@ play.prototype = {
 
 		map.setCollision(41);
 
-		if (levelNumber != 4) {
-			map.setTileIndexCallback(40, this.collectElement, this);
-		} else {
-			map.setTileIndexCallback(41, this.collectElement, this);
-		}
+		map.setTileIndexCallback(40, this.collectElement, this);
 
 		// the parameter can be found in the json file
 		layer = map.createLayer('Kachelebene 1');
 
 		// This resizes the game world to match the layer dimensions
 		layer.resizeWorld();
+
+		/*
+		 * add tools
+		 */
+		this.nopliers = new Tools(this.game, 230, 15, 1);
+		this.game.add.existing(this.nopliers);
+		this.nopliers.fixedToCamera = true;
+
+		this.nowrench = new Tools(this.game, 260, 15, 3);
+		this.game.add.existing(this.nowrench);
+		this.nowrench.fixedToCamera = true;
+
+		this.noscrewdriver = new Tools(this.game, 290, 15, 5);
+		this.game.add.existing(this.noscrewdriver);
+		this.noscrewdriver.fixedToCamera = true;
 
 		switch (levelNumber) {
 		case 1:
@@ -248,6 +283,45 @@ play.prototype = {
 		default:
 		}
 
+		/*
+		 * adds the rocket
+		 */
+		switch (levelNumber) {
+		case 1:
+			this.rocket = this.game.add.sprite(2246, 71, 'rocket');
+			break;
+		default: // 2, 3,4
+			this.rocket = this.game.add.sprite(4646, 71, 'rocket');
+		}
+		this.game.physics.arcade.enableBody(this.rocket);
+		this.rocket.body.allowGravity = false;
+		this.rocket.body.immovable = true;
+
+		/*
+		 * adds the character
+		 */
+		this.astronaut = new Astronaut(this.game, 100, 450);
+		this.game.add.existing(this.astronaut);
+		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
+		this.astronaut.animations.add('stop', [ 0 ], 20, true);
+		this.astronaut.anchor.setTo(0.5, 0.5);
+
+		this.game.camera.follow(this.astronaut);
+
+		score = oldScore;
+
+		scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
+			font : '30px Courier',
+			fill : '#ffffff'
+		});
+		scoreText.fixedToCamera = true;
+
+		/**
+		 * add aliens
+		 */
+		this.alien = new Alien(this.game, 700, 350);
+		this.game.add.existing(this.alien);
+
 	},
 
 	collectElement : function(astronaut, tile) {
@@ -262,15 +336,27 @@ play.prototype = {
 	},
 
 	hitFinish : function(astronaut, finish) {
-		if (levelNumber != finalLevel) {
+
+		console.log("here");
+		console.log(toolsCollected);
+		console.log(this.isCompleted);
+
+		if (levelNumber != finalLevel && toolsCollected == 3 && !this.isCompleted) {
 			console.log("Level finished!");
 			levelNumber += 1;
-			this.loadLevel("");
-		} else {
+			this.astronaut.kill();
+			this.rocket.body.immovable = false;
+			this.isCompleted = true;
+
+			// this.loadLevel("");
+		} else if (toolsCollected == 3 && !this.isCompleted) {
 			game.add.text(game.width / 2, game.height / 2, 'You win!', {
 				font : '50px Courier',
 				fill : '#8B1A1A'
 			});
+			this.astronaut.kill();
+			this.rocket.body.immovable = false;
+			this.isCompleted = true;
 		}
 	},
 
@@ -288,7 +374,6 @@ play.prototype = {
 		}
 	},
 
-
 	collectTools : function(astronaut, tools) {
 
 		if (tools == this.collectpliers) {
@@ -298,6 +383,7 @@ play.prototype = {
 			this.pliers = new Tools(this.game, 230, 15, 0);
 			this.game.add.existing(this.pliers);
 			this.pliers.fixedToCamera = true;
+			toolsCollected += 1;
 		}
 		if (tools == this.collectscrewdriver) {
 			console.log("screwdriver")
@@ -306,6 +392,7 @@ play.prototype = {
 			this.screwdriver = new Tools(this.game, 290, 15, 4);
 			this.game.add.existing(this.screwdriver);
 			this.screwdriver.fixedToCamera = true;
+			toolsCollected += 1;
 		}
 		if (tools == this.collectwrench) {
 			console.log("wrench")
@@ -314,8 +401,8 @@ play.prototype = {
 			this.wrench = new Tools(this.game, 260, 15, 2);
 			this.game.add.existing(this.wrench);
 			this.wrench.fixedToCamera = true;
+			toolsCollected += 1;
 		}
 	}
 
 };
-
