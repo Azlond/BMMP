@@ -11,10 +11,12 @@ var jumpTimer = 0;
 var layer;
 var score;
 var oldScore;
-var lifeCounter;
+var lifeCounter = 3;
+var oxygenCounter;
 var scoreText;
 var pathCounter = 0;
 var levelNumber = 1;
+var timer;
 
 var finalLevel = 4;
 var lifeTimer;
@@ -42,7 +44,14 @@ play.prototype = {
 		// level number has to be increased once the player has reached the
 		// finish line
 		this.loadLevel("");
+<<<<<<< Updated upstream
 	},
+=======
+
+		
+
+    },
+>>>>>>> Stashed changes
 
 	update : function() {
 
@@ -80,7 +89,9 @@ play.prototype = {
 			this.astronaut.body.velocity.y = -700;
 			jumpTimer = game.time.now + 500;
 		}
-
+		 
+		
+		
 		if (lifeCounter == 0) {
 			this.astronaut.kill();
 
@@ -210,7 +221,10 @@ play.prototype = {
 				t.collideLeft = false;
 				t.collideRight = false;
 			}
-		}, game, 0, 0, map.width, map.height, layer);
+		}, 
+		
+		
+		game, 0, 0, map.width, map.height, layer);
 
 		map.setCollision(41);
 
@@ -334,10 +348,20 @@ play.prototype = {
 		 */
 		this.alien = new Alien(this.game, 700, 350);
 		this.game.add.existing(this.alien);
+<<<<<<< Updated upstream
 		this.alien.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
 		this.alien.anchor.setTo(0.5, 0.5);
 		this.alien.animations.play('walk');
 
+=======
+		
+		oxygenCounter = 9;
+		oxygenTank = game.add.sprite (3, 3, 'tank');
+		oxygenTank.frame = 0;
+		oxygenTank.fixedToCamera = true;
+        --oxygenCounter;
+        timeDown();
+>>>>>>> Stashed changes
 	},
 
 	collectElement : function(astronaut, tile) {
