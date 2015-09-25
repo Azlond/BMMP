@@ -5,25 +5,27 @@
 		<title>Game</title>
 		<style>
 			body {
-				background-image:url('http://insiteanalysis.com/wp-content/uploads/sites/4/2013/10/space-twitter-background-backgrounds-twitte-revolutions-free-plane-photo-space-backgrounds.jpg');
+				background-image:url('assets/stars.jpg');
 			}
-			#game {
+
+				#game {
 				padding-left: 250px;
-				/*background:url('img/hintergrund.png');*/
 				border: 1px solid rgba(255,255,255,0.0);
 				border-radius: 10px;
 				-moz-border-radius: 20px;
 				-webkit-border-radius: 50px;
-				box-shadow: inset 0px 0px 50px #000;
+				/*box-shadow: inset 0px 0px 50px #000;
 				-moz-box-shadow: inset 0px 0px 50px #000;
 				-webkit-box-shadow: inset 0px 0px 50px #000;
-			}
-			#planet {
+			}*/
+
+		#planet {
 				width:150px;
     			height:150px;
     			position:absolute;
     			margin-top:-250px;
     			margin-left:20px;
+					margin-bottom: 20px;
 
     			animation-duration: 10s;
   				animation-name: slidein;
@@ -31,6 +33,7 @@
   				animation-direction: alternate;
 
 			}
+
 			@keyframes slidein {
   			from {
     			margin-top:-300px;
@@ -44,7 +47,7 @@
   			from {
     			-webkit-transform: rotate(0deg);
   			}
-  			to { 
+  			to {
    				-webkit-transform: rotate(360deg);
   			}
 			}
@@ -71,6 +74,6 @@
 	</head>
 	<body>
 		<div id="game"></div>
-		<a id="planet" href="assets/smiley.png"><img src="assets/planet.gif" title="Credits" alt="Bild kann nicht angezeigt werden"></a>
+		<a id="planet" href="assets/smiley.png"><img src="assets/rocket_html.png" title="Credits" alt="Bild kann nicht angezeigt werden"></a>
 	</body>
 </html>
