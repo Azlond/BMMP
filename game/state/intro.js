@@ -16,14 +16,12 @@ intro.prototype = {
 		video.onComplete.add(handleComplete);
 
 		video.addToWorld(400, 300, 0.5, 0.5);
-	},
 
-	update : function() {
-		if ((this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)).isDown) {
+		game.input.keyboard.onUpCallback = function(e) {
 			handleComplete();
 		}
-	}
 
+	}
 }
 
 function handleComplete() {
@@ -31,6 +29,7 @@ function handleComplete() {
 		game.state.start('play');
 		introFinished = true;
 		video.stop(true);
+		video.destroy();
 	}
 
 	if (soundOn) {

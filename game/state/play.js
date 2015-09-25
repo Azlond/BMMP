@@ -76,7 +76,7 @@ play.prototype = {
 
 		if (cursors.up.isDown && this.astronaut.body.onFloor() && game.time.now > jumpTimer) {
 			this.astronaut.body.velocity.y = -700;
-			jumpTimer = game.time.now + 750;
+			jumpTimer = game.time.now + 500;
 		}
 
 		if (lifeCounter == 0) {
