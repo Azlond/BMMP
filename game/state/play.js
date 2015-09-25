@@ -43,28 +43,6 @@ play.prototype = {
 		// finish line
 		this.loadLevel("");
 
-		/*
-		 * adds the rocket
-		 */
-		switch (levelNumber) {
-		case 1:
-			this.rocket = this.game.add.sprite(2246, 71, 'rocket');
-			break;
-		default: // 2, 3,4
-			this.rocket = this.game.add.sprite(4646, 71, 'rocket');
-		}
-		this.game.physics.arcade.enableBody(this.rocket);
-		this.rocket.body.allowGravity = false;
-		this.rocket.body.immovable = true;
-
-		score = oldScore;
-
-		scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
-			font : '30px Courier',
-			fill : '#ffffff'
-		});
-		scoreText.fixedToCamera = true;		
-
 	},
 
 	update : function() {
