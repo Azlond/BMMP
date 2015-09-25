@@ -78,6 +78,8 @@ loading.prototype = {
 
 
 		game.load.spritesheet('char', './assets/Astronaut.png', 31, 71, 6);
+		game.load.image('rocket', './assets/rocket.png');
+		game.load.image('rocketPlayer', './assets/rocket_player.png');
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
 		game.load.image('gameOver', './assets/gameOver.jpg');
 
