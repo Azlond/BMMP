@@ -331,9 +331,9 @@ play.prototype = {
 		 */
 		this.alien = new Alien(this.game, 700, 350);
 		this.game.add.existing(this.alien);
-		this.alien.animations.add('walk', [ 1, 2, 3, 4, 5, 6, 7 ], 20, true);
-		this.alien.animations.add('stop', [ 0 ], 20, true);
+		this.alien.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
 		this.alien.anchor.setTo(0.5, 0.5);
+		this.alien.animations.play('walk');
 
 	},
 
