@@ -11,15 +11,40 @@ var Tools = function(game, x, y, frame) {
 Tools.prototype = Object.create(Phaser.Sprite.prototype);
 Tools.prototype.constructor = Tools;
 
-var level1pliers = [ 115, 124 ];
-var level1screw = [ 1600, 153 ];
-var level1wrench = [ 1108, 440 ];
-var level2pliers = [ 1400, 120 ];
-var level2screw = [ 1940, 120 ];
-var level2wrench = [ 3030, 120 ];
-var level3pliers = [ 1402, 92 ];
-var level3screw = [ 3825, 185 ];
-var level3wrench = [ 2850, 380 ];
-var level4pliers = [ 1379, 55 ];
-var level4screw = [ 4148, 25 ];
-var level4wrench = [ 3149, 125 ];
+var toolLocations = {
+	'level1PliersX' : 115,
+	'level1PliersY' : 124,
+
+	'level1ScrewX' : 1600,
+	'level1ScrewY' : 153,
+
+	'level1WrenchX' : 1108,
+	'level1WrenchY' : 440,
+
+	'level2PliersX' : 1400,
+	'level2PliersY' : 120,
+
+	'level2ScrewX' : 1940,
+	'level2ScrewY' : 120,
+
+	'level2WrenchX' : 3030,
+	'level2WrenchY' : 120,
+
+	'level3PliersX' : 1402,
+	'level3PliersY' : 92,
+
+	'level3ScrewX' : 3825,
+	'level3ScrewY' : 185,
+
+	'level3WrenchX' : 2850,
+	'level3WrenchY' : 380,
+
+	'level4PliersX' : 1379,
+	'level4PliersY' : 55,
+
+	'level4ScrewX' : 4148,
+	'level4ScrewY' : 25,
+
+	'level4WrenchX' : 3149,
+	'level4WrenchY' : 125
+}

@@ -6,23 +6,14 @@
 function play() {
 }
 
-var map; // tilemap, for the platforms
-var jumpTimer = 0;
-var layer;
 var score;
-var oldScore;
-var lifeCounter = 3;
+var oldScore;// the score at the beginning of a level - needed for restarting a level
+var lifeCounter; // the amount of lives the player has
 var oxygenCounter;
-var scoreText;
 var pathCounter = 0;
-var levelNumber = 1;
 var timer;
 
-var finalLevel = 4;
-var lifeTimer;
 var soundOn = true;
-var fallen;
-var toolsCollected = 0;
 
 play.prototype = {
 
@@ -34,44 +25,55 @@ play.prototype = {
 		// reduces jump height
 		this.game.physics.arcade.gravity.y = 300;
 
+		// score at the beginning of the game
 		score = 0;
+		lifeCounter = 3;
+
+		this.levelNumber = 1;// first level
+		this.finalLevel = 4;// last level
 
 		// Keyboard controls
 		cursors = game.input.keyboard.createCursorKeys();
-		fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-		// loads the first level
-		// level number has to be increased once the player has reached the
-		// finish line
+		// loads the first level level number has to be increased once the player has reached the finish line
 		this.loadLevel("");
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 	},
 
 	update : function() {
+		/*
+		 * collision between astronaut/alien/rocket and the platform/ground layer
+		 */
+		this.game.physics.arcade.collide(this.astronaut, this.layer);
+		this.game.physics.arcade.collide(this.alien, this.layer);
+		this.game.physics.arcade.collide(this.rocket, this.layer);
 
-		this.game.physics.arcade.collide(this.astronaut, layer);
-		this.game.physics.arcade.collide(this.alien, layer);
-		this.game.physics.arcade.collide(this.rocket, layer);
-		this.game.physics.arcade.overlap(this.astronaut, this.alien, this.collideWithAlien, null, this);
+		/*
+		 * collision between astronaut and rocket/alien
+		 */
 		this.game.physics.arcade.collide(this.astronaut, this.rocket, this.hitFinish, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, this.alien, this.collideWithAlien, null, this);
 
+		/*
+		 * collision between astronaut and tools
+		 */
 		this.game.physics.arcade.overlap(this.astronaut, this.collectscrewdriver, this.collectTools, null, this);
 		this.game.physics.arcade.overlap(this.astronaut, this.collectwrench, this.collectTools, null, this);
 		this.game.physics.arcade.overlap(this.astronaut, this.collectpliers, this.collectTools, null, this);
 
 		/*
+		 * Moving the player
+		 * 
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
+		 * 
+		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
-		if (cursors.left.isDown) {
+		if (cursors.left.isDown && this.rocket.body.y == 69) {
 			this.astronaut.body.velocity.x = -175;
 			this.astronaut.animations.play('walk', 7, true);
 			this.astronaut.scale.x = -1;
 			this.background2.x += 0.25;
 			this.background1.x += 0.3;
-		} else if (cursors.right.isDown) {
+		} else if (cursors.right.isDown && this.rocket.body.y == 69) {
 			this.astronaut.body.velocity.x = 175;
 			this.astronaut.scale.x = 1;
 			this.astronaut.animations.play('walk', 7, true);
@@ -82,57 +84,62 @@ play.prototype = {
 			this.astronaut.animations.play('stop', 7, true);
 		}
 
-		if (cursors.up.isDown && this.astronaut.body.onFloor() && game.time.now > jumpTimer) {
+		/*
+		 * Jumping
+		 */
+		if (cursors.up.isDown && this.astronaut.body.onFloor()) {
 			this.astronaut.body.velocity.y = -700;
-			jumpTimer = game.time.now + 500;
 		}
-		 
-		
-		
+
+		/*
+		 * check if the player is dead
+		 */
 		if (lifeCounter == 0) {
-			this.astronaut.kill();
-
-			this.game.add.image(0, 0, 'gameOver');
-
-			var gameOverText = game.add.text(this.game.camera.x, this.game.camera.y, 'Game Over...', {
-				font : '50px Courier',
-				fill : '#8B1A1A'
-			});
-
-			gameOverText.fixedToCamera = true;
+			this.game.state.start('gameOver');
 		}
 
-		if (this.astronaut.body.y > 600 && !fallen) {
+		/*
+		 * check if the player has fallen into a rift
+		 * 
+		 * if the player has more than 0 lives left, restart the level
+		 */
+		if (this.astronaut.body.y > 600 && !this.fallen) {
 			lifeCounter--;
 			console.log(lifeCounter);
-			fallen = true;
+			this.fallen = true;
 			if (lifeCounter != 0) {
 				this.loadLevel("restart");
 			}
 		}
 
-		if (fireButton.isDown) {
-			console.log("X: " + this.astronaut.body.x + " Y: " + this.astronaut.body.y);
-		}
-
+		/*
+		 * check if the rocket has left the camera fov
+		 */
 		if (this.rocket.body.y <= -420) {
 			this.rocketGone = true;
 		}
 
+		/*
+		 * rocket has left camera fov, either load the next level or display win message
+		 */
 		if (this.rocketGone) {
-			if (levelNumber == finalLevel) {
+			if (this.levelNumber == this.finalLevel) {
 				game.add.text(game.width / 2, game.height / 2, 'You win!', {
 					font : '50px Courier',
 					fill : '#8B1A1A'
 				});
 			} else {
+				this.levelNumber += 1;
 				this.loadLevel("");
 			}
 		}
 
+		/*
+		 * TODO: Make AI responsive to player
+		 */
+
 		if (pathCounter >= 0) {
 			pathCounter++;
-			// console.log(pathCounter);
 		}
 		if (pathCounter >= 300) {
 			if (this.alien.scale.x == -1 && this.alien.body.velocity.x == -50) {
@@ -148,93 +155,75 @@ play.prototype = {
 
 	},
 
+	/*
+	 * function to load each level
+	 */
 	loadLevel : function(string) {
 
-		if (this.astronaut != null) {
+		/*
+		 * reset values
+		 */
+
+		if (this.map != null) { // if a map exists, so do all other objects - we need to destroy them.
+			this.map.destroy();
 			this.astronaut.kill();
-		}
-
-		if (map != null) {
-			map.destroy();
-		}
-
-		if (layer != null) {
-			layer.destroy();
-		}
-
-		if (this.rocket != null) {
+			this.layer.destroy();
 			this.rocket.kill();
-		}
-
-		if (toolsCollected != 0) {
-			toolsCollected = 0;
-		}
-
-		if (this.nopliers != null) {
 			this.nopliers.kill();
-		}
-
-		if (this.nowrench != null) {
 			this.nowrench.kill();
-		}
-
-		if (this.noscrewdriver != null) {
 			this.noscrewdriver.kill();
 		}
 
-		lifeTimer = 0;
-		fallen = false;
+		this.toolsCollected = 0;
+		this.lifeTimer = 0;
+		this.fallen = false;
 
+		// if a new level is loaded (string !=restart), the current score is the new oldScore
+		// else we keep the oldScore
 		if (string != "restart") {
-			lifeCounter = 3;
 			oldScore = score;
 		}
 
-		// the backgrounds of the first level
-		this.background3 = this.game.add.image(0, 0, 'level' + levelNumber + 'background3');
-		this.background2 = this.game.add.image(0, 0, 'level' + levelNumber + 'background2');
-		this.background1 = this.game.add.image(-15, 0, 'level' + levelNumber + 'background1');
+		// loading the backgrounds
+		this.background3 = this.game.add.image(0, 0, 'level' + this.levelNumber + 'background3');
+		this.background2 = this.game.add.image(0, 0, 'level' + this.levelNumber + 'background2');
+		this.background1 = this.game.add.image(-15, 0, 'level' + this.levelNumber + 'background1');
 		this.rocketGone = false;
 		/*
-		 * adds the tile map to the game !!tilemap json files need to be created
-		 * with the csv preset and not base64 compressed, or this won't work!!
+		 * adds the tile map to the game !!tilemap json files need to be created with the csv preset and not base64 compressed, or this won't work!!
 		 */
-		map = game.add.tilemap('level' + levelNumber);
+		this.map = game.add.tilemap('level' + this.levelNumber);
 
-		// the second parameter needs to be the same as the one used in
-		// loading.js
-		// TODO: image names need to be adjusted to the level number
-		// map.addTilesetImage('level1_tilemap', 'level1_tilemap');
-		map.addTilesetImage('level' + levelNumber + '_tilemap', 'level' + levelNumber + '_tilemap');
-		map.addTilesetImage('level' + levelNumber + '_tilemap_ground', 'level' + levelNumber + '_tilemap_ground');
+		// the second parameter needs to be the same as the one used in loading.js
+		this.map.addTilesetImage('level' + this.levelNumber + '_tilemap', 'level' + this.levelNumber + '_tilemap');
+		this.map.addTilesetImage('level' + this.levelNumber + '_tilemap_ground', 'level' + this.levelNumber + '_tilemap_ground');
 
-		// TODO: amount of tiles needs to be the same for all levels - should be
-		// default
-		map.setCollisionBetween(1, 39);
+		this.map.setCollisionBetween(1, 39); // collision for the platforms
 
-		map.forEach(function(t) {
+		/*
+		 * player may only collide with platform top, so that it is possible to jump on one from beneath it.
+		 */
+		this.map.forEach(function(t) {
 			if (t) {
 				t.collideDown = false;
 				t.collideLeft = false;
 				t.collideRight = false;
 			}
-		}, 
-		
-		
-		game, 0, 0, map.width, map.height, layer);
+		}, game, 0, 0, this.map.width, this.map.height, this.layer);
 
-		map.setCollision(41);
+		this.map.setCollision(41);// collision with the ground
 
-		map.setTileIndexCallback(40, this.collectElement, this);
+		// element collision
+		this.map.setTileIndexCallback(40, this.collectElement, this);
 
 		// the parameter can be found in the json file
-		layer = map.createLayer('Kachelebene 1');
+		this.layer = this.map.createLayer('Kachelebene 1');
 
 		// This resizes the game world to match the layer dimensions
-		layer.resizeWorld();
+		this.layer.resizeWorld();
 
 		/*
-		 * add tools
+		 * add tool-placeholder icons for topbar
 		 */
 		this.nopliers = new Tools(this.game, 230, 15, 1);
 		this.game.add.existing(this.nopliers);
@@ -248,71 +237,37 @@ play.prototype = {
 		this.game.add.existing(this.noscrewdriver);
 		this.noscrewdriver.fixedToCamera = true;
 
-		switch (levelNumber) {
-		case 1:
-			this.collectpliers = new Tools(this.game, level1pliers[0], level1pliers[1], 0);
-			this.game.add.existing(this.collectpliers);
-			this.collectpliers.body.allowGravity = false;
+		/*
+		 * add tools to the levels
+		 */
+		this.collectpliers = new Tools(this.game, toolLocations['level' + this.levelNumber + 'PliersX'], toolLocations['level' + this.levelNumber + 'PliersY'],
+				0);
+		this.game.add.existing(this.collectpliers);
+		this.collectpliers.body.allowGravity = false;
 
-			this.collectwrench = new Tools(this.game, level1wrench[0], level1wrench[1], 2);
-			this.game.add.existing(this.collectwrench);
-			this.collectwrench.body.allowGravity = false;
+		this.collectwrench = new Tools(this.game, toolLocations['level' + this.levelNumber + 'WrenchX'], toolLocations['level' + this.levelNumber + 'WrenchY'],
+				2);
+		this.game.add.existing(this.collectwrench);
+		this.collectwrench.body.allowGravity = false;
 
-			this.collectscrewdriver = new Tools(this.game, level1screw[0], level1screw[1], 4);
-			this.game.add.existing(this.collectscrewdriver);
-			this.collectscrewdriver.body.allowGravity = false;
-			break;
-		case 2:
-			this.collectpliers = new Tools(this.game, level2pliers[0], level2pliers[1], 0);
-			this.game.add.existing(this.collectpliers);
-			this.collectpliers.body.allowGravity = false;
-
-			this.collectwrench = new Tools(this.game, level2wrench[0], level2wrench[1], 2);
-			this.game.add.existing(this.collectwrench);
-			this.collectwrench.body.allowGravity = false;
-
-			this.collectscrewdriver = new Tools(this.game, level2screw[0], level2screw[1], 4);
-			this.game.add.existing(this.collectscrewdriver);
-			this.collectscrewdriver.body.allowGravity = false;
-			break;
-		case 3:
-			this.collectpliers = new Tools(this.game, level3pliers[0], level3pliers[1], 0);
-			this.game.add.existing(this.collectpliers);
-			this.collectpliers.body.allowGravity = false;
-
-			this.collectwrench = new Tools(this.game, level3wrench[0], level3wrench[1], 2);
-			this.game.add.existing(this.collectwrench);
-			this.collectwrench.body.allowGravity = false;
-
-			this.collectscrewdriver = new Tools(this.game, level3screw[0], level3screw[1], 4);
-			this.game.add.existing(this.collectscrewdriver);
-			this.collectscrewdriver.body.allowGravity = false;
-			break;
-		case 4:
-			this.collectpliers = new Tools(this.game, level4pliers[0], level4pliers[1], 0);
-			this.game.add.existing(this.collectpliers);
-			this.collectpliers.body.allowGravity = false;
-
-			this.collectwrench = new Tools(this.game, level4wrench[0], level4wrench[1], 2);
-			this.game.add.existing(this.collectwrench);
-			this.collectwrench.body.allowGravity = false;
-
-			this.collectscrewdriver = new Tools(this.game, level4screw[0], level4screw[1], 4);
-			this.game.add.existing(this.collectscrewdriver);
-			this.collectscrewdriver.body.allowGravity = false;
-			break;
-		default:
-		}
+		this.collectscrewdriver = new Tools(this.game, toolLocations['level' + this.levelNumber + 'ScrewX'], toolLocations['level' + this.levelNumber
+				+ 'ScrewY'], 4);
+		this.game.add.existing(this.collectscrewdriver);
+		this.collectscrewdriver.body.allowGravity = false;
 
 		/*
-		 * adds the rocket
+		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
+		 * 
+		 * rocket needs to be immovable until player is inside so that it can't be kicked around
+		 * 
+		 * no gravity to make departure cleaner
 		 */
-		switch (levelNumber) {
+		switch (this.levelNumber) {
 		case 1:
-			this.rocket = this.game.add.sprite(2246, 71, 'rocket');
+			this.rocket = this.game.add.sprite(2246, 69, 'rocket');
 			break;
 		default: // 2, 3,4
-			this.rocket = this.game.add.sprite(4646, 71, 'rocket');
+			this.rocket = this.game.add.sprite(4646, 69, 'rocket');
 		}
 		this.game.physics.arcade.enableBody(this.rocket);
 		this.rocket.body.allowGravity = false;
@@ -329,19 +284,18 @@ play.prototype = {
 		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
 		this.astronaut.animations.add('stop', [ 0 ], 20, true);
 		this.astronaut.anchor.setTo(0.5, 0.5);
-
 		this.game.camera.follow(this.astronaut);
 
-		score = oldScore;
+		score = oldScore;// update the score
 
-		scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
+		this.scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
 			font : '30px Courier',
 			fill : '#ffffff'
 		});
-		scoreText.fixedToCamera = true;
+		this.scoreText.fixedToCamera = true;
 
 		/**
-		 * add aliens
+		 * add aliens TODO: hashmap with locations similar to the tools to support multiple aliens
 		 */
 		this.alien = new Alien(this.game, 700, 350);
 		this.game.add.existing(this.alien);
@@ -349,41 +303,37 @@ play.prototype = {
 		this.alien.anchor.setTo(0.5, 0.5);
 		this.alien.animations.play('walk');
 
-		
 		oxygenCounter = 9;
-		oxygenTank = game.add.sprite (3, 3, 'tank');
+		oxygenTank = game.add.sprite(3, 3, 'tank');
 		oxygenTank.frame = 0;
 		oxygenTank.fixedToCamera = true;
-<<<<<<< Updated upstream
-       		--oxygenCounter;
-        	timeDown();
+		--oxygenCounter;
+		timeDown();
 
-=======
-        --oxygenCounter;
-        timeDown();
->>>>>>> Stashed changes
 	},
 
+	/*
+	 * collecting an element and removing it from the game
+	 */
 	collectElement : function(astronaut, tile) {
 
-		map.removeTile(tile.x, tile.y, layer);
+		this.map.removeTile(tile.x, tile.y, this.layer);
 
 		score += 1;
-		scoreText.text = 'Score: ' + score;
+		this.scoreText.text = 'Score: ' + score;
 
 		return false;
 
 	},
 
+	/*
+	 * called when the player collides with the rocket
+	 * 
+	 * checks if all tools have been collected
+	 */
 	hitFinish : function(astronaut, finish) {
 
-		if (levelNumber != finalLevel && toolsCollected == 3) {
-			levelNumber += 1;
-			this.astronaut.kill();
-			this.rocket.body.immovable = false;
-			this.rocket.body.velocity.y = -150;
-			this.rocket.animations.play('full');
-		} else if (toolsCollected == 3) {
+		if (this.toolsCollected == 3) {
 			this.astronaut.kill();
 			this.rocket.body.immovable = false;
 			this.rocket.body.velocity.y = -150;
@@ -391,8 +341,13 @@ play.prototype = {
 		}
 	},
 
+	/*
+	 * called when player collides with an alien
+	 * 
+	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
+	 */
 	collideWithAlien : function(astronaut, alien) {
-		if (game.time.now > lifeTimer) {
+		if (game.time.now > this.lifeTimer) {
 			lifeCounter--;
 			if (lifeCounter <= 3 && lifeCounter > 0) {
 				console.log(lifeCounter);
@@ -401,39 +356,39 @@ play.prototype = {
 				console.log("LOSE");
 			}
 
-			lifeTimer = game.time.now + 750;
+			this.lifeTimer = game.time.now + 750;
 		}
 	},
+
+	/*
+	 * called when the player overlaps with the tools
+	 */
 
 	collectTools : function(astronaut, tools) {
 
 		if (tools == this.collectpliers) {
 			console.log("pliers")
-			this.collectpliers.kill();
 			this.nopliers.kill();
 			this.pliers = new Tools(this.game, 230, 15, 0);
 			this.game.add.existing(this.pliers);
 			this.pliers.fixedToCamera = true;
-			toolsCollected += 1;
 		}
 		if (tools == this.collectscrewdriver) {
 			console.log("screwdriver")
-			this.collectscrewdriver.kill();
 			this.noscrewdriver.kill();
 			this.screwdriver = new Tools(this.game, 290, 15, 4);
 			this.game.add.existing(this.screwdriver);
 			this.screwdriver.fixedToCamera = true;
-			toolsCollected += 1;
 		}
 		if (tools == this.collectwrench) {
 			console.log("wrench")
-			this.collectwrench.kill();
 			this.nowrench.kill();
 			this.wrench = new Tools(this.game, 260, 15, 2);
 			this.game.add.existing(this.wrench);
 			this.wrench.fixedToCamera = true;
-			toolsCollected += 1;
 		}
+		tools.kill();
+		this.toolsCollected += 1;
 	}
 
 };

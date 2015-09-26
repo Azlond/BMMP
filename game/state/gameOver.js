@@ -1,13 +1,16 @@
-function gameOver() {}
+function gameOver() {
+}
 
 gameOver.prototype = {
 
-	preload : function() {
+	create : function() {
 
-		cursors = game.input.keyboard.createCursorKeys();
-
-		var background = game.add.image(-100,0,'background');
-
+		this.game.add.image(0, 0, 'gameOver');
+		
+		/*
+		 * TODO: make it possible to go back to the menu
+		 */
+		
 	}
 
 };
