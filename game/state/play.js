@@ -44,7 +44,10 @@ play.prototype = {
 		// level number has to be increased once the player has reached the
 		// finish line
 		this.loadLevel("");
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 	},
 
 	update : function() {
@@ -351,9 +354,14 @@ play.prototype = {
 		oxygenTank = game.add.sprite (3, 3, 'tank');
 		oxygenTank.frame = 0;
 		oxygenTank.fixedToCamera = true;
+<<<<<<< Updated upstream
        		--oxygenCounter;
         	timeDown();
 
+=======
+        --oxygenCounter;
+        timeDown();
+>>>>>>> Stashed changes
 	},
 
 	collectElement : function(astronaut, tile) {
