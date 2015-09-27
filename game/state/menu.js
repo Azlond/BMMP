@@ -12,9 +12,9 @@ var soundControl;
 var musicControl
 var sound;
 var mControlX = -66;
-var mControlY = -180;
+var mControlY = -185;
 var sControlX = -156;
-var sControlY = -115;
+var sControlY = -100;
 var character;
 var startButton;
 var soundButton;
@@ -24,6 +24,10 @@ var closeButton;
 menu.prototype = {
 
 	create : function() {
+		
+		sound = game.add.audio ('music');
+		sound.play();
+		
 		popup = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
 		popup.alpha = 1.0;
 		popup.anchor.set(0.5);
@@ -61,13 +65,6 @@ function startGame() { //starts the game
 	}
 }
 
-/********* controlpanel + buttons to choose character, sound, score ******************/
-
-function openOption() {
-	// opens controlpanel to choose character, sound, score
-
-
-}
 
 /********* panel to switch music and sound on/off ******************/
 
@@ -143,8 +140,8 @@ function scoreOption() {
 function closeWindow() {
 	popup.kill();
 }
-/**** prototypes for diverse buttons*****/
-var controlButton = function(game, x, y, frame, option) {
+
+var controlButton = function (game, x, y, frame, option) {
 	this.game = game;
 	Phaser.Sprite.call(this, this.game, x, y, 'controlSound', frame);
 	this.inputEnabled = true;
@@ -157,7 +154,7 @@ controlButton.prototype.constructor = controlButton;
 
 var closeButton = function (game, frame) { 
 	this.game = game;
-	Phaser.Sprite.call(this, this.game, game.world.centerX - 46.5, 485, 'doneButton', frame);
+	Phaser.Sprite.call(this, this.game, -36, 185, 'doneButton', frame);
 	this.inputEnabled = true;
 	this.input.priorityID = 1;
 	this.input.useHandCursor = true;

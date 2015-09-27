@@ -5,10 +5,7 @@
 function loading() {
 }
 
-var cursors
-
 loading.prototype = {
-
 	preload : function() {
 
 		/*
@@ -41,10 +38,8 @@ loading.prototype = {
 		game.load.image ('doneButton', './assets/menu/soundMenu/doneButton.png');
 		game.load.spritesheet ('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
 		
-		
-		game.load.spritesheet('control', './assets/menu/controlSprite.png', 64, 94, 2);
+		//music
 		game.load.audio('music', './assets/sound/background_music.wav');
-		game.load.spritesheet('character', './assets/menu/Astronaut.png', 31, 71, 6); // TODO: is this needed? Or is it the same as 'char'?
 
 		/*
 		 * backgrounds - three layers for each level
