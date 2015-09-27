@@ -24,22 +24,38 @@ var closeButton;
 menu.prototype = {
 
 	create : function() {
-
-		game.add.sprite(0, 0, 'startBackground'); // adds background
-
-		// Game Title TODO: Maybe change this to an image later on, to match better with the background.
-		// var nameLabel = game.add.text(game.world.centerX - 175, 25,'Game Title', { font : '75px Arial', fill : '#ffffff' });
-		
-		sound = game.add.audio('music');
-		sound.play('', 0, 1, true);
-
-		startButton = game.add.button(game.world.centerX - 46.5, 485, 'start_button', openOption, this, 1); //button to start the game
+		popup = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
+		popup.alpha = 1.0;
+		popup.anchor.set(0.5);
+		popup.inputEnabled = true;
+	
+		startButton = game.make.sprite(-46.5, 185, 'start_button');
+		startButton.inputEnabled = true;
+		startButton.input.priorityID = 1;
+		startButton.input.useHandCursor = true;
+		startButton.events.onInputDown.add(startGame, this);
+		popup.addChild(startButton);
+	
+		soundButton = game.make.sprite (297, 180, 'sound_button');
+		soundButton.inputEnabled = true;
+		soundButton.input.priorityID = 1;
+		soundButton.input.useHandCursor = true;
+		soundButton.events.onInputDown.add(soundOption, this);
+		popup.addChild(soundButton);
+	
+		scoreButton = game.make.sprite (-333, 180, 'score_button');
+		scoreButton.inputEnabled = true;
+		scoreButton.input.priorityID = 1;
+		scoreButton.input.useHandCursor = true;
+		scoreButton.events.onInputDown.add(scoreOption, this);
+		popup.addChild(scoreButton);
 	}
 };
 
+
 function startGame() { //starts the game
 
-	game.state.start('intro');
+	game.state.start('play');
 	if (soundOn) {
 		sound.stop();
 	}
@@ -49,31 +65,7 @@ function startGame() { //starts the game
 
 function openOption() {
 	// opens controlpanel to choose character, sound, score
-	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
-	popup.alpha = 1.0;
-	popup.anchor.set(0.5);
-	popup.inputEnabled = true;
-	
-	startButton = game.make.sprite(-46.5, 185, 'start_button');
-	startButton.inputEnabled = true;
-	startButton.input.priorityID = 1;
-	startButton.input.useHandCursor = true;
-	startButton.events.onInputDown.add(startGame, this);
-	popup.addChild(startButton);
-	
-	soundButton = game.make.sprite (297, 180, 'sound_button');
-	soundButton.inputEnabled = true;
-	soundButton.input.priorityID = 1;
-	soundButton.input.useHandCursor = true;
-	soundButton.events.onInputDown.add(soundOption, this);
-	popup.addChild(soundButton);
-	
-	scoreButton = game.make.sprite (-333, 180, 'score_button');
-	scoreButton.inputEnabled = true;
-	scoreButton.input.priorityID = 1;
-	scoreButton.input.useHandCursor = true;
-	scoreButton.events.onInputDown.add(scoreOption, this);
-	popup.addChild(scoreButton);
+
 
 }
 
@@ -165,7 +157,7 @@ controlButton.prototype.constructor = controlButton;
 
 var closeButton = function (game, frame) { 
 	this.game = game;
-	Phaser.Sprite.call(this, this.game, 220, -270, 'doneButton', frame);
+	Phaser.Sprite.call(this, this.game, game.world.centerX - 46.5, 485, 'doneButton', frame);
 	this.inputEnabled = true;
 	this.input.priorityID = 1;
 	this.input.useHandCursor = true;
