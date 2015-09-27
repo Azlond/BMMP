@@ -5,147 +5,172 @@
 
 function menu() {
 }
+var musicOn = true;
 var soundOn = true;
 var popup;
-var control;
+var soundControl;
+var musicControl
 var sound;
-var cx;
-var cy;
-var controlX;
-var controlY;
+var mControlX = -66;
+var mControlY = -180;
+var sControlX = -156;
+var sControlY = -115;
 var character;
+var startButton;
+var soundButton;
+var scoreButton;
+var closeButton;
 
 menu.prototype = {
 
 	create : function() {
 
-		game.add.sprite(0, 0, 'menubackground'); // adds background
+		game.add.sprite(0, 0, 'startBackground'); // adds background
 
-		/*
-		 * Game Title TODO: Maybe change this to an image later on, to match better with the background.
-		 */
-		/*
-		 * var nameLabel = game.add.text(game.world.centerX - 175, 25,'Game Title', { font : '75px Arial', fill : '#ffffff' });
-		 */
+		// Game Title TODO: Maybe change this to an image later on, to match better with the background.
+		// var nameLabel = game.add.text(game.world.centerX - 175, 25,'Game Title', { font : '75px Arial', fill : '#ffffff' });
+		
 		sound = game.add.audio('music');
 		sound.play('', 0, 1, true);
 
-		var startButton = game.add.button(game.world.centerX - 225.5, 400, 'buttonStart', startClick); // button to start the game
-		var optionButton = game.add.button(game.world.centerX - 72.5, 400, 'button', openOption);
-		var characterButton = game.add.button(game.world.centerX + 73, 400, 'button', changeCharacter);
+		startButton = game.add.button(game.world.centerX - 46.5, 485, 'start_button', openOption, this, 1); //button to start the game
 	}
 };
 
-function startClick() {
+function startGame() { //starts the game
 
 	game.state.start('intro');
 	if (soundOn) {
 		sound.stop();
 	}
-	// starts the game
 }
+
+/********* controlpanel + buttons to choose character, sound, score ******************/
 
 function openOption() {
-	// opens controlpanel as popup to opt sound off/sound on
-	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'controlpanel');
+	// opens controlpanel to choose character, sound, score
+	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 	popup.inputEnabled = true;
+	
+	startButton = game.make.sprite(-46.5, 185, 'start_button');
+	startButton.inputEnabled = true;
+	startButton.input.priorityID = 1;
+	startButton.input.useHandCursor = true;
+	startButton.events.onInputDown.add(startGame, this);
+	popup.addChild(startButton);
+	
+	soundButton = game.make.sprite (297, 180, 'sound_button');
+	soundButton.inputEnabled = true;
+	soundButton.input.priorityID = 1;
+	soundButton.input.useHandCursor = true;
+	soundButton.events.onInputDown.add(soundOption, this);
+	popup.addChild(soundButton);
+	
+	scoreButton = game.make.sprite (-333, 180, 'score_button');
+	scoreButton.inputEnabled = true;
+	scoreButton.input.priorityID = 1;
+	scoreButton.input.useHandCursor = true;
+	scoreButton.events.onInputDown.add(scoreOption, this);
+	popup.addChild(scoreButton);
 
-	cx = (popup.width / 2) - 70;
-	cy = (popup.height / 2) - 30;
-
-	closeButton = game.make.sprite(cx, -cy, 'close');
-	closeButton.inputEnabled = true;
-	closeButton.input.priorityID = 1;
-	closeButton.input.useHandCursor = true;
-	closeButton.events.onInputDown.add(closeWindow, this);
-	popup.addChild(closeButton);
-
-	/*
-	 * cButton = new closeButton (game, cx, cy); popup.addChild(cButton);
-	 */
-	controlX = (popup.width / 2) - 290;
-	controlY = (popup.height / 2) - 280;
-
-	control = new controlButton(game, controlX, controlY, 1);
-	popup.addChild(control);
 }
 
-function changeCharacter() {
-	// opens controlpanel as popup to opt sound off/sound on
-	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'charBackground');
+/********* panel to switch music and sound on/off ******************/
+
+function soundOption () {
+	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'soundBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 	popup.inputEnabled = true;
-
-	cx = (popup.width / 2) - 70;
-	cy = (popup.height / 2) - 30;
-
-	closeButton = game.make.sprite(cx, -cy, 'close');
-	closeButton.inputEnabled = true;
-	closeButton.input.priorityID = 1;
-	closeButton.input.useHandCursor = true;
-	closeButton.events.onInputDown.add(closeWindow, this);
-	popup.addChild(closeButton);
-
-	character = new characterButton(game, 0, 0, 0);
-	popup.addChild(character);
-	character = new characterButton(game, 0, -100, 1);
-	popup.addChild(character);
-	character = new characterButton(game, -100, 0, 2);
-	popup.addChild(character);
-	character = new characterButton(game, -100, -100, 3);
-	popup.addChild(character);
-
+	
+	musicControl = new controlButton (game, mControlX, mControlY,  1, changeMusic);
+	popup.addChild(musicControl);
+	
+	soundControl = new controlButton (game, sControlX, sControlY,  1, changeSound);
+	popup.addChild(soundControl);
+	
+	close_button = new closeButton (game, 0);
+	popup.addChild(close_button);
 }
 
-function closeWindow() {
-	popup.kill();
-}
-
-function changeSound() {
-	if (soundOn) {
-		soundOn = false;
-		control.kill();
-		control = new controlButton(game, controlX, controlY, 0);
-		popup.addChild(control);
+function changeMusic() {
+	if (musicOn) {
+		musicOn = false;
+		musicControl.kill();
+		musicControl = new controlButton(game, mControlX, mControlY, 0, changeMusic);
+		popup.addChild(musicControl);
 		sound.pause();
 		console.log(soundOn);
 	} else {
-		soundOn = true;
-		control.kill();
-		control = new controlButton(game, controlX, controlY, 1);
-		popup.addChild(control);
+		musicOn = true;
+		musicControl.kill();
+		musicControl = new controlButton(game, mControlX, mControlY, 1, changeMusic);
+		popup.addChild(musicControl);
 		sound.resume();
 		console.log(soundOn);
 	}
 }
-
-function chooseCharacter() {
-
+function changeSound() {
+	if (soundOn) {
+		soundOn = false;
+		soundControl.kill();
+		soundControl = new controlButton(game, sControlX, sControlY, 0, changeSound);
+		popup.addChild(soundControl);
+		//sound.pause();
+		console.log(soundOn);
+	} else {
+		soundOn = true;
+		soundControl.kill();
+		soundControl = new controlButton(game, sControlX, sControlY, 1, changeSound);
+		popup.addChild(soundControl);
+		//sound.resume();
+		console.log(soundOn);
+	}
 }
 
-var controlButton = function(game, x, y, frame) {
+
+/**** panel for score  *****/
+
+function scoreOption() {
+	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'startBackground');
+	popup.alpha = 1.0;
+	popup.anchor.set(0.5);
+	popup.inputEnabled = true;
+	
+	close_button = new closeButton (game, 0);
+	popup.addChild(close_button);
+	
+	
+}
+
+/**** diverse methods*****/
+
+
+function closeWindow() {
+	popup.kill();
+}
+/**** prototypes for diverse buttons*****/
+var controlButton = function(game, x, y, frame, option) {
 	this.game = game;
-	Phaser.Sprite.call(this, this.game, x, y, 'control', frame);
+	Phaser.Sprite.call(this, this.game, x, y, 'controlSound', frame);
 	this.inputEnabled = true;
 	this.input.priorityID = 1;
 	this.input.useHandCursor = true;
-	this.events.onInputDown.add(changeSound, this);
+	this.events.onInputDown.add(option, this);
 };
-
 controlButton.prototype = Object.create(Phaser.Sprite.prototype);
 controlButton.prototype.constructor = controlButton;
 
-var characterButton = function(game, x, y, frame) {
+var closeButton = function (game, frame) { 
 	this.game = game;
-	Phaser.Sprite.call(this, this.game, x, y, 'character', frame);
+	Phaser.Sprite.call(this, this.game, 220, -270, 'doneButton', frame);
 	this.inputEnabled = true;
 	this.input.priorityID = 1;
 	this.input.useHandCursor = true;
-	this.events.onInputDown.add(chooseCharacter, this);
+	this.events.onInputDown.add(closeWindow, this);
+	
 };
-
-characterButton.prototype = Object.create(Phaser.Sprite.prototype);
-characterButton.prototype.constructor = characterButton;
+closeButton.prototype = Object.create(Phaser.Sprite.prototype);
+closeButton.prototype.constructor = closeButton;

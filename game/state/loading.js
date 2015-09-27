@@ -26,18 +26,24 @@ loading.prototype = {
 
 		game.load.video('intro', './assets/Intro.mp4');
 
-		/*
-		 * Menu-state images
-		 */
-
-		game.load.image('menubackground', './assets/menu/menubackground.png')
-		game.load.image('button', './assets/menu/woodbutton.png'); // temporary button, to be removed later on
-		game.load.image('buttonStart', './assets/menu/woodbutton_start.png'); // temporary button, to be removed later on
-		game.load.image('controlpanel', './assets/menu/controlpanel.png');
-		game.load.image('close', './assets/menu/closebutton.png');
+		/* Menu-state images */
+		
+		//background
+		game.load.image('startBackground', './assets/menu/startMenu/startBackground.png');
+		game.load.image('optionBackground', './assets/menu/startMenu/optionBackground.png');
+		game.load.image('soundBackground', './assets/menu/soundMenu/soundBackground.png');		
+		
+		//button
+		game.load.image('start_button', './assets/menu/startMenu/startButton.png');
+		game.load.image ('startButtonHighlight', './assets/menu/startMenu/startButtonHighlight.png');
+		game.load.image ('sound_button', './assets/menu/startMenu/soundButton.png');
+		game.load.image ('score_button', './assets/menu/startMenu/highscoreButton.png');
+		game.load.image ('doneButton', './assets/menu/soundMenu/doneButton.png');
+		game.load.spritesheet ('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
+		
+		
 		game.load.spritesheet('control', './assets/menu/controlSprite.png', 64, 94, 2);
 		game.load.audio('music', './assets/sound/background_music.wav');
-		game.load.image('charBackground', './assets/menu/characters_background.png');
 		game.load.spritesheet('character', './assets/menu/Astronaut.png', 31, 71, 6); // TODO: is this needed? Or is it the same as 'char'?
 
 		/*
