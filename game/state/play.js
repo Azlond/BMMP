@@ -405,7 +405,7 @@ play.prototype = {
 	},  
 
 timeDown : function () {
-  var countdown = 1000;
+  var countdown = 4000;
   timer = game.time.create(false);
   timer.loop(countdown, this.changeDisplay, this);
   timer.start ();
