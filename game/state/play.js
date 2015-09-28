@@ -29,9 +29,8 @@ play.prototype = {
 		// score at the beginning of the game
 		score = 0;
 		lifeCounter = 3;
-		
 
-		this.levelNumber = 1;// first level
+		this.levelNumber = 4;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -39,9 +38,7 @@ play.prototype = {
 
 		// loads the first level level number has to be increased once the player has reached the finish line
 		this.loadLevel("");
-		
-		
-		
+
 	},
 
 	update : function() {
@@ -100,6 +97,7 @@ play.prototype = {
 		 * check if the player is dead
 		 */
 		if (lifeCounter == 0) {
+			this.saveLocal();
 			this.game.state.start('gameOver');
 		}
 
@@ -110,7 +108,7 @@ play.prototype = {
 		 */
 		if (this.astronaut.body.y > 600 && !this.fallen) {
 			lifeCounter--;
-			showLife (lifeCounter);
+			showLife(lifeCounter);
 			console.log(lifeCounter);
 			this.fallen = true;
 			if (lifeCounter != 0) {
@@ -130,10 +128,7 @@ play.prototype = {
 		 */
 		if (this.rocketGone) {
 			if (this.levelNumber == this.finalLevel) {
-				game.add.text(game.width / 2, game.height / 2, 'You win!', {
-					font : '50px Courier',
-					fill : '#8B1A1A'
-				});
+				game.state.start('win');
 			} else {
 				this.levelNumber += 1;
 				this.loadLevel("");
@@ -294,7 +289,7 @@ play.prototype = {
 
 		score = oldScore;// update the score
 
-		this.scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
+		this.scoreText = game.add.text(0, 20, 'Score: ' + score, {
 			font : '30px Courier',
 			fill : '#ffffff'
 		});
@@ -309,27 +304,25 @@ play.prototype = {
 		this.alien.anchor.setTo(0.5, 0.5);
 		this.alien.animations.play('walk');
 
-
-		/* shows oxygencounter in each level*/
+		/* shows oxygencounter in each level */
 		oxygenCounter = 9;
 		oxygenTank = game.add.sprite(750, 63, 'tank');
 		oxygenTank.frame = oxygenCounter;
 		oxygenTank.fixedToCamera = true;
 		--oxygenCounter;
 		this.timeDown();
-		
-		
-		/* shows life counter in each level*/
-		var toolbar = game.add.sprite(0,0, 'toolbar');
+
+		/* shows life counter in each level */
+		var toolbar = game.add.sprite(0, 0, 'toolbar');
 		toolbar.fixedToCamera = true;
-		showLife (lifeCounter);
+		showLife(lifeCounter);
 	},
 
 	/*
 	 * collecting an element and removing it from the game
 	 */
 	collectElement : function(astronaut, tile) {
-
+	
 		this.map.removeTile(tile.x, tile.y, this.layer);
 
 		score += 1;
@@ -351,6 +344,9 @@ play.prototype = {
 			this.rocket.body.immovable = false;
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
+			score += 50;
+			this.scoreText.text = 'Score: ' + score;
+			this.saveLocal();
 		}
 	},
 
@@ -403,30 +399,84 @@ play.prototype = {
 		}
 		tools.kill();
 		this.toolsCollected += 1;
-	},  
+	},
 
-timeDown : function () {
-  var countdown = 1000;
-  timer = game.time.create(false);
-  timer.loop(countdown, this.changeDisplay, this);
-  timer.start ();
-},
+	timeDown : function() {
+		var countdown = 100000;
+		timer = game.time.create(false);
+		timer.loop(countdown, this.changeDisplay, this);
+		timer.start();
+	},
 
- changeDisplay : function () {
-    if (oxygenCounter > 3){
-        oxygenTank.frame = oxygenCounter;
-        --oxygenCounter;		
-    } else if (oxygenCounter < 4 && oxygenCounter > 0) {
-        oxygenTank.animations.add('blink1', [oxygenCounter, 0], 5, true);
-        oxygenTank.animations.play('blink1');
-        --oxygenCounter;
-    } else if (oxygenCounter === 0) {
-        oxygenTank.animations.stop();
-		oxygenTank.frame = 0;
-		--lifeCounter;
-		this.loadLevel("restart");
-		timer.stop();
-    } else {
-        timer.stop();
-    }
-}};
+	changeDisplay : function() {
+		if (oxygenCounter > 3) {
+			oxygenTank.frame = oxygenCounter;
+			--oxygenCounter;
+		} else if (oxygenCounter < 4 && oxygenCounter > 0) {
+			oxygenTank.animations.add('blink1', [ oxygenCounter, 0 ], 5, true);
+			oxygenTank.animations.play('blink1');
+			--oxygenCounter;
+		} else if (oxygenCounter === 0) {
+			oxygenTank.animations.stop();
+			oxygenTank.frame = 0;
+			--lifeCounter;
+			this.loadLevel("restart");
+			timer.stop();
+		} else {
+			timer.stop();
+		}
+	},
+
+	saveLocal : function() {
+		if (score != 0) {
+			var scores = localStorage.getItem('highScore') || [];
+
+			console.log(scores);
+
+			if (scores.length != 0) {
+				scores = JSON.parse(scores);
+			}
+			this.parseJson(scores);
+		}
+	},
+
+	parseJson : function(json) {
+		var pName = playerName.text.toString();
+		var playerExists = false;
+
+		if (json.length == 0) {
+			json.push(playerName.text + " " + score);
+			localStorage.setItem("highScore", JSON.stringify(json));
+		} else {
+			for (i = 0; i < json.length; i++) {
+				var highScoreName = json[i].replace(/\s[0-9]*/, "");
+				var playerHighScore = json[i].replace(/[a-zA-Z]*\s/, "");
+
+				if (highScoreName == pName) {
+					playerExists = true;
+					if (playerHighScore < score) {
+						console.log(highScoreName);
+						console.log(playerHighScore);
+						json.splice(i, 1);
+						json.push(playerName.text + " " + score);
+						localStorage.setItem("highScore", JSON.stringify(json));
+					}
+				}
+			}
+			if (!playerExists) {
+				json.push(playerName.text + " " + score);
+				localStorage.setItem("highScore", JSON.stringify(json));
+			}
+		}
+	}
+
+};
+
+function readLocal() {
+	// get the highscores object
+	var scores = localStorage.getItem("highScore");
+	scores = JSON.parse(scores);
+	for (i = 0; i < scores.length; i++) {
+		console.log(score[i]);
+	}
+}

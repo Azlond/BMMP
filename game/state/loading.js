@@ -89,6 +89,7 @@ loading.prototype = {
 		game.load.spritesheet('rocket', './assets/rocket_spritesheet.png', 154, 412, 2);
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
 		game.load.image('gameOver', './assets/gameOver.jpg');
+		game.load.image('win', './assets/win.jpg');
 		game.load.spritesheet('alien', './assets/alien.png', 48, 48, 8);
 		game.load.spritesheet('tank', './assets/Status/oxygenStatusSprite.png', 43, 82);
 

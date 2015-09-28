@@ -10,5 +10,6 @@ game.state.add('menu', menu);
 game.state.add('intro', intro);
 game.state.add('play', play);
 game.state.add('gameOver', gameOver);
+game.state.add('win', win);
 
 game.state.start('loading');
