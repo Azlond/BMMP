@@ -47,12 +47,16 @@ function startGame() { // starts the game
 
 function updateName(e) {
 
+	var str = playerName.text;
+
+	var nameLength = str.length;
+
 	// Backspace
 	if (e.keyCode == 8) {
-		var str = playerName.text;
 		str = str.substring(0, str.length - 1);
 		playerName.text = str;
-	} else {
+	} else if (e.keyCode >= 60 && e.keyCode <= 90 && nameLength < 20) {
+		console.log(e.keyCode);
 		var str = String.fromCharCode(e.keyCode);
 		playerName.text = playerName.text + str;
 	}
@@ -66,13 +70,13 @@ function openOption() {
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 
-	startButton = new button (game, -36, 185, 0, startGame, 'startButton');
+	startButton = new button(game, -36, 185, 0, startGame, 'startButton');
 	popup.addChild(startButton);
-	
-	soundButton = new button (game, 280, 188, 0, soundOption, 'soundButton');
+
+	soundButton = new button(game, 280, 188, 0, soundOption, 'soundButton');
 	popup.addChild(soundButton);
 
-	scoreButton = new button (game, -316, 188, 0, scoreOption, 'scoreButton');	
+	scoreButton = new button(game, -316, 188, 0, scoreOption, 'scoreButton');
 	popup.addChild(scoreButton);
 
 	playerName = game.add.text(370, 139, "", {
@@ -94,14 +98,14 @@ function soundOption() {
 	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'soundBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
-	
-	musicControl = new button (game, mControlX, mControlY, 1, changeMusic, 'controlSound');
+
+	musicControl = new button(game, mControlX, mControlY, 1, changeMusic, 'controlSound');
 	popup.addChild(musicControl);
 
 	soundControl = new button(game, sControlX, sControlY, 1, changeSound, 'controlSound');
 	popup.addChild(soundControl);
 
-	closeButton = new button (game, -36, 185, 0, closeWindow, 'closeButton');
+	closeButton = new button(game, -36, 185, 0, closeWindow, 'closeButton');
 	popup.addChild(closeButton);
 }
 
@@ -109,7 +113,7 @@ function changeMusic() {
 	if (musicOn) {
 		musicOn = false;
 		musicControl.kill();
-		musicControl = new button (game, mControlX, mControlY, 0, changeMusic, 'controlSound');
+		musicControl = new button(game, mControlX, mControlY, 0, changeMusic, 'controlSound');
 		popup.addChild(musicControl);
 		sound.pause();
 		console.log(soundOn);
@@ -126,14 +130,14 @@ function changeSound() {
 	if (soundOn) {
 		soundOn = false;
 		soundControl.kill();
-		soundControl = new button (game, sControlX, sControlY, 0, changeSound, 'controlSound');
+		soundControl = new button(game, sControlX, sControlY, 0, changeSound, 'controlSound');
 		popup.addChild(soundControl);
 		// sound.pause();
 		console.log(soundOn);
 	} else {
 		soundOn = true;
 		soundControl.kill();
-		soundControl = new button (game, sControlX, sControlY, 1, changeSound, 'controlSound');
+		soundControl = new button(game, sControlX, sControlY, 1, changeSound, 'controlSound');
 		popup.addChild(soundControl);
 		// sound.resume();
 		console.log(soundOn);
@@ -147,7 +151,7 @@ function scoreOption() {
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 
-	closeButton = new button (game, -36, 185, 0, closeWindow, 'closeButton');
+	closeButton = new button(game, -36, 185, 0, closeWindow, 'closeButton');
 	popup.addChild(closeButton);
 
 }
@@ -158,17 +162,10 @@ function closeWindow() {
 	popup.kill();
 }
 /*
-var controlButton = function(game, x, y, frame, option) {
-	this.game = game;
-	Phaser.Sprite.call(this, this.game, x, y, 'controlSound', frame);
-	this.inputEnabled = true;
-	this.input.priorityID = 1;
-	this.input.useHandCursor = true;
-	this.events.onInputDown.add(option, this);
-};
-controlButton.prototype = Object.create(Phaser.Sprite.prototype);
-controlButton.prototype.constructor = controlButton;
-*/
+ * var controlButton = function(game, x, y, frame, option) { this.game = game; Phaser.Sprite.call(this, this.game, x, y, 'controlSound', frame);
+ * this.inputEnabled = true; this.input.priorityID = 1; this.input.useHandCursor = true; this.events.onInputDown.add(option, this); }; controlButton.prototype =
+ * Object.create(Phaser.Sprite.prototype); controlButton.prototype.constructor = controlButton;
+ */
 var button = function(game, x, y, frame, option, keyName) {
 	this.game = game;
 	Phaser.Sprite.call(this, this.game, x, y, keyName, frame);

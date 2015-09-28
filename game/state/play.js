@@ -292,7 +292,7 @@ play.prototype = {
 
 		score = oldScore;// update the score
 
-		this.scoreText = game.add.text(this.astronaut.x - 50, 20, 'Score: ' + score, {
+		this.scoreText = game.add.text(0, 20, 'Score: ' + score, {
 			font : '30px Courier',
 			fill : '#ffffff'
 		});
@@ -325,7 +325,7 @@ play.prototype = {
 	 * collecting an element and removing it from the game
 	 */
 	collectElement : function(astronaut, tile) {
-		
+	
 		this.map.removeTile(tile.x, tile.y, this.layer);
 
 		score += 1;
