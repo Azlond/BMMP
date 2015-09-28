@@ -31,7 +31,7 @@ loading.prototype = {
 		game.load.image('soundBackground', './assets/menu/soundMenu/soundBackground.png');		
 		
 		//button
-		game.load.spritesheet ('start_button', './assets/menu/startMenu/startButtonSprite.png', 99, 40, 2);
+		game.load.spritesheet ('startButton', './assets/menu/startMenu/startButtonSprite.png', 99, 40, 2);
 		game.load.image ('sound_button', './assets/menu/startMenu/soundButton.png');
 		game.load.spritesheet ('score_button', './assets/menu/startMenu/highscoreButton.png', 43, 47, 2);
 		game.load.image ('doneButton', './assets/menu/soundMenu/doneButton.png');
