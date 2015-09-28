@@ -12,6 +12,7 @@ var lifeCounter; // the amount of lives the player has
 var oxygenCounter;
 var pathCounter = 0;
 var timer;
+var life;
 
 var soundOn = true;
 
@@ -28,6 +29,7 @@ play.prototype = {
 		// score at the beginning of the game
 		score = 0;
 		lifeCounter = 3;
+		
 
 		this.levelNumber = 1;// first level
 		this.finalLevel = 4;// last level
@@ -37,6 +39,9 @@ play.prototype = {
 
 		// loads the first level level number has to be increased once the player has reached the finish line
 		this.loadLevel("");
+		
+		
+		
 	},
 
 	update : function() {
@@ -105,6 +110,7 @@ play.prototype = {
 		 */
 		if (this.astronaut.body.y > 600 && !this.fallen) {
 			lifeCounter--;
+			showLife (lifeCounter);
 			console.log(lifeCounter);
 			this.fallen = true;
 			if (lifeCounter != 0) {
@@ -303,13 +309,18 @@ play.prototype = {
 		this.alien.anchor.setTo(0.5, 0.5);
 		this.alien.animations.play('walk');
 
+
+		/* shows oxygencounter in each level*/
 		oxygenCounter = 9;
 		oxygenTank = game.add.sprite(3, 3, 'tank');
 		oxygenTank.frame = 0;
 		oxygenTank.fixedToCamera = true;
 		--oxygenCounter;
 		timeDown();
-
+		
+		
+		/* shows life counter in each level*/
+		showLife (lifeCounter);
 	},
 
 	/*
@@ -349,6 +360,7 @@ play.prototype = {
 	collideWithAlien : function(astronaut, alien) {
 		if (game.time.now > this.lifeTimer) {
 			lifeCounter--;
+			showLife(lifeCounter);
 			if (lifeCounter <= 3 && lifeCounter > 0) {
 				console.log(lifeCounter);
 			}
