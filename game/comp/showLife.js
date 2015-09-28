@@ -8,10 +8,7 @@ function showLife (lifeCounter) {
 		life = game.add.sprite(735, 6, 'lifeCounter');
 		life.fixedToCamera = true;
 	}
-	
-	//life.frame = 3;
-	console.log ("here comes the life");
- 	
+	 	
 	switch (lifeCounter) {
 
     case 3: 	life.frame = 0; break;

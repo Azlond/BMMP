@@ -8,6 +8,7 @@ function menu() {
 var musicOn = 1;
 var soundOn = 1;
 var popup;
+var popupOption;
 var soundControl;
 var musicControl
 var sound;
@@ -31,18 +32,18 @@ menu.prototype = {
 		sound = game.add.audio('music');
 		sound.play();
 
-		popup = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
-		popup.alpha = 1.0;
-		popup.anchor.set(0.5);
+		popupOption = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
+		popupOption.alpha = 1.0;
+		popupOption.anchor.set(0.5);
 
 		startButton = new button (game, -36,185, 0, startGame, 'startButton');
-		popup.addChild(startButton);
+		popupOption.addChild(startButton);
 	
 		soundButton = new button (game, 280, 188, 0, soundOption, 'soundButton');
-		popup.addChild(soundButton);
+		popupOption.addChild(soundButton);
 
 		scoreButton = new button (game, -316, 188, 0, scoreOption, 'scoreButton');	
-		popup.addChild(scoreButton);
+		popupOption.addChild(scoreButton);
 
 		playerName = game.add.text(370, 139, "", {
 			font : '30px Courier',
@@ -101,15 +102,19 @@ function handleComplete() {
 
 
 function soundOption () {
+	
 	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'soundBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
-	popup.inputEnabled = false;
+	
+	soundButton.kill();
+	scoreButton.kill();
+	startButton.kill();
 	
 	musicControl = new button (game, mControlX, mControlY, musicOn, changeMusic, 'controlSound');
 	popup.addChild(musicControl);
 
-	soundControl = new button(game, sControlX, sControlY, soundOn, changeSound, 'controlSound');
+	soundControl = new button(game, sControlX, sControlY, 1, changeSound, 'controlSound');
 	popup.addChild(soundControl);
 
 	closeButton = new button (game, -36, 185, 0, closeWindow, 'closeButton');
@@ -124,14 +129,12 @@ function changeMusic() {
 		musicControl = new button (game, mControlX, mControlY, 0, changeMusic, 'controlSound');
 		popup.addChild(musicControl);
 		sound.pause();
-		console.log(soundOn);
 	} else {
 		musicOn = 1;
 		musicControl.kill();
 		musicControl = new button(game, mControlX, mControlY, 1, changeMusic, 'controlSound');
 		popup.addChild(musicControl);
 		sound.resume();
-		console.log(soundOn);
 	}
 }
 function changeSound() {
@@ -157,6 +160,10 @@ function scoreOption () {
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 
+	soundButton.kill();
+	scoreButton.kill();
+	startButton.kill();
+
 	closeButton = new button (game, -36, 185, 0, closeWindow, 'closeButton');
 	popup.addChild(closeButton);
 }
@@ -164,6 +171,15 @@ function scoreOption () {
 
 function closeWindow() {
 	popup.kill();
+	soundButton = new button (game, 280, 188, 0, soundOption, 'soundButton');
+	popupOption.addChild(soundButton);
+
+	scoreButton = new button (game, -316, 188, 0, scoreOption, 'scoreButton');	
+	popupOption.addChild(scoreButton);
+	
+	startButton = new button (game, -36,185, 0, startGame, 'startButton');
+	popupOption.addChild(startButton);
+	
 }
 
 var button = function(game, x, y, frame, option, keyName) {
