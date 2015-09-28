@@ -29,12 +29,14 @@ loading.prototype = {
 		game.load.image('startBackground', './assets/menu/startMenu/startBackground.png');
 		game.load.image('optionBackground', './assets/menu/startMenu/optionBackground.png');
 		game.load.image('soundBackground', './assets/menu/soundMenu/soundBackground.png');
+		game.load.image('scoreBackground', './assets/menu/scoreMenu/scoreBackground.png');
+		
 
 		// button
 		game.load.spritesheet('startButton', './assets/menu/startMenu/startButtonSprite.png', 99, 40, 2);
-		game.load.image('sound_button', './assets/menu/startMenu/soundButton.png');
-		game.load.spritesheet('score_button', './assets/menu/startMenu/highscoreButton.png', 43, 47, 2);
-		game.load.image('doneButton', './assets/menu/soundMenu/doneButton.png');
+		game.load.image('soundButton', './assets/menu/startMenu/soundButton.png');
+		game.load.spritesheet('scoreButton', './assets/menu/startMenu/highscoreButton.png', 43, 47, 2);
+		game.load.image('closeButton', './assets/menu/soundMenu/doneButton.png');
 		game.load.spritesheet('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
 
 		// music
