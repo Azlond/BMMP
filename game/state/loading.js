@@ -31,7 +31,7 @@ loading.prototype = {
 		game.load.image('soundBackground', './assets/menu/soundMenu/soundBackground.png');		
 		
 		//button
-		game.load.spritesheet ('startButton', './assets/menu/startMenu/startButtonSprite.png', 99, 40, 2);
+		game.load.spritesheet ('start_button', './assets/menu/startMenu/startButtonSprite.png', 99, 40, 2);
 		game.load.image ('sound_button', './assets/menu/startMenu/soundButton.png');
 		game.load.spritesheet ('score_button', './assets/menu/startMenu/highscoreButton.png', 43, 47, 2);
 		game.load.image ('doneButton', './assets/menu/soundMenu/doneButton.png');
@@ -81,7 +81,7 @@ loading.prototype = {
 		/*
 		 * other assets
 		 */
-		game.load.spritesheet ('lifeCounter', './assets/status/livesSprite.png', 55, 40, 4);
+		game.load.spritesheet ('lifeCounter', './assets/Status/livesSprite.png', 55, 40, 4);
 		game.load.spritesheet('char', './assets/Astronaut.png', 31, 71, 6);
 		game.load.spritesheet('rocket', './assets/rocket_spritesheet.png', 154, 412, 2);
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
