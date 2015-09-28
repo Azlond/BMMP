@@ -325,7 +325,7 @@ play.prototype = {
 	 * collecting an element and removing it from the game
 	 */
 	collectElement : function(astronaut, tile) {
-
+		
 		this.map.removeTile(tile.x, tile.y, this.layer);
 
 		score += 1;
@@ -348,6 +348,7 @@ play.prototype = {
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
 			score += 50;
+			this.scoreText.text = 'Score: ' + score;
 			this.saveLocal();
 		}
 	},
@@ -444,6 +445,7 @@ play.prototype = {
 
 	parseJson : function(json) {
 		var pName = playerName.text.toString();
+		var playerExists = false;
 
 		if (json.length == 0) {
 			json.push(playerName.text + " " + score);
@@ -453,17 +455,20 @@ play.prototype = {
 				var highScoreName = json[i].replace(/\s[0-9]*/, "");
 				var playerHighScore = json[i].replace(/[a-zA-Z]*\s/, "");
 
-				if (highScoreName == pName && playerHighScore < score) {
-					console.log(highScoreName);
-					console.log(playerHighScore);
-
-					console.log(json);
-					json.splice(i, 1);
-					console.log(json);
-
-					json.push(playerName.text + " " + score);
-					localStorage.setItem("highScore", JSON.stringify(json));
+				if (highScoreName == pName) {
+					playerExists = true;
+					if (playerHighScore < score) {
+						console.log(highScoreName);
+						console.log(playerHighScore);
+						json.splice(i, 1);
+						json.push(playerName.text + " " + score);
+						localStorage.setItem("highScore", JSON.stringify(json));
+					}
 				}
+			}
+			if (!playerExists) {
+				json.push(playerName.text + " " + score);
+				localStorage.setItem("highScore", JSON.stringify(json));
 			}
 		}
 	}
