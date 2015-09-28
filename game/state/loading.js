@@ -24,20 +24,20 @@ loading.prototype = {
 		game.load.video('intro', './assets/Intro.mp4');
 
 		/* Menu-state images */
-		
-		//background
+
+		// background
 		game.load.image('startBackground', './assets/menu/startMenu/startBackground.png');
 		game.load.image('optionBackground', './assets/menu/startMenu/optionBackground.png');
-		game.load.image('soundBackground', './assets/menu/soundMenu/soundBackground.png');		
-		
-		//button
-		game.load.spritesheet ('startButton', './assets/menu/startMenu/startButtonSprite.png', 99, 40, 2);
-		game.load.image ('sound_button', './assets/menu/startMenu/soundButton.png');
-		game.load.spritesheet ('score_button', './assets/menu/startMenu/highscoreButton.png', 43, 47, 2);
-		game.load.image ('doneButton', './assets/menu/soundMenu/doneButton.png');
-		game.load.spritesheet ('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
-		
-		//music
+		game.load.image('soundBackground', './assets/menu/soundMenu/soundBackground.png');
+
+		// button
+		game.load.spritesheet('startButton', './assets/menu/startMenu/startButtonSprite.png', 99, 40, 2);
+		game.load.image('sound_button', './assets/menu/startMenu/soundButton.png');
+		game.load.spritesheet('score_button', './assets/menu/startMenu/highscoreButton.png', 43, 47, 2);
+		game.load.image('doneButton', './assets/menu/soundMenu/doneButton.png');
+		game.load.spritesheet('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
+
+		// music
 		game.load.audio('music', './assets/sound/background_music.wav');
 
 		/*
@@ -81,9 +81,8 @@ loading.prototype = {
 		/*
 		 * other assets
 		 */
-		game.load.spritesheet ('lifeCounter', './assets/Status/livesSprite.png', 55, 40, 4);
 		game.load.image('toolbar', './assets/toolbar.png');
-		game.load.spritesheet ('lifeCounter', './assets/Status/livesSprite.png', 55, 40, 4);
+		game.load.spritesheet('lifeCounter', './assets/Status/livesSprite.png', 55, 40, 4);
 		game.load.spritesheet('char', './assets/Astronaut.png', 31, 71, 6);
 		game.load.spritesheet('rocket', './assets/rocket_spritesheet.png', 154, 412, 2);
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
