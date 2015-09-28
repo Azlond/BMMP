@@ -25,13 +25,12 @@ menu.prototype = {
 
 	create : function() {
 		
-		game.add.sprite(0, 0, 'startBackground'); // adds background
+		var startBackground = game.add.sprite(0, 0, 'startBackground'); // adds background
+		startBackground.inputEnabled = true;
+		startBackground.input.priorityID = 1;
+		startBackground.input.useHandCursor = true;
 
-		// Game Title TODO: Maybe change this to an image later on, to match better with the background.
-		// var nameLabel = game.add.text(game.world.centerX - 175, 25,'Game Title', { font : '75px Arial', fill : '#ffffff' });
-
-		startButton = game.add.button(game.world.centerX - 46.5, 485, 'start_button', openOption, this, 1); //button to start the game	
-		
+		startBackground.events.onInputDown.add(openOption, this);
 	}
 };
 
@@ -53,11 +52,8 @@ function openOption () {
 	popup.anchor.set(0.5);
 	popup.inputEnabled = true;
 
-	startButton = game.make.sprite(-46.5, 185, 'start_button');
-	startButton.inputEnabled = true;
-	startButton.input.priorityID = 1;
-	startButton.input.useHandCursor = true;
-	startButton.events.onInputDown.add(startGame, this);
+	startButton = new button (game, -46.5, 185, 0, startGame, 'startButton');
+	startButton.events.onInputOver.add(highlight, this);
 	popup.addChild(startButton);
 
 	soundButton = game.make.sprite (297, 180, 'sound_button');
@@ -91,8 +87,8 @@ function soundOption () {
 	soundControl = new controlButton (game, sControlX, sControlY,  1, changeSound);
 	popup.addChild(soundControl);
 	
-	close_button = new closeButton (game, 0);
-	popup.addChild(close_button);
+	closeButton = new button (game, -36, 185, 0, closeWindow, 'doneButton');
+	popup.addChild(closeButton);
 }
 
 function changeMusic() {
@@ -139,8 +135,8 @@ function scoreOption() {
 	popup.anchor.set(0.5);
 	popup.inputEnabled = true;
 	
-	close_button = new closeButton (game, 0);
-	popup.addChild(close_button);
+	closeButton = new button (game, -36, 185, 0, closeWindow, 'doneButton');
+	popup.addChild(closeButton);
 	
 	
 }
@@ -148,29 +144,21 @@ function scoreOption() {
 /**** diverse methods*****/
 
 
+function highlight () {}
+
 function closeWindow() {
 	popup.kill();
 }
 
-var controlButton = function (game, x, y, frame, option) {
+
+var button = function (game, x, y, frame, option, keyName) { 
 	this.game = game;
-	Phaser.Sprite.call(this, this.game, x, y, 'controlSound', frame);
+	Phaser.Sprite.call(this, this.game, x, y, keyName, frame);
 	this.inputEnabled = true;
 	this.input.priorityID = 1;
 	this.input.useHandCursor = true;
 	this.events.onInputDown.add(option, this);
-};
-controlButton.prototype = Object.create(Phaser.Sprite.prototype);
-controlButton.prototype.constructor = controlButton;
-
-var closeButton = function (game, frame) { 
-	this.game = game;
-	Phaser.Sprite.call(this, this.game, -36, 185, 'doneButton', frame);
-	this.inputEnabled = true;
-	this.input.priorityID = 1;
-	this.input.useHandCursor = true;
-	this.events.onInputDown.add(closeWindow, this);
 	
 };
-closeButton.prototype = Object.create(Phaser.Sprite.prototype);
-closeButton.prototype.constructor = closeButton;
+button.prototype = Object.create(Phaser.Sprite.prototype);
+button.prototype.constructor = button;
