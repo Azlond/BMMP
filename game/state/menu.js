@@ -166,6 +166,8 @@ function scoreOption () {
 
 	closeButton = new button (game, -36, 185, 0, closeWindow, 'closeButton');
 	popup.addChild(closeButton);
+	
+	readLocal();
 }
 
 

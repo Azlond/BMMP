@@ -87,6 +87,10 @@ play.prototype = {
 			this.astronaut.animations.play('stop', 7, true);
 		}
 
+		if (cursors.down.isDown) {
+			readLocal();
+		}
+
 		/*
 		 * Jumping
 		 */
@@ -303,7 +307,6 @@ play.prototype = {
 		alienGroup = game.add.group();
 
 		var alienInfo = aliens["level" + this.levelNumber];
-		console.log(alienInfo);
 		var amountAliens = alienInfo["amount"];
 		var alienCoordinates = alienInfo["coordinates"];
 
@@ -443,8 +446,6 @@ play.prototype = {
 		if (score != 0) {
 			var scores = localStorage.getItem('highScore') || [];
 
-			console.log(scores);
-
 			if (scores.length != 0) {
 				scores = JSON.parse(scores);
 			}
@@ -456,25 +457,32 @@ play.prototype = {
 		var pName = playerName.text.toString();
 		var playerExists = false;
 
+		console.log(json);
+
 		if (json.length == 0) {
-			json.push(playerName.text + " " + score);
+			var tjson = [ pName, score ];
+			json.push(tjson);
 			localStorage.setItem("highScore", JSON.stringify(json));
 		} else {
 			for (i = 0; i < json.length; i++) {
-				var highScoreName = json[i].replace(/\s[0-9]*/, "");
-				var playerHighScore = json[i].replace(/[a-zA-Z]*\s/, "");
+				console.log(json[i]);
+				var tArray = json[i];
+				var highScoreName = tArray[0];
+				var playerHighScore = tArray[1];
 
 				if (highScoreName == pName) {
 					playerExists = true;
 					if (playerHighScore < score) {
 						json.splice(i, 1);
-						json.push(playerName.text + " " + score);
+						var tjson = [ pName, score ];
+						json.push(tjson);
 						localStorage.setItem("highScore", JSON.stringify(json));
 					}
 				}
 			}
 			if (!playerExists) {
-				json.push(playerName.text + " " + score);
+				var tjson = [ pName, score ];
+				json.push(tjson);
 				localStorage.setItem("highScore", JSON.stringify(json));
 			}
 		}
@@ -483,10 +491,12 @@ play.prototype = {
 };
 
 function readLocal() {
+	// localStorage.clear();
 	// get the highscores object
 	var scores = localStorage.getItem("highScore");
 	scores = JSON.parse(scores);
+	console.log(scores);
 	for (i = 0; i < scores.length; i++) {
-		console.log(score[i]);
+		console.log(scores[i]);
 	}
 }
