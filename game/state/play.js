@@ -114,7 +114,6 @@ play.prototype = {
 		if (this.astronaut.body.y > 600 && !this.fallen) {
 			lifeCounter--;
 			showLife(lifeCounter);
-			console.log(lifeCounter);
 			this.fallen = true;
 			if (lifeCounter != 0) {
 				this.loadLevel("restart");
@@ -377,9 +376,6 @@ play.prototype = {
 			if (lifeCounter <= 3 && lifeCounter > 0) {
 				console.log(lifeCounter);
 			}
-			if (lifeCounter <= 0) {
-				console.log("LOSE");
-			}
 
 			this.lifeTimer = game.time.now + 750;
 		}
@@ -392,21 +388,18 @@ play.prototype = {
 	collectTools : function(astronaut, tools) {
 
 		if (tools == this.collectpliers) {
-			console.log("pliers")
 			this.nopliers.kill();
 			this.pliers = new Tools(this.game, 230, 15, 0);
 			this.game.add.existing(this.pliers);
 			this.pliers.fixedToCamera = true;
 		}
 		if (tools == this.collectscrewdriver) {
-			console.log("screwdriver")
 			this.noscrewdriver.kill();
 			this.screwdriver = new Tools(this.game, 290, 15, 4);
 			this.game.add.existing(this.screwdriver);
 			this.screwdriver.fixedToCamera = true;
 		}
 		if (tools == this.collectwrench) {
-			console.log("wrench")
 			this.nowrench.kill();
 			this.wrench = new Tools(this.game, 260, 15, 2);
 			this.game.add.existing(this.wrench);
@@ -457,15 +450,12 @@ play.prototype = {
 		var pName = playerName.text.toString();
 		var playerExists = false;
 
-		console.log(json);
-
 		if (json.length == 0) {
 			var tjson = [ pName, score ];
 			json.push(tjson);
 			localStorage.setItem("highScore", JSON.stringify(json));
 		} else {
 			for (i = 0; i < json.length; i++) {
-				console.log(json[i]);
 				var tArray = json[i];
 				var highScoreName = tArray[0];
 				var playerHighScore = tArray[1];
@@ -494,9 +484,28 @@ function readLocal() {
 	// localStorage.clear();
 	// get the highscores object
 	var scores = localStorage.getItem("highScore");
-	scores = JSON.parse(scores);
 	console.log(scores);
-	for (i = 0; i < scores.length; i++) {
-		console.log(scores[i]);
-	}
+
+	// for (i = 0; i < scores.length; i++) {
+	// console.log(scores[i]);
+	// }
+
+	return scores;
+}
+/*
+ * based on bubbleSort
+ */
+function sortHighScore(highScoreList) {
+	var swapped;
+
+	do {
+		swapped = false;
+		for (var i = 0; i < highScoreList.length - 1; i++) {
+			/*
+			 * TODO: bubbleSort
+			 */
+		}
+	} while (swapped);
+
+	return highScoreList;
 }
