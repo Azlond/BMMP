@@ -82,6 +82,7 @@ loading.prototype = {
 		 * other assets
 		 */
 		game.load.spritesheet ('lifeCounter', './assets/status/livesSprite.png', 55, 40, 4);
+		game.load.image('toolbar', './assets/toolbar.png');
 		game.load.spritesheet('char', './assets/Astronaut.png', 31, 71, 6);
 		game.load.spritesheet('rocket', './assets/rocket_spritesheet.png', 154, 412, 2);
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);

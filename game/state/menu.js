@@ -50,7 +50,7 @@ function openOption () {
 	popup.anchor.set(0.5);
 	popup.inputEnabled = true;
 
-	startButton = game.make.sprite(-46.5, 185, 'start_button');
+	startButton = game.make.sprite(-46.5, 185, 'startButton');
 	startButton.inputEnabled = true;
 	startButton.input.priorityID = 1;
 	startButton.input.useHandCursor = true;

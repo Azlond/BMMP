@@ -1,3 +1,5 @@
+var counter = 0;
+
 function timeDown () {
   var countdown = 1000;
   timer = game.time.create(false);
@@ -49,20 +51,8 @@ function changeDisplay () {
         oxygenTank.animations.stop();
 		oxygenTank.frame = 9;
         console.log(oxygenCounter);
-        this.timer.stop();
+		--lifeCounter;
     } else {
         this.timer.stop();
     }
-
-}
-
-function timeDownLife () {
-  var countdown = 1000;
-  timer = game.time.create(false);
-  timer.loop(countdown, oxygenForLife, this);
-  timer.start ();
-}
-
-function oxygenForLife () {
-	
 }
