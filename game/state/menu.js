@@ -20,6 +20,8 @@ var startButton;
 var soundButton;
 var scoreButton;
 var closeButton;
+var playerName;
+var playerRegEx = /8|6[5-9]|7[0-9]|8[0-9]|90/;
 
 menu.prototype = {
 
@@ -32,19 +34,33 @@ menu.prototype = {
 	}
 };
 
+function startGame() { // starts the game
+	var str = playerName.text;
 
-function startGame() { //starts the game
-
-	game.state.start('intro');
-	if (soundOn) {
-		sound.stop();
+	if (!(str.length < 1)) {
+		game.state.start('intro');
+		if (soundOn) {
+			sound.stop();
+		}
 	}
 }
 
-function openOption () {
-	sound = game.add.audio ('music');
+function updateName(e) {
+
+	// Backspace
+	if (e.keyCode == 8) {
+		var str = playerName.text;
+		str = str.substring(0, str.length - 1);
+		playerName.text = str;
+	} else {
+		playerName.text = playerName.text + e.key.toString().toUpperCase();
+	}
+}
+
+function openOption() {
+	sound = game.add.audio('music');
 	sound.play();
-	
+
 	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
@@ -57,38 +73,48 @@ function openOption () {
 	startButton.events.onInputDown.add(startGame, this);
 	popup.addChild(startButton);
 
-	soundButton = game.make.sprite (297, 180, 'sound_button');
+	soundButton = game.make.sprite(297, 180, 'sound_button');
 	soundButton.inputEnabled = true;
 	soundButton.input.priorityID = 1;
 	soundButton.input.useHandCursor = true;
 	soundButton.events.onInputDown.add(soundOption, this);
 	popup.addChild(soundButton);
 
-	scoreButton = game.make.sprite (-333, 180, 'score_button');
+	scoreButton = game.make.sprite(-333, 180, 'score_button');
 	scoreButton.inputEnabled = true;
 	scoreButton.input.priorityID = 1;
 	scoreButton.input.useHandCursor = true;
 	scoreButton.events.onInputDown.add(scoreOption, this);
 	popup.addChild(scoreButton);
-	
+
+	playerName = game.add.text(370, 139, "", {
+		font : '30px Courier',
+		fill : '#ffffff'
+	});
+
+	game.input.keyboard.onUpCallback = function(e) {
+		if (playerRegEx.test(e.keyCode)) {
+			updateName(e);
+		}
+	}
+
 }
 
+/** ******* panel to switch music and sound on/off ***************** */
 
-/********* panel to switch music and sound on/off ******************/
-
-function soundOption () {
+function soundOption() {
 	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'soundBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 	popup.inputEnabled = true;
-	
-	musicControl = new controlButton (game, mControlX, mControlY,  1, changeMusic);
+
+	musicControl = new controlButton(game, mControlX, mControlY, 1, changeMusic);
 	popup.addChild(musicControl);
-	
-	soundControl = new controlButton (game, sControlX, sControlY,  1, changeSound);
+
+	soundControl = new controlButton(game, sControlX, sControlY, 1, changeSound);
 	popup.addChild(soundControl);
-	
-	close_button = new closeButton (game, 0);
+
+	close_button = new closeButton(game, 0);
 	popup.addChild(close_button);
 }
 
@@ -115,41 +141,38 @@ function changeSound() {
 		soundControl.kill();
 		soundControl = new controlButton(game, sControlX, sControlY, 0, changeSound);
 		popup.addChild(soundControl);
-		//sound.pause();
+		// sound.pause();
 		console.log(soundOn);
 	} else {
 		soundOn = true;
 		soundControl.kill();
 		soundControl = new controlButton(game, sControlX, sControlY, 1, changeSound);
 		popup.addChild(soundControl);
-		//sound.resume();
+		// sound.resume();
 		console.log(soundOn);
 	}
 }
 
-
-/**** panel for score  *****/
+/** ** panel for score **** */
 
 function scoreOption() {
 	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'startBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 	popup.inputEnabled = true;
-	
-	close_button = new closeButton (game, 0);
+
+	close_button = new closeButton(game, 0);
 	popup.addChild(close_button);
-	
-	
+
 }
 
-/**** diverse methods*****/
-
+/** ** diverse methods**** */
 
 function closeWindow() {
 	popup.kill();
 }
 
-var controlButton = function (game, x, y, frame, option) {
+var controlButton = function(game, x, y, frame, option) {
 	this.game = game;
 	Phaser.Sprite.call(this, this.game, x, y, 'controlSound', frame);
 	this.inputEnabled = true;
@@ -160,14 +183,14 @@ var controlButton = function (game, x, y, frame, option) {
 controlButton.prototype = Object.create(Phaser.Sprite.prototype);
 controlButton.prototype.constructor = controlButton;
 
-var closeButton = function (game, frame) { 
+var closeButton = function(game, frame) {
 	this.game = game;
 	Phaser.Sprite.call(this, this.game, -36, 185, 'doneButton', frame);
 	this.inputEnabled = true;
 	this.input.priorityID = 1;
 	this.input.useHandCursor = true;
 	this.events.onInputDown.add(closeWindow, this);
-	
+
 };
 closeButton.prototype = Object.create(Phaser.Sprite.prototype);
 closeButton.prototype.constructor = closeButton;
