@@ -95,7 +95,7 @@ loading.prototype = {
 	},
 
 	create : function() {
-		game.state.start('menu'); // opens the menu
+		game.state.start('intro'); // opens the menu
 	}
 
 };
