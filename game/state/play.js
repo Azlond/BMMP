@@ -30,7 +30,6 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-
 		this.levelNumber = 1;// first level
 		this.finalLevel = 4;// last level
 
@@ -39,8 +38,6 @@ play.prototype = {
 
 		// loads the first level level number has to be increased once the player has reached the finish line
 		this.loadLevel("");
-
-
 
 	},
 
@@ -67,9 +64,9 @@ play.prototype = {
 
 		/*
 		 * Moving the player
-		 *
+		 * 
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 *
+		 * 
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
 		if (cursors.left.isDown && this.rocket.body.y == 69) {
@@ -100,17 +97,18 @@ play.prototype = {
 		 * check if the player is dead
 		 */
 		if (lifeCounter == 0) {
+			this.saveLocal();
 			this.game.state.start('gameOver');
 		}
 
 		/*
 		 * check if the player has fallen into a rift
-		 *
+		 * 
 		 * if the player has more than 0 lives left, restart the level
 		 */
 		if (this.astronaut.body.y > 600 && !this.fallen) {
 			lifeCounter--;
-			showLife (lifeCounter);
+			showLife(lifeCounter);
 			console.log(lifeCounter);
 			this.fallen = true;
 			if (lifeCounter != 0) {
@@ -263,9 +261,9 @@ play.prototype = {
 
 		/*
 		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
-		 *
+		 * 
 		 * rocket needs to be immovable until player is inside so that it can't be kicked around
-		 *
+		 * 
 		 * no gravity to make departure cleaner
 		 */
 		switch (this.levelNumber) {
@@ -309,8 +307,7 @@ play.prototype = {
 		this.alien.anchor.setTo(0.5, 0.5);
 		this.alien.animations.play('walk');
 
-
-		/* shows oxygencounter in each level*/
+		/* shows oxygencounter in each level */
 		oxygenCounter = 9;
 		oxygenTank = game.add.sprite(750, 63, 'tank');
 		oxygenTank.frame = oxygenCounter;
@@ -318,11 +315,10 @@ play.prototype = {
 		--oxygenCounter;
 		this.timeDown();
 
-
-		/* shows life counter in each level*/
-		var toolbar = game.add.sprite(0,0, 'toolbar');
+		/* shows life counter in each level */
+		var toolbar = game.add.sprite(0, 0, 'toolbar');
 		toolbar.fixedToCamera = true;
-		showLife (lifeCounter);
+		showLife(lifeCounter);
 	},
 
 	/*
@@ -341,7 +337,7 @@ play.prototype = {
 
 	/*
 	 * called when the player collides with the rocket
-	 *
+	 * 
 	 * checks if all tools have been collected
 	 */
 	hitFinish : function(astronaut, finish) {
@@ -351,12 +347,14 @@ play.prototype = {
 			this.rocket.body.immovable = false;
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
+			score += 50;
+			this.saveLocal();
 		}
 	},
 
 	/*
 	 * called when player collides with an alien
-	 *
+	 * 
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
 	collideWithAlien : function(astronaut, alien) {
@@ -405,28 +403,78 @@ play.prototype = {
 		this.toolsCollected += 1;
 	},
 
-timeDown : function () {
-  var countdown = 100000;
-  timer = game.time.create(false);
-  timer.loop(countdown, this.changeDisplay, this);
-  timer.start ();
-},
+	timeDown : function() {
+		var countdown = 100000;
+		timer = game.time.create(false);
+		timer.loop(countdown, this.changeDisplay, this);
+		timer.start();
+	},
 
- changeDisplay : function () {
-    if (oxygenCounter > 3){
-        oxygenTank.frame = oxygenCounter;
-        --oxygenCounter;
-    } else if (oxygenCounter < 4 && oxygenCounter > 0) {
-        oxygenTank.animations.add('blink1', [oxygenCounter, 0], 5, true);
-        oxygenTank.animations.play('blink1');
-        --oxygenCounter;
-    } else if (oxygenCounter === 0) {
-        oxygenTank.animations.stop();
-		oxygenTank.frame = 0;
-		--lifeCounter;
-		this.loadLevel("restart");
-		timer.stop();
-    } else {
-        timer.stop();
-    }
-}};
+	changeDisplay : function() {
+		if (oxygenCounter > 3) {
+			oxygenTank.frame = oxygenCounter;
+			--oxygenCounter;
+		} else if (oxygenCounter < 4 && oxygenCounter > 0) {
+			oxygenTank.animations.add('blink1', [ oxygenCounter, 0 ], 5, true);
+			oxygenTank.animations.play('blink1');
+			--oxygenCounter;
+		} else if (oxygenCounter === 0) {
+			oxygenTank.animations.stop();
+			oxygenTank.frame = 0;
+			--lifeCounter;
+			this.loadLevel("restart");
+			timer.stop();
+		} else {
+			timer.stop();
+		}
+	},
+
+	saveLocal : function() {
+		if (score != 0) {
+			var scores = localStorage.getItem('highScore') || [];
+
+			console.log(scores);
+
+			if (scores.length != 0) {
+				scores = JSON.parse(scores);
+			}
+			this.parseJson(scores);
+		}
+	},
+
+	parseJson : function(json) {
+		var pName = playerName.text.toString();
+
+		if (json.length == 0) {
+			json.push(playerName.text + " " + score);
+			localStorage.setItem("highScore", JSON.stringify(json));
+		} else {
+			for (i = 0; i < json.length; i++) {
+				var highScoreName = json[i].replace(/\s[0-9]*/, "");
+				var playerHighScore = json[i].replace(/[a-zA-Z]*\s/, "");
+
+				if (highScoreName == pName && playerHighScore < score) {
+					console.log(highScoreName);
+					console.log(playerHighScore);
+
+					console.log(json);
+					json.splice(i, 1);
+					console.log(json);
+
+					json.push(playerName.text + " " + score);
+					localStorage.setItem("highScore", JSON.stringify(json));
+				}
+			}
+		}
+	}
+
+};
+
+function readLocal() {
+	// get the highscores object
+	var scores = localStorage.getItem("highScore");
+	scores = JSON.parse(scores);
+	for (i = 0; i < scores.length; i++) {
+		console.log(score[i]);
+	}
+}
