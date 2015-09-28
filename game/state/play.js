@@ -412,7 +412,7 @@ timeDown : function () {
 },
 
  changeDisplay : function () {
-    if (oxygenCounter === 9) {
+    if (oxygenCounter ==9) {
         oxygenTank.frame = 0;
         console.log(oxygenCounter);
         --oxygenCounter;		
