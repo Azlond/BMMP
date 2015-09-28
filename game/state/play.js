@@ -313,7 +313,7 @@ play.prototype = {
 		/* shows oxygencounter in each level*/
 		oxygenCounter = 9;
 		oxygenTank = game.add.sprite(750, 63, 'tank');
-		oxygenTank.frame = 0;
+		oxygenTank.frame = oxygenCounter;
 		oxygenTank.fixedToCamera = true;
 		--oxygenCounter;
 		this.timeDown();
@@ -405,57 +405,23 @@ play.prototype = {
 	},  
 
 timeDown : function () {
-  var countdown = 4000;
+  var countdown = 1000;
   timer = game.time.create(false);
   timer.loop(countdown, this.changeDisplay, this);
   timer.start ();
 },
 
  changeDisplay : function () {
-    if (oxygenCounter ==9) {
-        oxygenTank.frame = 0;
-        console.log(oxygenCounter);
+    if (oxygenCounter > 3){
+        oxygenTank.frame = oxygenCounter;
         --oxygenCounter;		
-    } else if (oxygenCounter === 8) {
-        oxygenTank.frame = 1;
-        console.log(oxygenCounter);
-        --oxygenCounter;
-    } else if (oxygenCounter === 7) {
-        oxygenTank.frame = 2;
-        console.log(oxygenCounter);
-        --oxygenCounter;
-    } else if (oxygenCounter === 6) {
-        oxygenTank.frame = 3;
-        console.log(oxygenCounter);
-        --oxygenCounter;
-    } else if (oxygenCounter === 5) {
-        oxygenTank.frame = 4;
-        console.log(oxygenCounter);
-        --oxygenCounter;
-    } else if (oxygenCounter === 4) {
-        oxygenTank.frame = 5;
-        console.log(oxygenCounter);
-        --oxygenCounter;
-    } else if (oxygenCounter === 3) {
-        oxygenTank.animations.add('blink1', [6, 9], 5, true);
+    } else if (oxygenCounter < 4 && oxygenCounter > 0) {
+        oxygenTank.animations.add('blink1', [oxygenCounter, 0], 5, true);
         oxygenTank.animations.play('blink1');
-        console.log(oxygenCounter);
-        --oxygenCounter;
-    } else if (oxygenCounter === 2) {
-        oxygenTank.animations.add('blink2', [7, 9], 5, true);
-        oxygenTank.animations.play('blink2');
-        console.log(oxygenCounter);
-        --oxygenCounter;
-    } else if (oxygenCounter === 1) {
-        oxygenTank.animations.add('blink3', [8, 9], 5, true);
-        oxygenTank.animations.play('blink3');
-        console.log(oxygenCounter);
         --oxygenCounter;
     } else if (oxygenCounter === 0) {
         oxygenTank.animations.stop();
-		oxygenTank.frame = 9;
-        console.log(oxygenCounter);
-		console.log(this);
+		oxygenTank.frame = 0;
 		--lifeCounter;
 		this.loadLevel("restart");
 		timer.stop();
