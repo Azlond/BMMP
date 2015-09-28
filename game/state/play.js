@@ -13,6 +13,7 @@ var oxygenCounter;
 var pathCounter = 0;
 var timer;
 var life;
+var alienGroup;
 
 var soundOn = true;
 
@@ -30,7 +31,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 4;// first level
+		this.levelNumber = 1;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -46,14 +47,14 @@ play.prototype = {
 		 * collision between astronaut/alien/rocket and the platform/ground layer
 		 */
 		this.game.physics.arcade.collide(this.astronaut, this.layer);
-		this.game.physics.arcade.collide(this.alien, this.layer);
+		this.game.physics.arcade.collide(alienGroup, this.layer);
 		this.game.physics.arcade.collide(this.rocket, this.layer);
 
 		/*
 		 * collision between astronaut and rocket/alien
 		 */
 		this.game.physics.arcade.collide(this.astronaut, this.rocket, this.hitFinish, null, this);
-		this.game.physics.arcade.overlap(this.astronaut, this.alien, this.collideWithAlien, null, this);
+		this.game.physics.arcade.overlap(this.astronaut, alienGroup, this.collideWithAlien, null, this);
 
 		/*
 		 * collision between astronaut and tools
@@ -173,6 +174,7 @@ play.prototype = {
 			this.nopliers.kill();
 			this.nowrench.kill();
 			this.noscrewdriver.kill();
+			alienGroup.destroy();
 		}
 
 		this.toolsCollected = 0;
@@ -298,11 +300,21 @@ play.prototype = {
 		/**
 		 * add aliens TODO: hashmap with locations similar to the tools to support multiple aliens
 		 */
-		this.alien = new Alien(this.game, 700, 350);
-		this.game.add.existing(this.alien);
-		this.alien.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
-		this.alien.anchor.setTo(0.5, 0.5);
-		this.alien.animations.play('walk');
+		alienGroup = game.add.group();
+
+		var alienInfo = aliens["level" + this.levelNumber];
+		console.log(alienInfo);
+		var amountAliens = alienInfo["amount"];
+		var alienCoordinates = alienInfo["coordinates"];
+
+		for (i = 1; i <= amountAliens; i++) {
+			this.alien = new Alien(this.game, alienCoordinates["alien" + i][0], alienCoordinates["alien" + i][1]);
+			this.game.add.existing(this.alien);
+			this.alien.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
+			this.alien.anchor.setTo(0.5, 0.5);
+			this.alien.animations.play('walk');
+			alienGroup.add(this.alien);
+		}
 
 		/* shows oxygencounter in each level */
 		oxygenCounter = 9;
@@ -322,7 +334,7 @@ play.prototype = {
 	 * collecting an element and removing it from the game
 	 */
 	collectElement : function(astronaut, tile) {
-	
+
 		this.map.removeTile(tile.x, tile.y, this.layer);
 
 		score += 1;
@@ -455,8 +467,6 @@ play.prototype = {
 				if (highScoreName == pName) {
 					playerExists = true;
 					if (playerHighScore < score) {
-						console.log(highScoreName);
-						console.log(playerHighScore);
 						json.splice(i, 1);
 						json.push(playerName.text + " " + score);
 						localStorage.setItem("highScore", JSON.stringify(json));
