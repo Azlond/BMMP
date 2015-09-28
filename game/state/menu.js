@@ -56,7 +56,6 @@ function updateName(e) {
 		str = str.substring(0, str.length - 1);
 		playerName.text = str;
 	} else if (e.keyCode >= 60 && e.keyCode <= 90 && nameLength < 20) {
-		console.log(e.keyCode);
 		var str = String.fromCharCode(e.keyCode);
 		playerName.text = playerName.text + str;
 	}

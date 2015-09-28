@@ -30,7 +30,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 1;// first level
+		this.levelNumber = 4;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -128,10 +128,7 @@ play.prototype = {
 		 */
 		if (this.rocketGone) {
 			if (this.levelNumber == this.finalLevel) {
-				game.add.text(game.width / 2, game.height / 2, 'You win!', {
-					font : '50px Courier',
-					fill : '#8B1A1A'
-				});
+				game.state.start('win');
 			} else {
 				this.levelNumber += 1;
 				this.loadLevel("");
