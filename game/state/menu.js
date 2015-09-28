@@ -53,7 +53,8 @@ function updateName(e) {
 		str = str.substring(0, str.length - 1);
 		playerName.text = str;
 	} else {
-		playerName.text = playerName.text + e.key.toString().toUpperCase();
+		var str = String.fromCharCode(e.keyCode);
+		playerName.text = playerName.text + str;
 	}
 }
 
