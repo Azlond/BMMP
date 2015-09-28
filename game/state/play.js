@@ -29,7 +29,7 @@ play.prototype = {
 		// score at the beginning of the game
 		score = 0;
 		lifeCounter = 3;
-		
+
 
 		this.levelNumber = 1;// first level
 		this.finalLevel = 4;// last level
@@ -39,9 +39,9 @@ play.prototype = {
 
 		// loads the first level level number has to be increased once the player has reached the finish line
 		this.loadLevel("");
-		
-		
-		
+
+
+
 	},
 
 	update : function() {
@@ -67,9 +67,9 @@ play.prototype = {
 
 		/*
 		 * Moving the player
-		 * 
+		 *
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 * 
+		 *
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
 		if (cursors.left.isDown && this.rocket.body.y == 69) {
@@ -105,7 +105,7 @@ play.prototype = {
 
 		/*
 		 * check if the player has fallen into a rift
-		 * 
+		 *
 		 * if the player has more than 0 lives left, restart the level
 		 */
 		if (this.astronaut.body.y > 600 && !this.fallen) {
@@ -263,9 +263,9 @@ play.prototype = {
 
 		/*
 		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
-		 * 
+		 *
 		 * rocket needs to be immovable until player is inside so that it can't be kicked around
-		 * 
+		 *
 		 * no gravity to make departure cleaner
 		 */
 		switch (this.levelNumber) {
@@ -317,8 +317,8 @@ play.prototype = {
 		oxygenTank.fixedToCamera = true;
 		--oxygenCounter;
 		this.timeDown();
-		
-		
+
+
 		/* shows life counter in each level*/
 		var toolbar = game.add.sprite(0,0, 'toolbar');
 		toolbar.fixedToCamera = true;
@@ -341,7 +341,7 @@ play.prototype = {
 
 	/*
 	 * called when the player collides with the rocket
-	 * 
+	 *
 	 * checks if all tools have been collected
 	 */
 	hitFinish : function(astronaut, finish) {
@@ -356,7 +356,7 @@ play.prototype = {
 
 	/*
 	 * called when player collides with an alien
-	 * 
+	 *
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
 	collideWithAlien : function(astronaut, alien) {
@@ -403,10 +403,10 @@ play.prototype = {
 		}
 		tools.kill();
 		this.toolsCollected += 1;
-	},  
+	},
 
 timeDown : function () {
-  var countdown = 1000;
+  var countdown = 100000;
   timer = game.time.create(false);
   timer.loop(countdown, this.changeDisplay, this);
   timer.start ();
@@ -415,7 +415,7 @@ timeDown : function () {
  changeDisplay : function () {
     if (oxygenCounter > 3){
         oxygenTank.frame = oxygenCounter;
-        --oxygenCounter;		
+        --oxygenCounter;
     } else if (oxygenCounter < 4 && oxygenCounter > 0) {
         oxygenTank.animations.add('blink1', [oxygenCounter, 0], 5, true);
         oxygenTank.animations.play('blink1');
