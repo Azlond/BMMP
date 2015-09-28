@@ -320,7 +320,8 @@ play.prototype = {
 		
 		
 		/* shows life counter in each level*/
-		game.add.sprite(0,0, 'toolbar');
+		var toolbar = game.add.sprite(0,0, 'toolbar');
+		toolbar.fixedToCamera = true;
 		showLife (lifeCounter);
 	},
 
