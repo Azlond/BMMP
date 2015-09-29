@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e0d322c-ff59-46c5-9eea-778b32acede3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/state/intro.js" afterPath="$PROJECT_DIR$/game/state/intro.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/state/loading.js" afterPath="$PROJECT_DIR$/game/state/loading.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/state/menu.js" afterPath="$PROJECT_DIR$/game/state/menu.js" />
     </list>
     <ignored path="BMMP.iws" />
@@ -29,9 +27,11 @@
         <entry file="file://$PROJECT_DIR$/game/state/menu.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.86764705">
-              <caret line="181" column="38" selection-start-line="181" selection-start-column="38" selection-end-line="181" selection-end-column="38" />
+              <caret line="199" column="38" selection-start-line="199" selection-start-column="38" selection-end-line="199" selection-end-column="38" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <marker date="1443453751000" expanded="true" signature="4312:4314" placeholder="{...}" />
+                <marker date="1443453751000" expanded="true" signature="4312:4689" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -244,6 +244,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1443453751000" expanded="true" signature="4312:4314" placeholder="{...}" />
+            <marker date="1443453751000" expanded="true" signature="4312:4689" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -259,9 +261,11 @@
     <entry file="file://$PROJECT_DIR$/game/state/menu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.86764705">
-          <caret line="181" column="38" selection-start-line="181" selection-start-column="38" selection-end-line="181" selection-end-column="38" />
+          <caret line="199" column="38" selection-start-line="199" selection-start-column="38" selection-end-line="199" selection-end-column="38" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1443453751000" expanded="true" signature="4312:4314" placeholder="{...}" />
+            <marker date="1443453751000" expanded="true" signature="4312:4689" placeholder="{...}" />
           </folding>
         </state>
       </provider>

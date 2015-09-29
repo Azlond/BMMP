@@ -18,7 +18,10 @@ var mControlX = -66;
 var mControlY = -185;
 var sControlX = -156;
 var sControlY = -100;
-var character;
+var player1;
+var player2;
+var player3;
+var player4;
 var startButton;
 var soundButton;
 var scoreButton;
@@ -36,14 +39,31 @@ menu.prototype = {
 		popupOption.alpha = 1.0;
 		popupOption.anchor.set(0.5);
 
-		startButton = new button(game, -36, 185, 0, startGame, 'startButton');
+		/* characterauswahl*/
+		
+		player1 = game.add.button (-314, -120, 'player1', highlightButton, this, 0);
+		popupOption.addChild(player1);
+		
+		player2 = game.add.button (-157, -120, 'player2', highlightButton, this, 0);
+		popupOption.addChild(player2);
+		
+		player3 = game.add.button (20, -120, 'player3', highlightButton, this, 0);
+		popupOption.addChild(player3);
+		
+		player4 = game.add.button (177, -120, 'player4', highlightButton, this, 0);
+		popupOption.addChild(player4);
+		
+		/* buttons */
+	
+		startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
 		popupOption.addChild(startButton);
-
-		soundButton = new button(game, 280, 188, 0, soundOption, 'soundButton');
+	
+		soundButton = game.add.button (280, 188, 'soundButton', soundOption, this, 1, 0);
 		popupOption.addChild(soundButton);
 
-		scoreButton = new button(game, -316, 188, 0, scoreOption, 'scoreButton');
+		scoreButton = game.add.button (-316, 188, 'scoreButton', scoreOption, this, 1, 0);
 		popupOption.addChild(scoreButton);
+
 
 		playerName = game.add.text(370, 139, "", {
 			font : '30px Courier',
@@ -107,14 +127,19 @@ function soundOption() {
 	soundButton.kill();
 	scoreButton.kill();
 	startButton.kill();
-
-	musicControl = new button(game, mControlX, mControlY, musicOn, changeMusic, 'controlSound');
+	player1.kill();
+	player2.kill();
+	player3.kill();
+	player4.kill();
+	
+	
+	musicControl = new button (game, mControlX, mControlY, musicOn, changeMusic, 'controlSound');
 	popup.addChild(musicControl);
 
 	soundControl = new button(game, sControlX, sControlY, 1, changeSound, 'controlSound');
 	popup.addChild(soundControl);
 
-	closeButton = new button(game, -36, 185, 0, closeWindow, 'closeButton');
+	closeButton = game.add.button (-36, 188, 'closeButton', closeWindow, this, 1, 0);
 	popup.addChild(closeButton);
 }
 
@@ -159,8 +184,13 @@ function scoreOption() {
 	soundButton.kill();
 	scoreButton.kill();
 	startButton.kill();
+	player1.kill();
+	player2.kill();
+	player3.kill();
+	player4.kill();
+	
 
-	closeButton = new button(game, -36, 185, 0, closeWindow, 'closeButton');
+	closeButton = game.add.button (-36, 188, 'closeButton', closeWindow, this, 1, 0);
 	popup.addChild(closeButton);
 
 	var highScoreList = readLocal();
@@ -177,13 +207,61 @@ function closeWindow() {
 	popup.kill();
 	soundButton = new button(game, 280, 188, 0, soundOption, 'soundButton');
 	popupOption.addChild(soundButton);
+	
+	player1 = game.add.button (-314, -120, 'player1', highlightButton(1), this, 0);
+	popupOption.addChild(player1);
+	
+	player2 = game.add.button (-157, -120, 'player2', highlightButton(2), this, 0);
+	popupOption.addChild(player2);
+	
+	player3 = game.add.button (20, -120, 'player3', highlightButton(3), this, 0);
+	popupOption.addChild(player3);
+	
+	player4 = game.add.button (177, -120, 'player4', highlightButton(4), this, 0);
+	popupOption.addChild(player4);
+	
+	/* buttons */
 
-	scoreButton = new button(game, -316, 188, 0, scoreOption, 'scoreButton');
-	popupOption.addChild(scoreButton);
-
-	startButton = new button(game, -36, 185, 0, startGame, 'startButton');
+	startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
 	popupOption.addChild(startButton);
 
+	soundButton = game.add.button (280, 188, 'soundButton', soundOption, this, 1, 0);
+	popupOption.addChild(soundButton);
+
+	scoreButton = game.add.button (-316, 188, 'scoreButton', scoreOption, this, 1, 0);
+	popupOption.addChild(scoreButton);
+	
+}
+
+function highlightButton(player){
+	/*
+	switch (player) {
+		case 1: player1.kill(); 
+				player1 = game.add.sprite (-314, -120, 'player1');
+				player1.frame = 0;
+				popupOption.addChild(player1);
+				break;
+				
+		case 2: player2.kill(); 
+				player2 = game.add.sprite (-314, -120, 'player2');
+				player2.frame = 0;
+				popupOption.addChild(player2);
+				break;
+				
+		case 3: player3.kill(); 
+				player3 = game.add.sprite (-314, -120, 'player1');
+				player3.frame = 0;
+				popupOption.addChild(player3);
+				break;
+		case 4: player4.kill(); 
+				player4 = game.add.sprite (-314, -120, 'player1');
+				player4.frame = 0;
+				popupOption.addChild(player4);
+				break;
+				
+		default: break;
+	}
+	*/
 }
 
 var button = function(game, x, y, frame, option, keyName) {

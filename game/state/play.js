@@ -157,7 +157,14 @@ play.prototype = {
 				this.alien.body.velocity.x = -50;
 			}
 		}
-
+		
+		
+		/* pause menu*/
+		
+		game.input.keyboard.onUpCallback = function(e) {
+			pauseOption(e);
+		}
+		function pauseOption (e) {}
 	},
 
 	/*

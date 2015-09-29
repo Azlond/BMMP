@@ -33,11 +33,18 @@ loading.prototype = {
 		
 
 		// button
-		game.load.spritesheet('startButton', './assets/menu/startMenu/startButtonSprite.png', 99, 40, 2);
-		game.load.image('soundButton', './assets/menu/startMenu/soundButton.png');
-		game.load.spritesheet('scoreButton', './assets/menu/startMenu/highscoreButton.png', 43, 47, 2);
-		game.load.image('closeButton', './assets/menu/soundMenu/doneButton.png');
+		game.load.spritesheet('startButton', './assets/menu/startMenu/startButtonSprite.png', 100, 35, 2);
+		game.load.spritesheet('soundButton', './assets/menu/startMenu/soundButtonSprite.png', 43, 43, 2);
+		game.load.spritesheet('scoreButton', './assets/menu/startMenu/highscoreButtonSprite.png', 43, 43, 2);
+		game.load.spritesheet('closeButton', './assets/menu/soundMenu/doneButtonSprite.png', 71, 29, 2);
 		game.load.spritesheet('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
+		
+		//characters
+		game.load.image ('player1', './assets/menu/startMenu/player1.png');
+		game.load.image ('player2', './assets/menu/startMenu/player2.png');
+		game.load.image ('player3', './assets/menu/startMenu/player3.png');
+		game.load.image ('player4', './assets/menu/startMenu/player4.png');
+		
 
 		// music
 		game.load.audio('music', './assets/sound/background_music.wav');
