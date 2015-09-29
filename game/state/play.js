@@ -30,7 +30,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 1;// first level
+		this.levelNumber = 2;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -71,19 +71,25 @@ play.prototype = {
 		 */
 		if (cursors.left.isDown && this.rocket.body.y == 69) {
 			this.astronaut.body.velocity.x = -175;
-			this.astronaut.animations.play('walk', 7, true);
+			if (this.astronaut.body.onFloor()) {
+				this.astronaut.animations.play('walk', 7, true);
+			}
 			this.astronaut.scale.x = -1;
 			this.background2.x += 0.25;
 			this.background1.x += 0.3;
 		} else if (cursors.right.isDown && this.rocket.body.y == 69) {
+			if (this.astronaut.body.onFloor()) {
+				this.astronaut.animations.play('walk', 7, true);
+			}
 			this.astronaut.body.velocity.x = 175;
 			this.astronaut.scale.x = 1;
-			this.astronaut.animations.play('walk', 7, true);
 			this.background2.x -= 0.25;
 			this.background1.x -= 0.3;
 		} else {
 			this.astronaut.body.velocity.x = 0;
-			this.astronaut.animations.play('stop', 7, true);
+			if (this.astronaut.body.onFloor()) {
+				this.astronaut.animations.play('stop', 7, true);
+			}
 		}
 
 		if (cursors.down.isDown) {
@@ -93,8 +99,11 @@ play.prototype = {
 		/*
 		 * Jumping
 		 */
-		if (cursors.up.isDown && this.astronaut.body.onFloor()) {
-			this.astronaut.body.velocity.y = -700;
+		if (cursors.up.isDown) {
+			this.astronaut.animations.play('jump', 6, true);
+			if (this.astronaut.body.onFloor()) {
+				this.astronaut.body.velocity.y = -700;
+			}
 		}
 
 		/*
@@ -149,7 +158,7 @@ play.prototype = {
 			if (enemy.pathCounter >= 0) {
 				enemy.pathCounter++;
 			}
-			if (enemy.pathCounter >= 150) {
+			if (enemy.pathCounter >= enemy.distance) {
 				if (enemy.scale.x == -1 && enemy.body.velocity.x == -50) {
 					enemy.pathCounter = 0;
 					enemy.scale.x = 1;
@@ -299,8 +308,9 @@ play.prototype = {
 		 */
 		this.astronaut = new Astronaut(this.game, 100, 450);
 		this.game.add.existing(this.astronaut);
-		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
+		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11 ], 20, true);
 		this.astronaut.animations.add('stop', [ 0 ], 20, true);
+		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true)
 		this.astronaut.anchor.setTo(0.5, 0.5);
 		this.game.camera.follow(this.astronaut);
 
@@ -322,7 +332,7 @@ play.prototype = {
 		var alienCoordinates = alienInfo["coordinates"];
 
 		for (i = 1; i <= amountAliens; i++) {
-			this.alien = new Alien(this.game, alienCoordinates["alien" + i][0], alienCoordinates["alien" + i][1], 0, "alien" + i);
+			this.alien = new Alien(this.game, alienCoordinates["alien" + i][0], alienCoordinates["alien" + i][1], alienCoordinates["alien" + i][2]);
 			this.game.add.existing(this.alien);
 			this.alien.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
 			this.alien.anchor.setTo(0.5, 0.5);
@@ -348,13 +358,15 @@ play.prototype = {
 	 * collecting an element and removing it from the game
 	 */
 	collectElement : function(astronaut, tile) {
+		if (astronaut.key.contains("char")) {
 
-		this.map.removeTile(tile.x, tile.y, this.layer);
+			this.map.removeTile(tile.x, tile.y, this.layer);
 
-		score += 1;
-		this.scoreText.text = 'Score: ' + score;
+			score += 1;
+			this.scoreText.text = 'Score: ' + score;
 
-		return false;
+			return false;
+		}
 
 	},
 

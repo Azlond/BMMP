@@ -1,9 +1,9 @@
-var Alien = function(game, x, y, pathCounter, name) {
+var Alien = function(game, x, y, distance) {
 
 	this.game = game;
-	this.name = name;
+	this.distance = distance;
 	
-	this.pathCounter = pathCounter;
+	this.pathCounter = 0;
 
 	Phaser.Sprite.call(this, this.game, x, y, 'alien');
 
@@ -21,32 +21,34 @@ var aliens = {
 	"level1" : {
 		"amount" : 2,
 		"coordinates" : {
-			"alien1" : [ 600, 350 ],
-			"alien2" : [ 1800, 350 ]
+			"alien1" : [ 600, 350, 250 ], // x, y, distance
+			"alien2" : [ 1800, 350, 250 ]
 		}
 	},
 	"level2" : {
-		"amount" : 3,
+		"amount" : 5,
 		"coordinates" : {
-			"alien1" : [ 600, 350 ],
-			"alien2" : [ 1600, 350 ],
-			"alien3" : [ 1108, 350 ]
+			"alien1" : [ 740, 450, 230 ],
+			"alien2" : [ 1050, 450, 400 ],
+			"alien3" : [ 1230, 220, 250 ],
+			"alien4" : [ 2570, 200, 210 ],
+			"alien5" : [ 3600, 265, 150 ]
 		}
 	},
 	"level3" : {
 		"amount" : 3,
 		"coordinates" : {
-			"alien1" : [ 700, 350 ],
-			"alien2" : [ 1600, 350 ],
-			"alien3" : [ 1108, 350 ]
+			"alien1" : [ 700, 350, 250 ],
+			"alien2" : [ 1600, 350, 250 ],
+			"alien3" : [ 1108, 350, 250 ]
 		}
 	},
 	"level4" : {
 		"amount" : 3,
 		"coordinates" : {
-			"alien1" : [ 700, 350 ],
-			"alien2" : [ 1600, 350 ],
-			"alien3" : [ 1108, 350 ]
+			"alien1" : [ 700, 350, 250 ],
+			"alien2" : [ 1600, 350, 250 ],
+			"alien3" : [ 1108, 350, 250 ]
 		}
 	}
 
