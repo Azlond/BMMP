@@ -29,6 +29,7 @@ var closeButton;
 var playerName;
 var playerRegEx = /8|6[5-9]|7[0-9]|8[0-9]|90/;
 var highScoreGroup;
+var activeAstronaut = 1;
 
 menu.prototype = {
 
@@ -255,16 +256,40 @@ function closeWindow() {
 }
 
 function highlightButton(player) {
-	/*
-	 * switch (player) { case 1: player1.kill(); player1 = game.add.sprite (-314, -120, 'player1'); player1.frame = 0; popupOption.addChild(player1); break;
-	 * 
-	 * case 2: player2.kill(); player2 = game.add.sprite (-314, -120, 'player2'); player2.frame = 0; popupOption.addChild(player2); break;
-	 * 
-	 * case 3: player3.kill(); player3 = game.add.sprite (-314, -120, 'player1'); player3.frame = 0; popupOption.addChild(player3); break; case 4:
-	 * player4.kill(); player4 = game.add.sprite (-314, -120, 'player1'); player4.frame = 0; popupOption.addChild(player4); break;
-	 * 
-	 * default: break; }
-	 */
+/*
+	switch (player) {
+	case 1:
+		player1.kill();
+		player1 = game.add.sprite(-314, -120, 'player1');
+		player1.frame = 0;
+		popupOption.addChild(player1);
+		activeAstronaut = 1;
+		break;
+	case 2:
+		player2.kill();
+		player2 = game.add.sprite(-314, -120, 'player2');
+		player2.frame = 0;
+		popupOption.addChild(player2);
+		activeAstronaut = 2;
+		break;
+	case 3:
+		player3.kill();
+		player3 = game.add.sprite(-314, -120, 'player1');
+		player3.frame = 0;
+		popupOption.addChild(player3);
+		activeAstronaut = 3;
+		break;
+	case 4:
+		player4.kill();
+		player4 = game.add.sprite(-314, -120, 'player1');
+		player4.frame = 0;
+		popupOption.addChild(player4);
+		activeAstronaut = 4;
+		break;
+	default:
+		break;
+	}
+*/
 }
 
 var button = function(game, x, y, frame, option, keyName) {
