@@ -2,7 +2,22 @@ var Astronaut = function(game, x, y) {
 
 	this.game = game;
 
-	Phaser.Sprite.call(this, this.game, x, y, 'char');
+	switch (activeAstronaut) {
+	case 1:
+		Phaser.Sprite.call(this, this.game, x, y, 'char1');
+		break;
+	case 2:
+		Phaser.Sprite.call(this, this.game, x, y, 'char2');
+		break;
+	case 3:
+		Phaser.Sprite.call(this, this.game, x, y, 'char3');
+		break;
+	case 4:
+		Phaser.Sprite.call(this, this.game, x, y, 'char4');
+		break;
+	default:
+		break;
+	}
 
 	this.game.physics.arcade.enableBody(this);
 

@@ -42,11 +42,11 @@ loading.prototype = {
 		game.load.spritesheet('restartButton', './assets/menu/pauseMenu/restartButtonSprite.png', 111, 29, 2);
 		
 		game.load.image('continueButton','./assets/menu/pauseMenu/continueButton.png');
-		game.load.image('continueButtonHighlight','./assets/menu/pauseMenu/continueButtonHighlight.png');
+		game.load.image('continueHighlight','./assets/menu/pauseMenu/continueButtonHighlight.png');
 		game.load.image('quitButton','./assets/menu/pauseMenu/quitButton.png');
-		game.load.image('quitButtonHighlight','./assets/menu/pauseMenu/quitButtonHighlight.png');
+		game.load.image('quitHighlight','./assets/menu/pauseMenu/quitButtonHighlight.png');
 		game.load.image('restartButton','./assets/menu/pauseMenu/restartButton.png');
-		game.load.image('restartButtonHighlight','./assets/menu/pauseMenu/restartButtonHighlight.png');
+		game.load.image('restartHighlight','./assets/menu/pauseMenu/restartButtonHighlight.png');
 		game.load.image('off','./assets/menu/pauseMenu/off.png');
 		game.load.image('on','./assets/menu/pauseMenu/on.png');
 		
@@ -103,7 +103,7 @@ loading.prototype = {
 		 */
 		game.load.image('toolbar', './assets/toolbar.png');
 		game.load.spritesheet('lifeCounter', './assets/Status/livesSprite.png', 55, 40, 4);
-		game.load.spritesheet('char', './assets/Astronaut.png', 31, 71, 6);
+		game.load.spritesheet('char1', './assets/Astronaut2.png', 64, 96, 18);
 		game.load.spritesheet('rocket', './assets/rocket_spritesheet.png', 154, 412, 2);
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
 		game.load.image('gameOver', './assets/gameOver.jpg');
