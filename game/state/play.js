@@ -360,9 +360,9 @@ play.prototype = {
 		 */
 		this.astronaut = new Astronaut(this.game, 100, 440);
 		this.game.add.existing(this.astronaut);
-		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
-		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ], 20, true);
-		this.astronaut.animations.add('stop', [ 0 ], 20, true);
+		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 26, true);
+		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ], 26, true);
+		this.astronaut.animations.add('stop', [ 0 ], 26, true);
 		this.astronaut.anchor.setTo(0.5, 0.5);
 		this.game.camera.follow(this.astronaut);
 
