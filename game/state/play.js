@@ -92,15 +92,11 @@ play.prototype = {
 			}
 		}
 
-		if (cursors.down.isDown) {
-			readLocal();
-		}
-
 		/*
 		 * Jumping
 		 */
 		if (cursors.up.isDown) {
-			this.astronaut.animations.play('jump', 6, true);
+			this.astronaut.animations.play('jump', 12, true);
 			if (this.astronaut.body.onFloor()) {
 				this.astronaut.body.velocity.y = -700;
 			}
@@ -306,9 +302,9 @@ play.prototype = {
 		/*
 		 * adds the character
 		 */
-		this.astronaut = new Astronaut(this.game, 100, 450);
+		this.astronaut = new Astronaut(this.game, 100, 440);
 		this.game.add.existing(this.astronaut);
-		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11 ], 20, true);
+		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ], 20, true);
 		this.astronaut.animations.add('stop', [ 0 ], 20, true);
 		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true)
 		this.astronaut.anchor.setTo(0.5, 0.5);

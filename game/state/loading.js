@@ -102,7 +102,7 @@ loading.prototype = {
 		 */
 		game.load.image('toolbar', './assets/toolbar.png');
 		game.load.spritesheet('lifeCounter', './assets/Status/livesSprite.png', 55, 40, 4);
-		game.load.spritesheet('char1', './assets/Astronaut2.png', 64, 96, 12);
+		game.load.spritesheet('char1', './assets/Astronaut2.png', 64, 96, 18);
 		game.load.spritesheet('rocket', './assets/rocket_spritesheet.png', 154, 412, 2);
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
 		game.load.image('gameOver', './assets/gameOver.jpg');
