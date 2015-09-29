@@ -157,14 +157,14 @@ play.prototype = {
 				this.alien.body.velocity.x = -50;
 			}
 		}
-		
-		
-		/* pause menu*/
-		
+
+		/* pause menu */
+
 		game.input.keyboard.onUpCallback = function(e) {
 			pauseOption(e);
 		}
-		function pauseOption (e) {}
+		function pauseOption(e) {
+		}
 	},
 
 	/*
@@ -491,16 +491,13 @@ function readLocal() {
 	// localStorage.clear();
 	// get the highscores object
 	var scores = localStorage.getItem("highScore");
-	console.log(scores);
-
-	// for (i = 0; i < scores.length; i++) {
-	// console.log(scores[i]);
-	// }
+	scores = JSON.parse(scores);
 
 	return scores;
 }
+
 /*
- * based on bubbleSort
+ * bubbleSort
  */
 function sortHighScore(highScoreList) {
 	var swapped;
@@ -508,9 +505,17 @@ function sortHighScore(highScoreList) {
 	do {
 		swapped = false;
 		for (var i = 0; i < highScoreList.length - 1; i++) {
-			/*
-			 * TODO: bubbleSort
-			 */
+			v1 = highScoreList[i];
+			v2 = highScoreList[i + 1];
+
+			if (v1[1] < v2[1]) {
+				var temp = [ v1[0], v1[1] ];
+				v1 = [ v2[0], v2[1] ];
+				v2 = temp;
+				highScoreList[i] = v1;
+				highScoreList[i + 1] = v2;
+				swapped = true;
+			}
 		}
 	} while (swapped);
 
