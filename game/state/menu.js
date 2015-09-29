@@ -10,6 +10,7 @@ function menu() {
 var musicOn = 1;
 var soundIsOn = 1;
 var popup;
+var background;
 var soundControl;
 var musicControl
 var sound;
@@ -47,12 +48,11 @@ menu.prototype = {
 		sound.play();
 		
 
-		var background = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
+		background = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
 		background.alpha = 1.0;
 		background.anchor.set(0.5);
 
 		/* characterauswahl */
-<<<<<<< HEAD
 		
 		player1 = game.add.button (-286, -120, 'player1', highlightButton, this, 0, 1);
 		background.addChild(player1);
@@ -65,40 +65,19 @@ menu.prototype = {
 		
 		player4 = game.add.button (158, -120, 'player4', highlightButton, this, 0);
 		background.addChild(player4);
-		
-		/* buttons */
-	
-	
-		soundButton = game.add.button (277, 188, 'soundButton', soundOption, this, 1, 0);
-		background.addChild(soundButton);
 
-		scoreButton = game.add.button (-316, 188, 'scoreButton', scoreOption, this, 1, 0);
-		background.addChild(scoreButton);
-=======
 
-		player1 = game.add.button(-314, -120, 'player1', highlightButton, this, 0);
-		popupOption.addChild(player1);
-
-		player2 = game.add.button(-157, -120, 'player2', highlightButton, this, 0);
-		popupOption.addChild(player2);
-
-		player3 = game.add.button(20, -120, 'player3', highlightButton, this, 0);
-		popupOption.addChild(player3);
-
-		player4 = game.add.button(177, -120, 'player4', highlightButton, this, 0);
-		popupOption.addChild(player4);
 
 		/* buttons */
 
 		startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
-		popupOption.addChild(startButton);
+		background.addChild(startButton);
 
 		soundButton = game.add.button(280, 188, 'soundButton', soundOption, this, 1, 0);
-		popupOption.addChild(soundButton);
+		background.addChild(soundButton);
 
 		scoreButton = game.add.button(-316, 188, 'scoreButton', scoreOption, this, 1, 0);
-		popupOption.addChild(scoreButton);
->>>>>>> origin/master
+		background.addChild(scoreButton);
 
 		playerName = game.add.text(370, 139, "", {
 			font : '30px Courier',
@@ -110,15 +89,6 @@ menu.prototype = {
 				updateName(e);
 			}
 		}
-<<<<<<< HEAD
-		console.log("warum funzt das nicht?");
-		
-	
-		startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
-		background.addChild(startButton);
-=======
-
->>>>>>> origin/master
 	}
 };
 
@@ -265,30 +235,30 @@ function scoreOption() {
 function closeWindow() {
 	popup.kill();
 	soundButton = new button(game, 280, 188, 0, soundOption, 'soundButton');
-	popupOption.addChild(soundButton);
+	background.addChild(soundButton);
 
 	player1 = game.add.button(-314, -120, 'player1', highlightButton(1), this, 0);
-	popupOption.addChild(player1);
+	background.addChild(player1);
 
 	player2 = game.add.button(-157, -120, 'player2', highlightButton(2), this, 0);
-	popupOption.addChild(player2);
+	background.addChild(player2);
 
 	player3 = game.add.button(20, -120, 'player3', highlightButton(3), this, 0);
-	popupOption.addChild(player3);
+	background.addChild(player3);
 
 	player4 = game.add.button(177, -120, 'player4', highlightButton(4), this, 0);
-	popupOption.addChild(player4);
+	background.addChild(player4);
 
 	/* buttons */
 
 	startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
-	popupOption.addChild(startButton);
+	background.addChild(startButton);
 
 	soundButton = game.add.button(280, 188, 'soundButton', soundOption, this, 1, 0);
-	popupOption.addChild(soundButton);
+	background.addChild(soundButton);
 
 	scoreButton = game.add.button(-316, 188, 'scoreButton', scoreOption, this, 1, 0);
-	popupOption.addChild(scoreButton);
+	background.addChild(scoreButton);
 
 	if (highScoreGroup != null) {
 		highScoreGroup.destroy();
@@ -303,39 +273,35 @@ function highlightButton(player) {
 		player1.kill();
 		player1 = game.add.sprite(-314, -120, 'player1');
 		player1.frame = 0;
-		popupOption.addChild(player1);
+		background.addChild(player1);
 		activeAstronaut = 1;
 		break;
 	case 2:
 		player2.kill();
 		player2 = game.add.sprite(-314, -120, 'player2');
 		player2.frame = 0;
-		popupOption.addChild(player2);
+		background.addChild(player2);
 		activeAstronaut = 2;
 		break;
 	case 3:
 		player3.kill();
 		player3 = game.add.sprite(-314, -120, 'player1');
 		player3.frame = 0;
-		popupOption.addChild(player3);
+		background.addChild(player3);
 		activeAstronaut = 3;
 		break;
 	case 4:
 		player4.kill();
 		player4 = game.add.sprite(-314, -120, 'player1');
 		player4.frame = 0;
-		popupOption.addChild(player4);
+		background.addChild(player4);
 		activeAstronaut = 4;
 		break;
 	default:
 		break;
 	}
-<<<<<<< HEAD
+
 	*/
-	
-=======
-*/
->>>>>>> origin/master
 }
 
 var button = function(game, x, y, frame, option, keyName) {

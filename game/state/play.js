@@ -14,9 +14,8 @@ var pathCounter = 0;
 var timer;
 var life;
 var alienGroup;
-<<<<<<< HEAD
 var oxygenGroup;
-=======
+
 
 var restartButton;
 var quitButton;
@@ -27,7 +26,6 @@ var soundOff;
 var musicOn;
 var musicOff;
 
->>>>>>> origin/master
 var soundOn = true;
 
 play.prototype = {
@@ -192,8 +190,7 @@ play.prototype = {
 				}
 			}
 		}
-<<<<<<< HEAD
-=======
+
 
 		if (this.spaceKey.isDown) {
 
@@ -213,7 +210,6 @@ play.prototype = {
 
 		}
 
->>>>>>> origin/master
 	},
 
 	/*
