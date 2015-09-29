@@ -39,7 +39,6 @@ menu.prototype = {
 		popupOption.alpha = 1.0;
 		popupOption.anchor.set(0.5);
 
-<<<<<<< HEAD
 		/* characterauswahl*/
 		
 		player1 = game.add.button (-314, -120, 'player1', highlightButton, this, 0);
@@ -63,16 +62,8 @@ menu.prototype = {
 		popupOption.addChild(soundButton);
 
 		scoreButton = game.add.button (-316, 188, 'scoreButton', scoreOption, this, 1, 0);
-=======
-		startButton = new button(game, -36, 185, 0, startGame, 'startButton');
-		popupOption.addChild(startButton);
-
-		soundButton = new button(game, 280, 188, 0, soundOption, 'soundButton');
-		popupOption.addChild(soundButton);
-
-		scoreButton = new button(game, -316, 188, 0, scoreOption, 'scoreButton');
->>>>>>> master
 		popupOption.addChild(scoreButton);
+
 
 		playerName = game.add.text(370, 139, "", {
 			font : '30px Courier',
@@ -136,7 +127,6 @@ function soundOption() {
 	soundButton.kill();
 	scoreButton.kill();
 	startButton.kill();
-<<<<<<< HEAD
 	player1.kill();
 	player2.kill();
 	player3.kill();
@@ -144,20 +134,12 @@ function soundOption() {
 	
 	
 	musicControl = new button (game, mControlX, mControlY, musicOn, changeMusic, 'controlSound');
-=======
-
-	musicControl = new button(game, mControlX, mControlY, musicOn, changeMusic, 'controlSound');
->>>>>>> master
 	popup.addChild(musicControl);
 
 	soundControl = new button(game, sControlX, sControlY, 1, changeSound, 'controlSound');
 	popup.addChild(soundControl);
 
-<<<<<<< HEAD
 	closeButton = game.add.button (-36, 188, 'closeButton', closeWindow, this, 1, 0);
-=======
-	closeButton = new button(game, -36, 185, 0, closeWindow, 'closeButton');
->>>>>>> master
 	popup.addChild(closeButton);
 }
 
@@ -208,11 +190,7 @@ function scoreOption() {
 	player4.kill();
 	
 
-<<<<<<< HEAD
 	closeButton = game.add.button (-36, 188, 'closeButton', closeWindow, this, 1, 0);
-=======
-	closeButton = new button(game, -36, 185, 0, closeWindow, 'closeButton');
->>>>>>> master
 	popup.addChild(closeButton);
 
 	var highScoreList = readLocal();
@@ -229,8 +207,6 @@ function closeWindow() {
 	popup.kill();
 	soundButton = new button(game, 280, 188, 0, soundOption, 'soundButton');
 	popupOption.addChild(soundButton);
-
-<<<<<<< HEAD
 	
 	player1 = game.add.button (-314, -120, 'player1', highlightButton(1), this, 0);
 	popupOption.addChild(player1);
@@ -255,14 +231,6 @@ function closeWindow() {
 	scoreButton = game.add.button (-316, 188, 'scoreButton', scoreOption, this, 1, 0);
 	popupOption.addChild(scoreButton);
 	
-=======
-	scoreButton = new button(game, -316, 188, 0, scoreOption, 'scoreButton');
-	popupOption.addChild(scoreButton);
-
-	startButton = new button(game, -36, 185, 0, startGame, 'startButton');
-	popupOption.addChild(startButton);
-
->>>>>>> master
 }
 
 function highlightButton(player){

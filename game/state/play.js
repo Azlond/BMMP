@@ -164,7 +164,7 @@ play.prototype = {
 		game.input.keyboard.onUpCallback = function(e) {
 			pauseOption(e);
 		}
-		function pauseOption (e)
+		function pauseOption (e) {}
 	},
 
 	/*
