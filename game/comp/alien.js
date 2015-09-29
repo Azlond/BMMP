@@ -2,6 +2,10 @@ var Alien = function(game, x, y, distance) {
 
 	this.game = game;
 	this.distance = distance;
+	this.turnLTimer = 0;
+	this.timerLSet = false;
+	this.turnRTimer = 0;
+	this.timerRSet = false;
 
 	this.pathCounter = 0;
 

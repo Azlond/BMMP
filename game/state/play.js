@@ -41,7 +41,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 3;// first level
+		this.levelNumber = 2;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -166,7 +166,7 @@ play.prototype = {
 				this.loadLevel("");
 			}
 		}
-		
+
 		/*
 		 * alien movement and interaction
 		 */
@@ -186,15 +186,30 @@ play.prototype = {
 			if ((enemy.scale.x == 1)
 					&& ((this.astronaut.body.x > (enemy.body.x - enemy.pathCounter)) && (this.astronaut.body.x < (enemy.body.x + (enemy.distance - enemy.pathCounter))))
 					&& (this.astronaut.body.x < enemy.body.x)) {
-				enemy.scale.x = -enemy.scale.x
-				enemy.pathCounter = enemy.distance - enemy.pathCounter;
-				enemy.body.velocity.x = -enemy.body.velocity.x;
+
+				if (!enemy.timerLSet) {
+					enemy.turnLTimer = game.time.now + 100;
+					enemy.timerLSet = true;
+				}
+				if (game.time.now > enemy.turnLTimer) {
+					enemy.scale.x = -enemy.scale.x
+					enemy.pathCounter = enemy.distance - enemy.pathCounter;
+					enemy.body.velocity.x = -enemy.body.velocity.x;
+					enemy.timerLSet = false;
+				}
 			} else if ((enemy.scale.x != 1)
 					&& ((this.astronaut.body.x > (enemy.body.x - (enemy.distance - enemy.pathCounter))) && (this.astronaut.body.x < (enemy.body.x + enemy.pathCounter)))
 					&& (this.astronaut.body.x > enemy.body.x)) {
-				enemy.scale.x = -enemy.scale.x
-				enemy.pathCounter = enemy.distance - enemy.pathCounter;
-				enemy.body.velocity.x = -enemy.body.velocity.x;
+				if (!enemy.timerRSet) {
+					enemy.turnRTimer = game.time.now + 100;
+					enemy.timerRSet = true;
+				}
+				if (game.time.now > enemy.turnRTimer) {
+					enemy.scale.x = -enemy.scale.x
+					enemy.pathCounter = enemy.distance - enemy.pathCounter;
+					enemy.body.velocity.x = -enemy.body.velocity.x;
+					enemy.timerRSet = false;
+				}
 			}
 		}
 
