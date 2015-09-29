@@ -81,14 +81,14 @@ play.prototype = {
 		/*
 		 * collision between astronaut and oxygen
 		 */
-		
+
 		this.game.physics.arcade.overlap(this.astronaut, oxygenGroup, this.collectOxygen, null, this);
-		
+
 		/*
 		 * Moving the player
-		 * 
+		 *
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 * 
+		 *
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
 		if (cursors.left.isDown && this.rocket.body.y == 69) {
@@ -138,7 +138,7 @@ play.prototype = {
 
 		/*
 		 * check if the player has fallen into a rift
-		 * 
+		 *
 		 * if the player has more than 0 lives left, restart the level
 		 */
 		if (this.astronaut.body.y > 600 && !this.fallen) {
@@ -315,9 +315,9 @@ play.prototype = {
 
 		/*
 		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
-		 * 
+		 *
 		 * rocket needs to be immovable until player is inside so that it can't be kicked around
-		 * 
+		 *
 		 * no gravity to make departure cleaner
 		 */
 		switch (this.levelNumber) {
@@ -340,7 +340,7 @@ play.prototype = {
 		this.astronaut = new Astronaut(this.game, 100, 440);
 		this.game.add.existing(this.astronaut);
 		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
-		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ], 20, true);
+		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23 ], 20, true);
 		this.astronaut.animations.add('stop', [ 0 ], 20, true);
 		this.astronaut.anchor.setTo(0.5, 0.5);
 		this.game.camera.follow(this.astronaut);
@@ -370,7 +370,7 @@ play.prototype = {
 			this.alien.animations.play('walk');
 			alienGroup.add(this.alien);
 		}
-		
+
 		oxygenGroup = game.add.group ();
 
 		var oxygenInfo = oxygens["level" + this.levelNumber];
@@ -381,7 +381,7 @@ play.prototype = {
 			this.oxygenBottle = new oxygen(this.game, oxygenCoordinates["oxygen" + i][0], oxygenCoordinates["oxygen" + i][1]);
 			this.game.add.existing(this.oxygenBottle);
 			oxygenGroup.add(this.oxygenBottle);
-		}		
+		}
 
 		/* shows oxygencounter in each level */
 		oxygenCounter = 9;
@@ -415,7 +415,7 @@ play.prototype = {
 
 	/*
 	 * called when the player collides with the rocket
-	 * 
+	 *
 	 * checks if all tools have been collected
 	 */
 	hitFinish : function(astronaut, finish) {
@@ -433,13 +433,13 @@ play.prototype = {
 
 	/*
 	 * called when player collides with an alien
-	 * 
+	 *
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
 	collideWithAlien : function(astronaut, alien) {
 		if (game.time.now > this.lifeTimer) {
 			lifeCounter--;
-			showLife(lifeCounter);	
+			showLife(lifeCounter);
 			if (lifeCounter <= 3 && lifeCounter > 0) {
 				console.log(lifeCounter);
 			}
@@ -447,7 +447,7 @@ play.prototype = {
 			this.lifeTimer = game.time.now + 750;
 		}
 	},
-	
+
 	collectOxygen : function (astronaut, oxygenBottle) {
 		oxygenBottle.kill();
 		timer.stop();
@@ -457,7 +457,7 @@ play.prototype = {
 		oxygenTank.frame = oxygenCounter;
 		oxygenTank.fixedToCamera = true;
 		--oxygenCounter;
-		this.timeDown();		
+		this.timeDown();
 	},
 
 	/*
