@@ -201,7 +201,7 @@ function scoreOption() {
 	if (highScoreList != null) {
 		highScoreList = sortHighScore(highScoreList);
 
-		var firstPlace = 145;
+		var firstPlace = 125;
 
 		highScoreGroup = game.add.group();
 
