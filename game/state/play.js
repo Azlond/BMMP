@@ -10,9 +10,19 @@ var score;
 var oldScore;// the score at the beginning of a level - needed for restarting a level
 var lifeCounter; // the amount of lives the player has
 var oxygenCounter;
+var pathCounter = 0;
 var timer;
 var life;
 var alienGroup;
+
+var restartButton;
+var quitButton;
+var continueButton;
+var popup;
+var soundOn;
+var soundOff;
+var musicOn;
+var musicOff;
 
 var soundOn = true;
 
@@ -30,7 +40,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 2;// first level
+		this.levelNumber = 1;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -38,6 +48,9 @@ play.prototype = {
 
 		// loads the first level level number has to be increased once the player has reached the finish line
 		this.loadLevel("");
+
+		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
 
 	},
 
@@ -71,35 +84,30 @@ play.prototype = {
 		 */
 		if (cursors.left.isDown && this.rocket.body.y == 69) {
 			this.astronaut.body.velocity.x = -175;
-			if (this.astronaut.body.onFloor()) {
-				this.astronaut.animations.play('walk', 7, true);
-			}
+			this.astronaut.animations.play('walk', 7, true);
 			this.astronaut.scale.x = -1;
 			this.background2.x += 0.25;
 			this.background1.x += 0.3;
 		} else if (cursors.right.isDown && this.rocket.body.y == 69) {
-			if (this.astronaut.body.onFloor()) {
-				this.astronaut.animations.play('walk', 7, true);
-			}
 			this.astronaut.body.velocity.x = 175;
 			this.astronaut.scale.x = 1;
+			this.astronaut.animations.play('walk', 7, true);
 			this.background2.x -= 0.25;
 			this.background1.x -= 0.3;
 		} else {
 			this.astronaut.body.velocity.x = 0;
-			if (this.astronaut.body.onFloor()) {
-				this.astronaut.animations.play('stop', 7, true);
-			}
+			this.astronaut.animations.play('stop', 7, true);
+		}
+
+		if (cursors.down.isDown) {
+			readLocal();
 		}
 
 		/*
 		 * Jumping
 		 */
-		if (cursors.up.isDown) {
-			this.astronaut.animations.play('jump', 12, true);
-			if (this.astronaut.body.onFloor()) {
-				this.astronaut.body.velocity.y = -700;
-			}
+		if (cursors.up.isDown && this.astronaut.body.onFloor()) {
+			this.astronaut.body.velocity.y = -700;
 		}
 
 		/*
@@ -147,34 +155,40 @@ play.prototype = {
 		 * TODO: Make AI responsive to player
 		 */
 
-		for (i = 0; i < alienGroup.children.length; i++) {
-
-			var enemy = alienGroup.children[i];
-
-			if (enemy.pathCounter >= 0) {
-				enemy.pathCounter++;
+		if (pathCounter >= 0) {
+			pathCounter++;
+		}
+		if (pathCounter >= 300) {
+			if (this.alien.scale.x == -1 && this.alien.body.velocity.x == -50) {
+				pathCounter = 0;
+				this.alien.scale.x = 1;
+				this.alien.body.velocity.x = 50;
+			} else if (this.alien.scale.x == 1 && this.alien.body.velocity.x == 50) {
+				pathCounter = 0;
+				this.alien.scale.x = -1;
+				this.alien.body.velocity.x = -50;
 			}
-			if (enemy.pathCounter >= enemy.distance) {
-				if (enemy.scale.x == -1 && enemy.body.velocity.x == -50) {
-					enemy.pathCounter = 0;
-					enemy.scale.x = 1;
-					enemy.body.velocity.x = 50;
-				} else if (enemy.scale.x == 1 && enemy.body.velocity.x == 50) {
-					enemy.pathCounter = 0;
-					enemy.scale.x = -1;
-					enemy.body.velocity.x = -50;
-				}
-			}
+		}
+
+		if(this.spaceKey.isDown) {
+
+			popup = game.add.image(400, 300, 'pauseBackground');
+			popup.alpha = 1.0;
+			popup.anchor.set(0.5);
+			popup.fixedToCamera = true;
+
+			restartButton = game.add.button (-300, 180, 'restartButton', this.restartGame, this, 1, 0);
+			popup.addChild(restartButton);
+		
+			continueButton = game.add.button (-50, 180, 'continueButton', this.continueGame, this, 1, 0);
+			popup.addChild(continueButton);
+
+			quitButton = game.add.button (210, 185, 'quitButton', this.quitGame, this, 1, 0);
+			popup.addChild(quitButton);
 
 		}
 
-		/* pause menu */
-
-		game.input.keyboard.onUpCallback = function(e) {
-			pauseOption(e);
-		}
-		function pauseOption(e) {
-		}
+		
 	},
 
 	/*
@@ -302,11 +316,10 @@ play.prototype = {
 		/*
 		 * adds the character
 		 */
-		this.astronaut = new Astronaut(this.game, 100, 440);
+		this.astronaut = new Astronaut(this.game, 100, 450);
 		this.game.add.existing(this.astronaut);
-		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ], 20, true);
+		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true);
 		this.astronaut.animations.add('stop', [ 0 ], 20, true);
-		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 20, true)
 		this.astronaut.anchor.setTo(0.5, 0.5);
 		this.game.camera.follow(this.astronaut);
 
@@ -350,19 +363,18 @@ play.prototype = {
 		showLife(lifeCounter);
 	},
 
+
 	/*
 	 * collecting an element and removing it from the game
 	 */
 	collectElement : function(astronaut, tile) {
-		if (astronaut.key.contains("char")) {
 
-			this.map.removeTile(tile.x, tile.y, this.layer);
+		this.map.removeTile(tile.x, tile.y, this.layer);
 
-			score += 1;
-			this.scoreText.text = 'Score: ' + score;
+		score += 1;
+		this.scoreText.text = 'Score: ' + score;
 
-			return false;
-		}
+		return false;
 
 	},
 
@@ -466,6 +478,39 @@ play.prototype = {
 		}
 	},
 
+	quitGame: function() { //quits the game
+
+		console.log("Quit the game");
+		this.game.state.start('intro');
+
+	},
+
+	restartGame: function() {
+
+		console.log("Restart the game");
+		this.loadLevel("restart");
+	
+	},
+
+	continueGame: function() {
+
+		popup.kill();
+		console.log("Continue the game");
+
+	},
+
+	restartHover: function() {
+		this.game.add.button (-300, 180, 'restartHighlight', this.restartGame, this, 1, 0);		
+	},
+
+	continueHover: function() {
+
+	},
+
+	quitHover: function() {
+
+	},
+
 	parseJson : function(json) {
 		var pName = playerName.text.toString();
 		var playerExists = false;
@@ -504,13 +549,17 @@ function readLocal() {
 	// localStorage.clear();
 	// get the highscores object
 	var scores = localStorage.getItem("highScore");
-	scores = JSON.parse(scores);
+	console.log(scores);
+
+	// for (i = 0; i < scores.length; i++) {
+	// console.log(scores[i]);
+	// }
 
 	return scores;
 }
 
 /*
- * bubbleSort
+ * based on bubbleSort
  */
 function sortHighScore(highScoreList) {
 	var swapped;
@@ -518,19 +567,13 @@ function sortHighScore(highScoreList) {
 	do {
 		swapped = false;
 		for (var i = 0; i < highScoreList.length - 1; i++) {
-			v1 = highScoreList[i];
-			v2 = highScoreList[i + 1];
-
-			if (v1[1] < v2[1]) {
-				var temp = [ v1[0], v1[1] ];
-				v1 = [ v2[0], v2[1] ];
-				v2 = temp;
-				highScoreList[i] = v1;
-				highScoreList[i + 1] = v2;
-				swapped = true;
-			}
+			/*
+			 * TODO: bubbleSort
+			 */
 		}
 	} while (swapped);
 
 	return highScoreList;
 }
+
+
