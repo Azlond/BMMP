@@ -10,7 +10,6 @@ var score;
 var oldScore;// the score at the beginning of a level - needed for restarting a level
 var lifeCounter; // the amount of lives the player has
 var oxygenCounter;
-var pathCounter = 0;
 var timer;
 var life;
 var alienGroup;
@@ -143,19 +142,25 @@ play.prototype = {
 		 * TODO: Make AI responsive to player
 		 */
 
-		if (pathCounter >= 0) {
-			pathCounter++;
-		}
-		if (pathCounter >= 300) {
-			if (this.alien.scale.x == -1 && this.alien.body.velocity.x == -50) {
-				pathCounter = 0;
-				this.alien.scale.x = 1;
-				this.alien.body.velocity.x = 50;
-			} else if (this.alien.scale.x == 1 && this.alien.body.velocity.x == 50) {
-				pathCounter = 0;
-				this.alien.scale.x = -1;
-				this.alien.body.velocity.x = -50;
+		for (i = 0; i < alienGroup.children.length; i++) {
+
+			var enemy = alienGroup.children[i];
+
+			if (enemy.pathCounter >= 0) {
+				enemy.pathCounter++;
 			}
+			if (enemy.pathCounter >= 150) {
+				if (enemy.scale.x == -1 && enemy.body.velocity.x == -50) {
+					enemy.pathCounter = 0;
+					enemy.scale.x = 1;
+					enemy.body.velocity.x = 50;
+				} else if (enemy.scale.x == 1 && enemy.body.velocity.x == 50) {
+					enemy.pathCounter = 0;
+					enemy.scale.x = -1;
+					enemy.body.velocity.x = -50;
+				}
+			}
+
 		}
 
 		/* pause menu */
@@ -317,7 +322,7 @@ play.prototype = {
 		var alienCoordinates = alienInfo["coordinates"];
 
 		for (i = 1; i <= amountAliens; i++) {
-			this.alien = new Alien(this.game, alienCoordinates["alien" + i][0], alienCoordinates["alien" + i][1]);
+			this.alien = new Alien(this.game, alienCoordinates["alien" + i][0], alienCoordinates["alien" + i][1], 0, "alien" + i);
 			this.game.add.existing(this.alien);
 			this.alien.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
 			this.alien.anchor.setTo(0.5, 0.5);

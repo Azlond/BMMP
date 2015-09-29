@@ -1,6 +1,9 @@
-var Alien = function(game, x, y) {
+var Alien = function(game, x, y, pathCounter, name) {
 
 	this.game = game;
+	this.name = name;
+	
+	this.pathCounter = pathCounter;
 
 	Phaser.Sprite.call(this, this.game, x, y, 'alien');
 
