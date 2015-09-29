@@ -16,6 +16,15 @@ var life;
 var alienGroup;
 var oxygenGroup;
 
+//sounds
+var loseLifeSound;
+var collectToolSound;
+var collectOxygenSound;
+var completeLevelSound;
+var collideWithAlienSound;
+
+
+
 var restartButton;
 var quitButton;
 var continueButton;
@@ -41,7 +50,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 2;// first level
+		this.levelNumber = 1;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -52,7 +61,12 @@ play.prototype = {
 
 		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
-
+		
+		loseLifeSound = game.add.audio('loseLife');
+		collectToolSound = game.add.audio('collectTool');
+		collectOxygenSound = game.add.audio ('collectOxygen');
+		completeLevelSound = game.add.audio('completeLevel');
+		collideWithAlienSound = game.add.audio('collideWithAlien');
 	},
 
 	update : function() {
@@ -141,6 +155,7 @@ play.prototype = {
 		 */
 		if (this.astronaut.body.y > 600 && !this.fallen) {
 			lifeCounter--;
+			loseLifeSound.play();
 			showLife(lifeCounter);
 			this.fallen = true;
 			if (lifeCounter != 0) {
@@ -443,6 +458,7 @@ play.prototype = {
 
 		if (this.toolsCollected == 3) {
 			this.astronaut.kill();
+			completeLevelSound.play();
 			this.rocket.body.immovable = false;
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
@@ -460,6 +476,7 @@ play.prototype = {
 	collideWithAlien : function(astronaut, alien) {
 		if (game.time.now > this.lifeTimer) {
 			lifeCounter--;
+			collideWithAlienSound.play();
 			showLife(lifeCounter);
 			if (lifeCounter <= 3 && lifeCounter > 0) {
 				console.log(lifeCounter);
@@ -472,6 +489,7 @@ play.prototype = {
 	collectOxygen : function(astronaut, oxygenBottle) {
 		oxygenBottle.kill();
 		timer.stop();
+		collectOxygenSound.play();
 		oxygenCounter = 9;
 		oxygenTank.kill();
 		oxygenTank = game.add.sprite(750, 63, 'tank');
@@ -489,18 +507,21 @@ play.prototype = {
 
 		if (tools == this.collectpliers) {
 			this.nopliers.kill();
+			collectToolSound.play();
 			this.pliers = new Tools(this.game, 230, 15, 0);
 			this.game.add.existing(this.pliers);
 			this.pliers.fixedToCamera = true;
 		}
 		if (tools == this.collectscrewdriver) {
 			this.noscrewdriver.kill();
+			collectToolSound.play();
 			this.screwdriver = new Tools(this.game, 290, 15, 4);
 			this.game.add.existing(this.screwdriver);
 			this.screwdriver.fixedToCamera = true;
 		}
 		if (tools == this.collectwrench) {
 			this.nowrench.kill();
+			collectToolSound.play();
 			this.wrench = new Tools(this.game, 260, 15, 2);
 			this.game.add.existing(this.wrench);
 			this.wrench.fixedToCamera = true;
@@ -528,6 +549,7 @@ play.prototype = {
 			oxygenTank.animations.stop();
 			oxygenTank.frame = 0;
 			--lifeCounter;
+			loseLifeSound.play();
 			this.loadLevel("restart");
 			timer.stop();
 		} else {
