@@ -13,7 +13,8 @@ var background;
 var soundControl;
 var musicControl
 var sound;
-var video;
+var missionVideo;
+var introVideo;
 var introFinished = false;
 var mControlX = -66;
 var mControlY = -185;
@@ -63,7 +64,7 @@ menu.prototype = {
 
 		/* buttons */
 
-		startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
+		startButton = game.add.button(-36, 193, 'startButton', startIntro, this, 1, 0);
 		background.addChild(startButton);
 
 		soundButton = game.add.button(280, 188, 'soundButton', soundOption, this, 1, 0);
@@ -85,23 +86,36 @@ menu.prototype = {
 	}
 };
 
-function startGame() {
+function startIntro() {
 	var str = playerName.text;
 
 	if (!(str.length < 1)) {
-		video = this.game.add.video('intro');
-		video.play(true);
-		video.loop = false;
-		video.onComplete.add(handleComplete);
-		video.addToWorld(400, 300, 0.5, 0.5);
+		introVideo = this.game.add.video('intro');
+		introVideo.play(true);
+		introVideo.loop = false;
+		introVideo.onComplete.add(startGame);
+		introVideo.addToWorld(400, 300, 0.5, 0.5);
 		game.input.keyboard.onUpCallback = function(e) {
-			handleComplete();
+			startGame();
 		}
 		if (soundOn) {
 			sound.stop();
 		}
 	}
 }
+
+function startGame() {
+
+		missionVideo = this.game.add.video('mission');
+		missionVideo.play(true);
+		missionVideo.loop = false;
+		missionVideo.onComplete.add(handleComplete);
+		missionVideo.addToWorld(400, 300, 0.5, 0.5);
+		game.input.keyboard.onUpCallback = function(e) {
+			handleComplete();
+		}
+}
+
 
 function updateName(e) {
 	var str = playerName.text;
@@ -120,8 +134,9 @@ function handleComplete() {
 	if (!introFinished) {
 		game.state.start('play');
 		introFinished = true;
-		video.stop(true);
-		// video.destroy();
+
+		missionVideo.stop(true);
+		//missionVideo.destroy();
 	}
 }
 
@@ -193,8 +208,11 @@ function scoreOption() {
 	player3.kill();
 	player4.kill();
 
-	closeButton = game.add.button(-36, 188, 'closeButton', closeWindow, this, 1, 0);
+	closeButton = game.add.button(-316, 188, 'closeButton', closeWindow, this, 1, 0);
 	popup.addChild(closeButton);
+	
+	resetButton = game.add.button(260, 188, 'resetButton', resetScore, this, 1, 0);
+	popup.addChild(resetButton);
 
 	var highScoreList = readLocal();
 
@@ -229,6 +247,11 @@ function scoreOption() {
 		}
 	}
 
+}
+
+function resetScore () {
+	
+	localStorage.clear();
 }
 
 function closeWindow() {
@@ -267,7 +290,7 @@ function closeWindow() {
 
 function highlightButton(player) {
 	/*
-	 * switch (player) { case 1: player1.kill(); player1 = game.add.sprite(-314, -120, 'player1'); player1.frame = 0; background.addChild(player1);
+	 switch (player) { case 1: player1.kill(); player1 = game.add.sprite(-314, -120, 'player1'); player1.frame = 0; background.addChild(player1);
 	 * activeAstronaut = 1; break; case 2: player2.kill(); player2 = game.add.sprite(-314, -120, 'player2'); player2.frame = 0; background.addChild(player2);
 	 * activeAstronaut = 2; break; case 3: player3.kill(); player3 = game.add.sprite(-314, -120, 'player1'); player3.frame = 0; background.addChild(player3);
 	 * activeAstronaut = 3; break; case 4: player4.kill(); player4 = game.add.sprite(-314, -120, 'player1'); player4.frame = 0; background.addChild(player4);
