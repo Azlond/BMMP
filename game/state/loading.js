@@ -30,6 +30,7 @@ loading.prototype = {
 		game.load.image('optionBackground', './assets/menu/startMenu/optionBackground.png');
 		game.load.image('soundBackground', './assets/menu/soundMenu/soundBackground.png');
 		game.load.image('scoreBackground', './assets/menu/scoreMenu/scoreBackground.png');
+		game.load.image('pauseBackground', './assets/menu/pauseMenu/background.png');
 		
 
 		// button
@@ -38,6 +39,15 @@ loading.prototype = {
 		game.load.spritesheet('scoreButton', './assets/menu/startMenu/highscoreButtonSprite.png', 43, 43, 2);
 		game.load.spritesheet('closeButton', './assets/menu/soundMenu/doneButtonSprite.png', 71, 29, 2);
 		game.load.spritesheet('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
+		
+		game.load.image('continueButton','./assets/menu/pauseMenu/continueButton.png');
+		game.load.image('continueButtonHighlight','./assets/menu/pauseMenu/continueButtonHighlight.png');
+		game.load.image('quitButton','./assets/menu/pauseMenu/quitButton.png');
+		game.load.image('quitButtonHighlight','./assets/menu/pauseMenu/quitButtonHighlight.png');
+		game.load.image('restartButton','./assets/menu/pauseMenu/restartButton.png');
+		game.load.image('restartButtonHighlight','./assets/menu/pauseMenu/restartButtonHighlight.png');
+		game.load.image('off','./assets/menu/pauseMenu/off.png');
+		game.load.image('on','./assets/menu/pauseMenu/on.png');
 		
 		//characters
 		game.load.image ('player1', './assets/menu/startMenu/player1.png');
