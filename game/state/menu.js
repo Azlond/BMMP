@@ -6,7 +6,6 @@
 function menu() {
 }
 
-
 var musicOn = 1;
 var soundIsOn = 1;
 var popup;
@@ -33,40 +32,34 @@ var playerRegEx = /8|6[5-9]|7[0-9]|8[0-9]|90/;
 var highScoreGroup;
 var activeAstronaut = 1;
 
-
-
 var startButton
 
 menu.prototype = {
 
 	create : function() {
-		
+
 		console.log("bin jetzt im menu");
-		
-		
+
 		sound = game.add.audio('music');
 		sound.play();
-		
 
 		background = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
 		background.alpha = 1.0;
 		background.anchor.set(0.5);
 
 		/* characterauswahl */
-		
-		player1 = game.add.button (-286, -120, 'player1', highlightButton, this, 0, 1);
+
+		player1 = game.add.button(-286, -120, 'player1', highlightButton, this, 0, 1);
 		background.addChild(player1);
-		
-		player2 = game.add.button (-138, -120, 'player2', highlightButton, this, 0);
+
+		player2 = game.add.button(-138, -120, 'player2', highlightButton, this, 0);
 		background.addChild(player2);
-		
-		player3 = game.add.button (10, -120, 'player3', highlightButton, this, 0);
+
+		player3 = game.add.button(10, -120, 'player3', highlightButton, this, 0);
 		background.addChild(player3);
-		
-		player4 = game.add.button (158, -120, 'player4', highlightButton, this, 0);
+
+		player4 = game.add.button(158, -120, 'player4', highlightButton, this, 0);
 		background.addChild(player4);
-
-
 
 		/* buttons */
 
@@ -110,7 +103,6 @@ function startGame() {
 	}
 }
 
-
 function updateName(e) {
 	var str = playerName.text;
 
@@ -129,7 +121,7 @@ function handleComplete() {
 		game.state.start('play');
 		introFinished = true;
 		video.stop(true);
-		//video.destroy();
+		// video.destroy();
 	}
 }
 
@@ -149,8 +141,8 @@ function soundOption() {
 
 	musicControl = new button(game, mControlX, mControlY, musicOn, changeMusic, 'controlSound');
 	popup.addChild(musicControl);
-	
-	soundControl = new button (game, sControlX, sControlY, soundIsOn, changeSound, 'controlSound');
+
+	soundControl = new button(game, sControlX, sControlY, soundIsOn, changeSound, 'controlSound');
 	popup.addChild(soundControl);
 
 	closeButton = game.add.button(-36, 188, 'closeButton', closeWindow, this, 1, 0);
@@ -213,19 +205,26 @@ function scoreOption() {
 
 		highScoreGroup = game.add.group();
 
-		for (i = 0; i < highScoreList.length; i++) {
-			console.log(highScoreList[i]);
-			var n = game.add.text(200, firstPlace, highScoreList[i][0], {
+		for (i = 0; (i < highScoreList.length) && (i < 10); i++) {
+
+			var p = game.add.text(190, firstPlace, i + 1 + ". ", {
 				font : '30px Courier',
 				fill : '#ffffff'
 			});
 
-			var s = game.add.text(500, firstPlace, highScoreList[i][1], {
+			console.log(highScoreList[i]);
+			var n = game.add.text(250, firstPlace, highScoreList[i][0], {
+				font : '30px Courier',
+				fill : '#ffffff'
+			});
+
+			var s = game.add.text(550, firstPlace, highScoreList[i][1], {
 				font : '30px Courier',
 				fill : '#ffffff'
 			});
 			highScoreGroup.add(n);
 			highScoreGroup.add(s);
+			highScoreGroup.add(p);
 			firstPlace += 35;
 		}
 	}
@@ -267,41 +266,14 @@ function closeWindow() {
 }
 
 function highlightButton(player) {
-/*
-	switch (player) {
-	case 1:
-		player1.kill();
-		player1 = game.add.sprite(-314, -120, 'player1');
-		player1.frame = 0;
-		background.addChild(player1);
-		activeAstronaut = 1;
-		break;
-	case 2:
-		player2.kill();
-		player2 = game.add.sprite(-314, -120, 'player2');
-		player2.frame = 0;
-		background.addChild(player2);
-		activeAstronaut = 2;
-		break;
-	case 3:
-		player3.kill();
-		player3 = game.add.sprite(-314, -120, 'player1');
-		player3.frame = 0;
-		background.addChild(player3);
-		activeAstronaut = 3;
-		break;
-	case 4:
-		player4.kill();
-		player4 = game.add.sprite(-314, -120, 'player1');
-		player4.frame = 0;
-		background.addChild(player4);
-		activeAstronaut = 4;
-		break;
-	default:
-		break;
-	}
-
-	*/
+	/*
+	 * switch (player) { case 1: player1.kill(); player1 = game.add.sprite(-314, -120, 'player1'); player1.frame = 0; background.addChild(player1);
+	 * activeAstronaut = 1; break; case 2: player2.kill(); player2 = game.add.sprite(-314, -120, 'player2'); player2.frame = 0; background.addChild(player2);
+	 * activeAstronaut = 2; break; case 3: player3.kill(); player3 = game.add.sprite(-314, -120, 'player1'); player3.frame = 0; background.addChild(player3);
+	 * activeAstronaut = 3; break; case 4: player4.kill(); player4 = game.add.sprite(-314, -120, 'player1'); player4.frame = 0; background.addChild(player4);
+	 * activeAstronaut = 4; break; default: break; }
+	 * 
+	 */
 }
 
 var button = function(game, x, y, frame, option, keyName) {
