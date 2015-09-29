@@ -204,16 +204,16 @@ function closeWindow() {
 	popupOption.addChild(soundButton);
 
 	
-	player1 = game.add.button (-314, -120, 'player1', highlightButton, this, 0);
+	player1 = game.add.button (-314, -120, 'player1', highlightButton(1), this, 0);
 	popupOption.addChild(player1);
 	
-	player2 = game.add.button (-157, -120, 'player2', highlightButton, this, 0);
+	player2 = game.add.button (-157, -120, 'player2', highlightButton(2), this, 0);
 	popupOption.addChild(player2);
 	
-	player3 = game.add.button (20, -120, 'player3', highlightButton, this, 0);
+	player3 = game.add.button (20, -120, 'player3', highlightButton(3), this, 0);
 	popupOption.addChild(player3);
 	
-	player4 = game.add.button (177, -120, 'player4', highlightButton, this, 0);
+	player4 = game.add.button (177, -120, 'player4', highlightButton(4), this, 0);
 	popupOption.addChild(player4);
 	
 	/* buttons */
@@ -229,9 +229,35 @@ function closeWindow() {
 	
 }
 
-function highlightButton(){
-	
-	
+function highlightButton(player){
+	/*
+	switch (player) {
+		case 1: player1.kill(); 
+				player1 = game.add.sprite (-314, -120, 'player1');
+				player1.frame = 0;
+				popupOption.addChild(player1);
+				break;
+				
+		case 2: player2.kill(); 
+				player2 = game.add.sprite (-314, -120, 'player2');
+				player2.frame = 0;
+				popupOption.addChild(player2);
+				break;
+				
+		case 3: player3.kill(); 
+				player3 = game.add.sprite (-314, -120, 'player1');
+				player3.frame = 0;
+				popupOption.addChild(player3);
+				break;
+		case 4: player4.kill(); 
+				player4 = game.add.sprite (-314, -120, 'player1');
+				player4.frame = 0;
+				popupOption.addChild(player4);
+				break;
+				
+		default: break;
+	}
+	*/
 }
 
 var button = function(game, x, y, frame, option, keyName) {
