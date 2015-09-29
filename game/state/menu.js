@@ -14,7 +14,8 @@ var background;
 var soundControl;
 var musicControl
 var sound;
-var video;
+var missionVideo;
+var introVideo;
 var introFinished = false;
 var mControlX = -66;
 var mControlY = -185;
@@ -70,7 +71,7 @@ menu.prototype = {
 
 		/* buttons */
 
-		startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
+		startButton = game.add.button(-36, 193, 'startButton', startIntro, this, 1, 0);
 		background.addChild(startButton);
 
 		soundButton = game.add.button(280, 188, 'soundButton', soundOption, this, 1, 0);
@@ -92,22 +93,34 @@ menu.prototype = {
 	}
 };
 
-function startGame() {
+function startIntro() {
 	var str = playerName.text;
 
 	if (!(str.length < 1)) {
-		video = this.game.add.video('intro');
-		video.play(true);
-		video.loop = false;
-		video.onComplete.add(handleComplete);
-		video.addToWorld(400, 300, 0.5, 0.5);
+		introVideo = this.game.add.video('intro');
+		introVideo.play(true);
+		introVideo.loop = false;
+		introVideo.onComplete.add(startGame);
+		introVideo.addToWorld(400, 300, 0.5, 0.5);
 		game.input.keyboard.onUpCallback = function(e) {
-			handleComplete();
+			startGame();
 		}
 		if (soundOn) {
 			sound.stop();
 		}
 	}
+}
+
+function startGame() {
+
+		missionVideo = this.game.add.video('mission');
+		missionVideo.play(true);
+		missionVideo.loop = false;
+		missionVideo.onComplete.add(handleComplete);
+		missionVideo.addToWorld(400, 300, 0.5, 0.5);
+		game.input.keyboard.onUpCallback = function(e) {
+			handleComplete();
+		}
 }
 
 
@@ -128,8 +141,8 @@ function handleComplete() {
 	if (!introFinished) {
 		game.state.start('play');
 		introFinished = true;
-		video.stop(true);
-		//video.destroy();
+		missionVideo.stop(true);
+		//missionVideo.destroy();
 	}
 }
 

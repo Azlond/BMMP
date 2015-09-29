@@ -21,7 +21,9 @@ loading.prototype = {
 		 * Intro
 		 */
 
-		game.load.video('intro', './assets/Intro.mp4');
+		game.load.video('intro', './assets/videos/Intro.mp4');
+		game.load.video('mission', './assets/videos/Mission.mp4');
+		
 
 		/* Menu-state images */
 
