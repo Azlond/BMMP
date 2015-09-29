@@ -10,7 +10,7 @@ var Alien = function(game, x, y, distance) {
 	this.game.physics.arcade.enableBody(this);
 
 	this.body.collideWorldBounds = false;
-	this.body.velocity.x = 50
+	this.body.velocity.x = 50;
 
 };
 
@@ -28,9 +28,9 @@ var aliens = {
 	"level2" : {
 		"amount" : 5,
 		"coordinates" : {
-			"alien1" : [ 740, 450, 260 ],
+			"alien1" : [ 740, 450, 265 ],
 			"alien2" : [ 1050, 450, 400 ],
-			"alien3" : [ 1230, 220, 280 ],
+			"alien3" : [ 1230, 220, 290 ],
 			"alien4" : [ 2570, 200, 210 ],
 			"alien5" : [ 3600, 265, 150 ]
 		}

@@ -16,7 +16,6 @@ var life;
 var alienGroup;
 var oxygenGroup;
 
-
 var restartButton;
 var quitButton;
 var continueButton;
@@ -42,7 +41,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 1;// first level
+		this.levelNumber = 3;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -77,7 +76,6 @@ play.prototype = {
 		this.game.physics.arcade.overlap(this.astronaut, this.collectwrench, this.collectTools, null, this);
 		this.game.physics.arcade.overlap(this.astronaut, this.collectpliers, this.collectTools, null, this);
 
-
 		/*
 		 * collision between astronaut and oxygen
 		 */
@@ -86,9 +84,9 @@ play.prototype = {
 
 		/*
 		 * Moving the player
-		 *
+		 * 
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 *
+		 * 
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
 		if (cursors.left.isDown && this.rocket.body.y == 69) {
@@ -138,7 +136,7 @@ play.prototype = {
 
 		/*
 		 * check if the player has fallen into a rift
-		 *
+		 * 
 		 * if the player has more than 0 lives left, restart the level
 		 */
 		if (this.astronaut.body.y > 600 && !this.fallen) {
@@ -168,9 +166,9 @@ play.prototype = {
 				this.loadLevel("");
 			}
 		}
-
+		
 		/*
-		 * TODO: Make AI responsive to player
+		 * alien movement and interaction
 		 */
 
 		for (i = 0; i < alienGroup.children.length; i++) {
@@ -179,18 +177,26 @@ play.prototype = {
 				enemy.pathCounter++;
 			}
 			if (enemy.pathCounter >= enemy.distance) {
-				if (enemy.scale.x == -1 && enemy.body.velocity.x == -50) {
-					enemy.pathCounter = 0;
-					enemy.scale.x = 1;
-					enemy.body.velocity.x = 50;
-				} else if (enemy.scale.x == 1 && enemy.body.velocity.x == 50) {
-					enemy.pathCounter = 0;
-					enemy.scale.x = -1;
-					enemy.body.velocity.x = -50;
-				}
+				enemy.pathCounter = 0;
+				enemy.scale.x = -enemy.scale.x;
+				enemy.body.velocity.x = -enemy.body.velocity.x;
+			}
+
+			// enemy facing right,the astronaut is within walking distance of the alien and the alien is facing the wrong direction
+			if ((enemy.scale.x == 1)
+					&& ((this.astronaut.body.x > (enemy.body.x - enemy.pathCounter)) && (this.astronaut.body.x < (enemy.body.x + (enemy.distance - enemy.pathCounter))))
+					&& (this.astronaut.body.x < enemy.body.x)) {
+				enemy.scale.x = -enemy.scale.x
+				enemy.pathCounter = enemy.distance - enemy.pathCounter;
+				enemy.body.velocity.x = -enemy.body.velocity.x;
+			} else if ((enemy.scale.x != 1)
+					&& ((this.astronaut.body.x > (enemy.body.x - (enemy.distance - enemy.pathCounter))) && (this.astronaut.body.x < (enemy.body.x + enemy.pathCounter)))
+					&& (this.astronaut.body.x > enemy.body.x)) {
+				enemy.scale.x = -enemy.scale.x
+				enemy.pathCounter = enemy.distance - enemy.pathCounter;
+				enemy.body.velocity.x = -enemy.body.velocity.x;
 			}
 		}
-
 
 		if (this.spaceKey.isDown) {
 
@@ -315,9 +321,9 @@ play.prototype = {
 
 		/*
 		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
-		 *
+		 * 
 		 * rocket needs to be immovable until player is inside so that it can't be kicked around
-		 *
+		 * 
 		 * no gravity to make departure cleaner
 		 */
 		switch (this.levelNumber) {
@@ -371,7 +377,7 @@ play.prototype = {
 			alienGroup.add(this.alien);
 		}
 
-		oxygenGroup = game.add.group ();
+		oxygenGroup = game.add.group();
 
 		var oxygenInfo = oxygens["level" + this.levelNumber];
 		var amountOxygen = oxygenInfo["amount"];
@@ -415,7 +421,7 @@ play.prototype = {
 
 	/*
 	 * called when the player collides with the rocket
-	 *
+	 * 
 	 * checks if all tools have been collected
 	 */
 	hitFinish : function(astronaut, finish) {
@@ -433,7 +439,7 @@ play.prototype = {
 
 	/*
 	 * called when player collides with an alien
-	 *
+	 * 
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
 	collideWithAlien : function(astronaut, alien) {
@@ -444,11 +450,11 @@ play.prototype = {
 				console.log(lifeCounter);
 			}
 
-			this.lifeTimer = game.time.now + 750;
+			this.lifeTimer = game.time.now + 1000;
 		}
 	},
 
-	collectOxygen : function (astronaut, oxygenBottle) {
+	collectOxygen : function(astronaut, oxygenBottle) {
 		oxygenBottle.kill();
 		timer.stop();
 		oxygenCounter = 9;
