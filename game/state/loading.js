@@ -60,9 +60,15 @@ loading.prototype = {
 		game.load.image ('player4', './assets/menu/startMenu/player4.png');
 
 
-		// music
-		game.load.audio('music', './assets/sound/background_music.wav');
-
+		// audio
+		
+		game.load.audio('music', './assets/audio/background_music.wav');
+		game.load.audio('loseLife', './assets/audio/loseLifeSound.wav');
+		game.load.audio('collectTool', './assets/audio/collectToolSound.wav');
+		game.load.audio('collectOxygen', './assets/audio/collectOxygenSound.wav');
+		game.load.audio('completeLevel', './assets/audio/completeLevelSound.wav');
+		game.load.audio('collideWithAlien', './assets/audio/collideWithAlienSound.wav');
+		
 		/*
 		 * backgrounds - three layers for each level
 		 */

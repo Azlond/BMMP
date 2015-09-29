@@ -105,7 +105,7 @@ function startIntro() {
 }
 
 function startGame() {
-
+	introVideo.stop();
 		missionVideo = this.game.add.video('mission');
 		missionVideo.play(true);
 		missionVideo.loop = false;
@@ -136,7 +136,7 @@ function handleComplete() {
 		introFinished = true;
 
 		missionVideo.stop(true);
-		//missionVideo.destroy();
+		missionVideo.destroy();
 	}
 }
 
