@@ -39,7 +39,8 @@ loading.prototype = {
 		game.load.spritesheet('startButton', './assets/menu/startMenu/startButtonSprite.png', 100, 35, 2);
 		game.load.spritesheet('soundButton', './assets/menu/startMenu/soundButtonSprite.png', 43, 43, 2);
 		game.load.spritesheet('scoreButton', './assets/menu/startMenu/highscoreButtonSprite.png', 43, 43, 2);
-		game.load.spritesheet('closeButton', './assets/menu/soundMenu/doneButtonSprite.png', 71, 29, 2);
+		game.load.spritesheet('closeButton', './assets/menu/scoreMenu/backButtonSprite.png', 58, 28, 2);
+		game.load.spritesheet('resetButton', './assets/menu/scoreMenu/resetButtonSprite.png', 64, 28, 2);
 		game.load.spritesheet('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
 		game.load.spritesheet('restartButton', './assets/menu/pauseMenu/restartButtonSprite.png', 111, 29, 2);
 		
