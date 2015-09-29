@@ -39,6 +39,7 @@ loading.prototype = {
 		game.load.spritesheet('scoreButton', './assets/menu/startMenu/highscoreButtonSprite.png', 43, 43, 2);
 		game.load.spritesheet('closeButton', './assets/menu/soundMenu/doneButtonSprite.png', 71, 29, 2);
 		game.load.spritesheet('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
+		game.load.spritesheet('restartButton', './assets/menu/pauseMenu/restartButtonSprite.png', 111, 29, 2);
 		
 		game.load.image('continueButton','./assets/menu/pauseMenu/continueButton.png');
 		game.load.image('continueButtonHighlight','./assets/menu/pauseMenu/continueButtonHighlight.png');
@@ -109,6 +110,7 @@ loading.prototype = {
 		game.load.image('win', './assets/win.jpg');
 		game.load.spritesheet('alien', './assets/alien.png', 48, 48, 8);
 		game.load.spritesheet('tank', './assets/Status/oxygenStatusSprite.png', 43, 82);
+		game.load.image('oxygen','./assets/oxygen.png');
 
 	},
 

@@ -5,10 +5,11 @@
 
 function menu() {
 }
+
+
 var musicOn = 1;
-var soundOn = 1;
+var soundIsOn = 1;
 var popup;
-var popupOption;
 var soundControl;
 var musicControl
 var sound;
@@ -29,40 +30,47 @@ var closeButton;
 var playerName;
 var playerRegEx = /8|6[5-9]|7[0-9]|8[0-9]|90/;
 
+
+
+var startButton
+
 menu.prototype = {
 
 	create : function() {
+		
+		console.log("bin jetzt im menu");
+		
+		
 		sound = game.add.audio('music');
 		sound.play();
+		
 
-		popupOption = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
-		popupOption.alpha = 1.0;
-		popupOption.anchor.set(0.5);
+		var background = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
+		background.alpha = 1.0;
+		background.anchor.set(0.5);
 
-		/* characterauswahl*/
+		/* characterauswahl */
 		
-		player1 = game.add.button (-314, -120, 'player1', highlightButton, this, 0);
-		popupOption.addChild(player1);
+		player1 = game.add.button (-286, -120, 'player1', highlightButton, this, 0, 1);
+		background.addChild(player1);
 		
-		player2 = game.add.button (-157, -120, 'player2', highlightButton, this, 0);
-		popupOption.addChild(player2);
+		player2 = game.add.button (-138, -120, 'player2', highlightButton, this, 0);
+		background.addChild(player2);
 		
-		player3 = game.add.button (20, -120, 'player3', highlightButton, this, 0);
-		popupOption.addChild(player3);
+		player3 = game.add.button (10, -120, 'player3', highlightButton, this, 0);
+		background.addChild(player3);
 		
-		player4 = game.add.button (177, -120, 'player4', highlightButton, this, 0);
-		popupOption.addChild(player4);
+		player4 = game.add.button (158, -120, 'player4', highlightButton, this, 0);
+		background.addChild(player4);
 		
 		/* buttons */
 	
-		startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
-		popupOption.addChild(startButton);
 	
-		soundButton = game.add.button (280, 188, 'soundButton', soundOption, this, 1, 0);
-		popupOption.addChild(soundButton);
+		soundButton = game.add.button (277, 188, 'soundButton', soundOption, this, 1, 0);
+		background.addChild(soundButton);
 
 		scoreButton = game.add.button (-316, 188, 'scoreButton', scoreOption, this, 1, 0);
-		popupOption.addChild(scoreButton);
+		background.addChild(scoreButton);
 
 
 		playerName = game.add.text(370, 139, "", {
@@ -75,6 +83,11 @@ menu.prototype = {
 				updateName(e);
 			}
 		}
+		console.log("warum funzt das nicht?");
+		
+	
+		startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
+		background.addChild(startButton);
 	}
 };
 
@@ -96,6 +109,7 @@ function startGame() {
 	}
 }
 
+
 function updateName(e) {
 
 	// Backspace
@@ -114,7 +128,7 @@ function handleComplete() {
 		game.state.start('play');
 		introFinished = true;
 		video.stop(true);
-		video.destroy();
+		//video.destroy();
 	}
 }
 
@@ -135,8 +149,8 @@ function soundOption() {
 	
 	musicControl = new button (game, mControlX, mControlY, musicOn, changeMusic, 'controlSound');
 	popup.addChild(musicControl);
-
-	soundControl = new button(game, sControlX, sControlY, 1, changeSound, 'controlSound');
+	
+	soundControl = new button (game, sControlX, sControlY, soundIsOn, changeSound, 'controlSound');
 	popup.addChild(soundControl);
 
 	closeButton = game.add.button (-36, 188, 'closeButton', closeWindow, this, 1, 0);
@@ -159,20 +173,18 @@ function changeMusic() {
 	}
 }
 function changeSound() {
-	if (soundOn == 1) {
-		soundOn = 0;
+	if (soundIsOn == 1) {
+		soundIsOn = 0;
 		soundControl.kill();
 		soundControl = new button(game, sControlX, sControlY, 0, changeSound, 'controlSound');
 		popup.addChild(soundControl);
 		// sound.pause();
-		console.log(soundOn);
 	} else {
-		soundOn = 1;
+		soundIsOn = 1;
 		soundControl.kill();
 		soundControl = new button(game, sControlX, sControlY, 1, changeSound, 'controlSound');
 		popup.addChild(soundControl);
 		// sound.resume();
-		console.log(soundOn);
 	}
 }
 
@@ -262,6 +274,7 @@ function highlightButton(player){
 		default: break;
 	}
 	*/
+	
 }
 
 var button = function(game, x, y, frame, option, keyName) {

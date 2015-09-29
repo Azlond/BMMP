@@ -14,7 +14,7 @@ var pathCounter = 0;
 var timer;
 var life;
 var alienGroup;
-
+var oxygenGroup;
 var soundOn = true;
 
 play.prototype = {
@@ -63,6 +63,13 @@ play.prototype = {
 		this.game.physics.arcade.overlap(this.astronaut, this.collectwrench, this.collectTools, null, this);
 		this.game.physics.arcade.overlap(this.astronaut, this.collectpliers, this.collectTools, null, this);
 
+
+		/*
+		 * collision between astronaut and oxygen
+		 */
+		
+		this.game.physics.arcade.overlap(this.astronaut, oxygenGroup, this.collectOxygen, null, this);
+		
 		/*
 		 * Moving the player
 		 * 
@@ -103,7 +110,7 @@ play.prototype = {
 		 */
 		if (lifeCounter == 0) {
 			this.saveLocal();
-			this.game.state.start('gameOver');
+			this.game.state.start('gameOver', true, false);
 		}
 
 		/*
@@ -157,14 +164,6 @@ play.prototype = {
 				this.alien.body.velocity.x = -50;
 			}
 		}
-		
-		
-		/* pause menu*/
-		
-		game.input.keyboard.onUpCallback = function(e) {
-			pauseOption(e);
-		}
-		function pauseOption (e) {}
 	},
 
 	/*
@@ -324,6 +323,18 @@ play.prototype = {
 			this.alien.animations.play('walk');
 			alienGroup.add(this.alien);
 		}
+		
+		oxygenGroup = game.add.group ();
+
+		var oxygenInfo = oxygens["level" + this.levelNumber];
+		var amountOxygen = oxygenInfo["amount"];
+		var oxygenCoordinates = oxygenInfo["coordinates"];
+
+		for (i = 1; i <= amountOxygen; i++) {
+			this.oxygenBottle = new oxygen(this.game, oxygenCoordinates["oxygen" + i][0], oxygenCoordinates["oxygen" + i][1]);
+			this.game.add.existing(this.oxygenBottle);
+			oxygenGroup.add(this.oxygenBottle);
+		}		
 
 		/* shows oxygencounter in each level */
 		oxygenCounter = 9;
@@ -334,8 +345,8 @@ play.prototype = {
 		this.timeDown();
 
 		/* shows life counter in each level */
-		var toolbar = game.add.sprite(0, 0, 'toolbar');
-		toolbar.fixedToCamera = true;
+		var bar = game.add.sprite(0, 0, 'toolbar');
+		bar.fixedToCamera = true;
 		showLife(lifeCounter);
 	},
 
@@ -379,13 +390,25 @@ play.prototype = {
 	collideWithAlien : function(astronaut, alien) {
 		if (game.time.now > this.lifeTimer) {
 			lifeCounter--;
-			showLife(lifeCounter);
+			showLife(lifeCounter);	
 			if (lifeCounter <= 3 && lifeCounter > 0) {
 				console.log(lifeCounter);
 			}
 
 			this.lifeTimer = game.time.now + 750;
 		}
+	},
+	
+	collectOxygen : function (astronaut, oxygenBottle) {
+		oxygenBottle.kill();
+		timer.stop();
+		oxygenCounter = 9;
+		oxygenTank.kill();
+		oxygenTank = game.add.sprite(750, 63, 'tank');
+		oxygenTank.frame = oxygenCounter;
+		oxygenTank.fixedToCamera = true;
+		--oxygenCounter;
+		this.timeDown();		
 	},
 
 	/*
@@ -417,7 +440,7 @@ play.prototype = {
 	},
 
 	timeDown : function() {
-		var countdown = 100000;
+		var countdown = 30000;
 		timer = game.time.create(false);
 		timer.loop(countdown, this.changeDisplay, this);
 		timer.start();
