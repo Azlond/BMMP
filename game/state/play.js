@@ -367,10 +367,39 @@ play.prototype = {
 		 */
 		switch (this.levelNumber) {
 		case 1:
-			this.rocket = this.game.add.sprite(2246, 69, 'rocket');
+			switch (activeAstronaut) {
+			case 1:
+				this.rocket = this.game.add.sprite(2246, 69, 'rocket1');
+				break;
+			case 2:
+				this.rocket = this.game.add.sprite(2246, 69, 'rocket2');
+				break;
+			case 3:
+				this.rocket = this.game.add.sprite(2246, 69, 'rocket3');
+				break;
+			case 4:
+				this.rocket = this.game.add.sprite(2246, 69, 'rocket3');
+				break;
+			default:
+				break;
+			}
 			break;
 		default: // 2, 3,4
-			this.rocket = this.game.add.sprite(4646, 69, 'rocket');
+			switch (activeAstronaut) {
+			case 1:
+				this.rocket = this.game.add.sprite(4646, 69, 'rocket1');
+				break;
+			case 2:
+				this.rocket = this.game.add.sprite(4646, 69, 'rocket2');
+				break;
+			case 3:
+				this.rocket = this.game.add.sprite(4646, 69, 'rocket3');
+				break;
+			case 4:
+				this.rocket = this.game.add.sprite(4646, 69, 'rocket4');
+				break;
+			}
+			break;
 		}
 		this.game.physics.arcade.enableBody(this.rocket);
 		this.rocket.body.allowGravity = false;
@@ -684,6 +713,7 @@ play.prototype = {
 
 	restartGame : function() {
 
+		lifeCounter = 3;
 		console.log("Restart the game");
 		this.loadLevel("restart");
 

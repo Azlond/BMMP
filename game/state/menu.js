@@ -15,7 +15,7 @@ var musicControl
 var sound;
 var missionVideo;
 var introVideo;
-var introFinished = false;
+var introFinished;
 var mControlX = -66;
 var mControlY = -185;
 var sControlX = -156;
@@ -32,6 +32,7 @@ var playerName;
 var playerRegEx = /8|6[5-9]|7[0-9]|8[0-9]|90/;
 var highScoreGroup;
 var activeAstronaut = 1;
+var buttonSound;
 
 menu.prototype = {
 
@@ -41,7 +42,6 @@ menu.prototype = {
 			sound = game.add.audio('music');
 			sound.play();
 		}
-		
 		
 		background = game.add.sprite(400, 300, 'optionBackground');
 		background.alpha = 1.0;
@@ -107,6 +107,7 @@ function startGame() {
 	introVideo.stop();
 	missionVideo = game.add.video('mission');
 	missionVideo.play(true);
+	introFinished = false;
 	missionVideo.loop = false;
 	missionVideo.onComplete.add(handleComplete);
 	missionVideo.addToWorld(400, 300, 0.5, 0.5);
@@ -130,17 +131,22 @@ function updateName(e) {
 
 function handleComplete() {
 	if (!introFinished) {
+<<<<<<< HEAD
 		game.state.start('play', true, false);
+=======
+>>>>>>> origin/master
 		introFinished = true;
-
 		missionVideo.stop(true);
-		missionVideo.destroy();
+		game.state.start('play');
+		if (soundOn) {
+		sound.play();
+		}
 	}
 }
 
 function soundOption() {
 
-	popup = game.add.sprite(400,300, 'soundBackground');
+	popup = game.add.sprite(400, 300, 'soundBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 
@@ -194,7 +200,8 @@ function changeSound() {
 }
 
 function scoreOption() {
-	popup = game.add.sprite(400,300, 'scoreBackground');
+	buttonSound.play();
+	popup = game.add.sprite(400, 300, 'scoreBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 
@@ -304,6 +311,7 @@ var button = function(game, x, y, frame, option, keyName) {
 	this.input.priorityID = 1;
 	this.input.useHandCursor = true;
 	this.events.onInputDown.add(option, this);
+	buttonSound.play();
 
 };
 button.prototype = Object.create(Phaser.Sprite.prototype);
