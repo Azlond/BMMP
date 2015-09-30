@@ -6,8 +6,8 @@
  <tileset firstgid="2" name="level4_tilemap" tilewidth="32" tileheight="32" tilecount="40">
   <image source="level4_tilemap.png" trans="fffcfc" width="320" height="128"/>
  </tileset>
- <tileset firstgid="42" name="level4_tilemap_white" tilewidth="32" tileheight="32" tilecount="40">
-  <image source="level4_tilemap_white.png" trans="fffcfc" width="320" height="128"/>
+ <tileset firstgid="42" name="level4_tilemap" tilewidth="32" tileheight="32" tilecount="40">
+  <image source="level4_tilemap.png" trans="fffcfc" width="320" height="128"/>
  </tileset>
  <imagelayer name="Bildebene 1">
   <image source="../Level4/Level4_Ebene3.png"/>

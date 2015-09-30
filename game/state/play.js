@@ -129,10 +129,6 @@ play.prototype = {
 			}
 		}
 
-		if (cursors.down.isDown) {
-			readLocal();
-		}
-
 		/*
 		 * Jumping
 		 */
@@ -141,14 +137,6 @@ play.prototype = {
 			if (this.astronaut.body.onFloor()) {
 				this.astronaut.body.velocity.y = -700;
 			}
-		}
-
-		/*
-		 * check if the player is dead
-		 */
-		if (lifeCounter == 0) {
-			this.saveLocal();
-			this.game.state.start('gameOver', true, false);
 		}
 
 		/*
@@ -164,6 +152,14 @@ play.prototype = {
 			if (lifeCounter != 0) {
 				this.loadLevel("restart");
 			}
+		}
+
+		/*
+		 * check if the player is dead
+		 */
+		if (lifeCounter == 0) {
+			this.saveLocal();
+			this.game.state.start('gameOver', true, false);
 		}
 
 		/*
@@ -457,6 +453,8 @@ play.prototype = {
 			score += 1;
 			this.scoreText.text = 'Score: ' + score;
 
+			this.astronaut.collected++;
+
 			return false;
 		}
 
@@ -478,6 +476,30 @@ play.prototype = {
 			score += 50;
 			this.scoreText.text = 'Score: ' + score;
 			this.saveLocal();
+
+			switch (this.levelNumber) {
+			case 2:
+				if (this.astronaut.collected == amountElements["level" + this.levelNumber]) {
+					lifeCounter++;
+					showLife(lifeCounter);
+				}
+				break;
+			case 3:
+				if (this.astronaut.collected == amountElements["level" + this.levelNumber]) {
+					lifeCounter++;
+					showLife(lifeCounter);
+				}
+				break;
+			case 4:
+				if (this.astronaut.collected == amountElements["level" + this.levelNumber]) {
+					lifeCounter++;
+					showLife(lifeCounter);
+				}
+				break;
+
+			default:
+				break;
+			}
 		}
 	},
 
