@@ -136,7 +136,7 @@ function handleComplete() {
 
 function soundOption() {
 
-	popup = game.add.sprite(400,300, 'soundBackground');
+	popup = game.add.sprite(400, 300, 'soundBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 
@@ -190,7 +190,7 @@ function changeSound() {
 }
 
 function scoreOption() {
-	popup = game.add.sprite(400,300, 'scoreBackground');
+	popup = game.add.sprite(400, 300, 'scoreBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 
@@ -267,7 +267,7 @@ function closeWindow() {
 
 	/* buttons */
 
-	startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
+	startButton = game.add.button(-36, 193, 'startButton', startIntro, this, 1, 0);
 	background.addChild(startButton);
 
 	soundButton = game.add.button(280, 188, 'soundButton', soundOption, this, 1, 0);
