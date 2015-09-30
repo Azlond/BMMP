@@ -130,7 +130,6 @@ function handleComplete() {
 		introFinished = true;
 		missionVideo.stop(true);
 		game.state.start('play');
-		missionVideo.destroy();
 		if (soundOn) {
 		sound.play();
 		}
