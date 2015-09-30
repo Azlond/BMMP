@@ -39,7 +39,7 @@ menu.prototype = {
 		/*
 		 * sound = game.add.audio('music'); sound.play();
 		 */
-		background = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
+		background = game.add.sprite(400, 300, 'optionBackground');
 		background.alpha = 1.0;
 		background.anchor.set(0.5);
 
@@ -136,7 +136,7 @@ function handleComplete() {
 
 function soundOption() {
 
-	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'soundBackground');
+	popup = game.add.sprite(400,300, 'soundBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 
@@ -190,7 +190,7 @@ function changeSound() {
 }
 
 function scoreOption() {
-	popup = game.add.sprite(game.world.centerX, game.world.centerY, 'scoreBackground');
+	popup = game.add.sprite(400,300, 'scoreBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
 

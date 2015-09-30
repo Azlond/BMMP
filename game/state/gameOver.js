@@ -16,4 +16,5 @@ gameOver.prototype = {
 
 function restartGame () {
 		game.state.start ('menu');
+		introFinished = false;
 }
