@@ -72,6 +72,7 @@ play.prototype = {
 		 * collision between astronaut/alien/rocket and the platform/ground layer
 		 */
 		this.game.physics.arcade.collide(this.astronaut, this.layer);
+		this.game.physics.arcade.collide(this.astronaut, this.wall);
 		this.game.physics.arcade.collide(alienGroup, this.layer);
 		this.game.physics.arcade.collide(this.rocket, this.layer);
 
@@ -107,16 +108,20 @@ play.prototype = {
 				this.astronaut.animations.play('walk', 6, true);
 			}
 			this.astronaut.scale.x = -1;
-			this.background2.x += 0.25;
-			this.background1.x += 0.3;
+			if (this.astronaut.body.x > 50) {
+				this.background2.x += 0.25;
+				this.background1.x += 0.3;
+			}
 		} else if (cursors.right.isDown && this.rocket.body.y == 69) {
 			this.astronaut.body.velocity.x = 175;
 			this.astronaut.scale.x = 1;
 			if (this.astronaut.body.onFloor()) {
 				this.astronaut.animations.play('walk', 6, true);
 			}
-			this.background2.x -= 0.25;
-			this.background1.x -= 0.3;
+			if ((this.astronaut.body.x < 2200 && this.levelNumber == 1) || (this.astronaut.body.x < 4600 && this.levelNumber != 1)) {
+				this.background2.x -= 0.25;
+				this.background1.x -= 0.3;
+			}
 		} else {
 			this.astronaut.body.velocity.x = 0;
 			if (this.astronaut.body.onFloor()) {
@@ -379,8 +384,6 @@ play.prototype = {
 		this.astronaut.anchor.setTo(0.5, 0.5);
 		this.game.camera.follow(this.astronaut);
 
-		console.log(this.astronaut);
-
 		score = oldScore;// update the score
 
 		this.scoreText = game.add.text(0, 20, 'Score: ' + score, {
@@ -389,6 +392,14 @@ play.prototype = {
 		});
 		this.scoreText.fixedToCamera = true;
 
+		/*
+		 * adding the invisible Wall to make sure the character can't walk out of the screen on the left size
+		 */
+
+		this.wall = this.game.add.sprite(-10, 0, 'invisWall');
+		this.game.physics.arcade.enableBody(this.wall);
+		this.wall.body.allowGravity = false;
+		this.wall.body.immovable = true;
 		/**
 		 * add aliens TODO: hashmap with locations similar to the tools to support multiple aliens
 		 */
@@ -441,7 +452,6 @@ play.prototype = {
 		var str = astronaut.key.toString();
 		if (str.indexOf("char") != -1) {
 
-			// astronaut.key does not work in safari
 			this.map.removeTile(tile.x, tile.y, this.layer);
 
 			score += 1;

@@ -120,6 +120,7 @@ loading.prototype = {
 		game.load.spritesheet('alien', './assets/alien.png', 48, 48, 8);
 		game.load.spritesheet('tank', './assets/Status/oxygenStatusSprite.png', 43, 82);
 		game.load.image('oxygen','./assets/oxygen.png');
+		game.load.image('invisWall', './assets/invisibleWall.png');
 
 	},
 
