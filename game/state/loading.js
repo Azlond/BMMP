@@ -23,6 +23,10 @@ loading.prototype = {
 
 		game.load.video('intro', './assets/videos/Intro.mp4');
 		game.load.video('mission', './assets/videos/Mission.mp4');
+		game.load.video ('animation1', './assets/videos/animation1.mp4');
+		game.load.video ('animation2', './assets/videos/animation2.mp4');
+		game.load.video ('animation3', './assets/videos/animation3.mp4');
+		
 
 		/* Menu-state images */
 
@@ -41,15 +45,8 @@ loading.prototype = {
 		game.load.spritesheet('resetButton', './assets/menu/scoreMenu/resetButtonSprite.png', 64, 28, 2);
 		game.load.spritesheet('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
 		game.load.spritesheet('restartButton', './assets/menu/pauseMenu/restartButtonSprite.png', 111, 29, 2);
-
-		game.load.image('continueButton', './assets/menu/pauseMenu/continueButton.png');
-		game.load.image('continueHighlight', './assets/menu/pauseMenu/continueButtonHighlight.png');
-		game.load.image('quitButton', './assets/menu/pauseMenu/quitButton.png');
-		game.load.image('quitHighlight', './assets/menu/pauseMenu/quitButtonHighlight.png');
-		game.load.image('restartButton', './assets/menu/pauseMenu/restartButton.png');
-		game.load.image('restartHighlight', './assets/menu/pauseMenu/restartButtonHighlight.png');
-		game.load.image('off', './assets/menu/pauseMenu/off.png');
-		game.load.image('on', './assets/menu/pauseMenu/on.png');
+		game.load.spritesheet('continueButton', './assets/menu/pauseMenu/continueButtonSprite.png', 105, 30, 2);
+		game.load.spritesheet('quitButton', './assets/menu/pauseMenu/quitButtonSprite.png', 99, 26, 2);
 
 		// characters
 		game.load.image('player1', './assets/menu/startMenu/player1.png');
@@ -65,6 +62,7 @@ loading.prototype = {
 		game.load.audio('collectOxygen', './assets/audio/collectOxygenSound.wav');
 		game.load.audio('completeLevel', './assets/audio/completeLevelSound.wav');
 		game.load.audio('collideWithAlien', './assets/audio/collideWithAlienSound.wav');
+		//game.load.audio('buttonSound', './assets/audio/menuSelection.wav');
 
 		/*
 		 * backgrounds - three layers for each level
@@ -84,6 +82,8 @@ loading.prototype = {
 		game.load.image('level4background3', './assets/Level4/Level4_Ebene3.png');
 		game.load.image('level4background2', './assets/Level4/Level4_Ebene2.png');
 		game.load.image('level4background1', './assets/Level4/Level4_Ebene1.png');
+		
+		game.load.image('bonusLevelBackground', './assets/darkstars.png');
 
 		/*
 		 * levels - json file with the collision information, and the accompanying tilemaps
@@ -103,6 +103,11 @@ loading.prototype = {
 		game.load.tilemap('level4', './assets/Tilemap/level4_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('level4_tilemap', './assets/Tilemap/level4_tilemap.png');
 		game.load.image('level4_tilemap_ground', './assets/Tilemap/level4_tilemap_ground.png');
+		
+		game.load.tilemap('bonusLevel', './assets/Tilemap/bonus_level.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.image('bonusLevel_tilemap', './assets/Tilemap/level2_tilemap.png');
+		game.load.image('bonusLevel_tilemap_finish', './assets/Tilemap/bonusLevel_tilemap_finish.png');
+		game.load.image('bonusRocket', './assets/bonus_rocket.png');
 
 		/*
 		 * other assets

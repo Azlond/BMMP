@@ -11,7 +11,7 @@ var oldScore;// the score at the beginning of a level - needed for restarting a 
 var lifeCounter; // the amount of lives the player has
 var oxygenCounter;
 var pathCounter = 0;
-var timer;
+// var timer;
 var life;
 var alienGroup;
 var oxygenGroup;
@@ -22,6 +22,8 @@ var collectToolSound;
 var collectOxygenSound;
 var completeLevelSound;
 var collideWithAlienSound;
+var animation1;
+var videoBackground;
 
 var restartButton;
 var quitButton;
@@ -65,9 +67,14 @@ play.prototype = {
 		collectOxygenSound = game.add.audio('collectOxygen');
 		completeLevelSound = game.add.audio('completeLevel');
 		collideWithAlienSound = game.add.audio('collideWithAlien');
+		animation1 = game.add.video('animation1');
+		animation2 = game.add.video('animation2');
+		animation3 = game.add.video('animation3');
+
 	},
 
 	update : function() {
+
 		/*
 		 * collision between astronaut/alien/rocket and the platform/ground layer
 		 */
@@ -146,7 +153,9 @@ play.prototype = {
 		 */
 		if (this.astronaut.body.y > 600 && !this.fallen) {
 			lifeCounter--;
-			loseLifeSound.play();
+			if (soundIsOn == 1) {
+				loseLifeSound.play();
+			}
 			showLife(lifeCounter);
 			this.fallen = true;
 			if (lifeCounter != 0) {
@@ -164,22 +173,12 @@ play.prototype = {
 
 		/*
 		 * check if the rocket has left the camera fov
+		 * 
+		 * if (this.rocket.body.y <= -420) { this.rocketGone = true; }
+		 *  /* rocket has left camera fov, either load the next level or display win message
+		 * 
+		 * if (this.rocketGone) { if (this.levelNumber == this.finalLevel) { game.state.start('bonus'); } else { this.levelNumber += 1; this.loadLevel(""); } }
 		 */
-		if (this.rocket.body.y <= -420) {
-			this.rocketGone = true;
-		}
-
-		/*
-		 * rocket has left camera fov, either load the next level or display win message
-		 */
-		if (this.rocketGone) {
-			if (this.levelNumber == this.finalLevel) {
-				game.state.start('win');
-			} else {
-				this.levelNumber += 1;
-				this.loadLevel("");
-			}
-		}
 
 		/*
 		 * alien movement and interaction
@@ -266,10 +265,11 @@ play.prototype = {
 			this.noscrewdriver.kill();
 			alienGroup.destroy();
 		}
-
+		sound.play();
 		this.toolsCollected = 0;
 		this.lifeTimer = 0;
 		this.fallen = false;
+		this.rocketGone = false;
 
 		// if a new level is loaded (string !=restart), the current score is the new oldScore
 		// else we keep the oldScore
@@ -281,7 +281,6 @@ play.prototype = {
 		this.background3 = this.game.add.image(0, 0, 'level' + this.levelNumber + 'background3');
 		this.background2 = this.game.add.image(0, 0, 'level' + this.levelNumber + 'background2');
 		this.background1 = this.game.add.image(-15, 0, 'level' + this.levelNumber + 'background1');
-		this.rocketGone = false;
 		/*
 		 * adds the tile map to the game !!tilemap json files need to be created with the csv preset and not base64 compressed, or this won't work!!
 		 */
@@ -426,7 +425,7 @@ play.prototype = {
 		this.wall.body.allowGravity = false;
 		this.wall.body.immovable = true;
 		/**
-		 * add aliens TODO: hashmap with locations similar to the tools to support multiple aliens
+		 * add aliens
 		 */
 		alienGroup = game.add.group();
 
@@ -493,12 +492,16 @@ play.prototype = {
 	 * called when the player collides with the rocket
 	 * 
 	 * checks if all tools have been collected
+	 * 
 	 */
 	hitFinish : function(astronaut, finish) {
 
 		if (this.toolsCollected == 3) {
 			this.astronaut.kill();
-			completeLevelSound.play();
+			this.timer.stop();
+			if (soundIsOn == 1) {
+				completeLevelSound.play();
+			}
 			this.rocket.body.immovable = false;
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
@@ -529,7 +532,55 @@ play.prototype = {
 			default:
 				break;
 			}
+
+			this.timer2 = game.time.create(false);
+			this.timer2.add(3500, this.playVideo, this);
+			this.timer2.start();
 		}
+
+	},
+
+	playVideo : function() {
+		this.timer2.stop();
+		this.timer3 = game.time.create(false);
+		this.timer3.add(20000, this.endLevel, this);
+		this.timer3.start();
+		if (this.levelNumber < this.finalLevel) {
+			switch (this.levelNumber) {
+			case 1:
+				videoBackground = game.add.sprite(1600, 8, 'startBackground');
+				animation1.add(videoBackground);
+				animation1.play();
+				break;
+
+			case 2:
+				videoBackground = game.add.sprite(4000, 8, 'startBackground');
+				animation2.add(videoBackground);
+				animation2.play();
+				break;
+
+			case 3:
+				videoBackground = game.add.sprite(4000, 8, 'startBackground');
+				animation3.add(videoBackground);
+				animation3.play();
+				break;
+			}
+			videoBackground.bringToTop();
+			game.input.keyboard.onUpCallback = function(e) {
+				endLevel();
+			}
+
+		} else if (this.levelNumber == this.finalLevel) {
+			game.state.start('win');
+		}
+
+	},
+
+	endLevel : function() {
+		this.timer3.stop();
+		videoBackground.kill();
+		this.levelNumber += 1;
+		this.loadLevel("");
 	},
 
 	/*
@@ -540,7 +591,9 @@ play.prototype = {
 	collideWithAlien : function(astronaut, alien) {
 		if (game.time.now > this.lifeTimer) {
 			lifeCounter--;
-			collideWithAlienSound.play();
+			if (soundIsOn == 1) {
+				collideWithAlienSound.play();
+			}
 			showLife(lifeCounter);
 			if (lifeCounter <= 3 && lifeCounter > 0) {
 				console.log(lifeCounter);
@@ -552,8 +605,10 @@ play.prototype = {
 
 	collectOxygen : function(astronaut, oxygenBottle) {
 		oxygenBottle.kill();
-		timer.stop();
-		collectOxygenSound.play();
+		this.timer.stop();
+		if (soundIsOn == 1) {
+			collectOxygenSound.play();
+		}
 		oxygenCounter = 9;
 		oxygenTank.kill();
 		oxygenTank = game.add.sprite(750, 63, 'tank');
@@ -571,21 +626,27 @@ play.prototype = {
 
 		if (tools == this.collectpliers) {
 			this.nopliers.kill();
-			collectToolSound.play();
+			if (soundIsOn == 1) {
+				collectToolSound.play();
+			}
 			this.pliers = new Tools(this.game, 230, 15, 0);
 			this.game.add.existing(this.pliers);
 			this.pliers.fixedToCamera = true;
 		}
 		if (tools == this.collectscrewdriver) {
 			this.noscrewdriver.kill();
-			collectToolSound.play();
+			if (soundIsOn == 1) {
+				collectToolSound.play();
+			}
 			this.screwdriver = new Tools(this.game, 290, 15, 4);
 			this.game.add.existing(this.screwdriver);
 			this.screwdriver.fixedToCamera = true;
 		}
 		if (tools == this.collectwrench) {
 			this.nowrench.kill();
-			collectToolSound.play();
+			if (soundIsOn == 1) {
+				collectToolSound.play();
+			}
 			this.wrench = new Tools(this.game, 260, 15, 2);
 			this.game.add.existing(this.wrench);
 			this.wrench.fixedToCamera = true;
@@ -596,9 +657,9 @@ play.prototype = {
 
 	timeDown : function() {
 		var countdown = 30000;
-		timer = game.time.create(false);
-		timer.loop(countdown, this.changeDisplay, this);
-		timer.start();
+		this.timer = game.time.create(false);
+		this.timer.loop(countdown, this.changeDisplay, this);
+		this.timer.start();
 	},
 
 	changeDisplay : function() {
@@ -613,7 +674,9 @@ play.prototype = {
 			oxygenTank.animations.stop();
 			oxygenTank.frame = 0;
 			--lifeCounter;
-			loseLifeSound.play();
+			if (soundIsOn == 1) {
+				loseLifeSound.play();
+			}
 			this.loadLevel("restart");
 			timer.stop();
 		} else {
@@ -697,7 +760,6 @@ play.prototype = {
 			}
 		}
 	}
-
 };
 
 function readLocal() {
