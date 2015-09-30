@@ -36,14 +36,13 @@ var activeAstronaut = 1;
 menu.prototype = {
 
 	create : function() {
-/*
-		sound = game.add.audio('music');
-		sound.play();
-*/
+		/*
+		 * sound = game.add.audio('music'); sound.play();
+		 */
 		background = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
 		background.alpha = 1.0;
 		background.anchor.set(0.5);
-		
+
 		/* characterauswahl */
 
 		player1 = game.add.button(-286, -120, 'player1', highlightButton, this, 0, 1);
@@ -102,16 +101,15 @@ function startIntro() {
 
 function startGame() {
 	introVideo.stop();
-		missionVideo = this.game.add.video('mission');
-		missionVideo.play(true);
-		missionVideo.loop = false;
-		missionVideo.onComplete.add(handleComplete);
-		missionVideo.addToWorld(400, 300, 0.5, 0.5);
-		game.input.keyboard.onUpCallback = function(e) {
-			handleComplete();
-		}
+	missionVideo = this.game.add.video('mission');
+	missionVideo.play(true);
+	missionVideo.loop = false;
+	missionVideo.onComplete.add(handleComplete);
+	missionVideo.addToWorld(400, 300, 0.5, 0.5);
+	game.input.keyboard.onUpCallback = function(e) {
+		handleComplete();
+	}
 }
-
 
 function updateName(e) {
 	var str = playerName.text;
@@ -206,7 +204,7 @@ function scoreOption() {
 
 	closeButton = game.add.button(-316, 188, 'closeButton', closeWindow, this, 1, 0);
 	popup.addChild(closeButton);
-	
+
 	resetButton = game.add.button(260, 188, 'resetButton', resetScore, this, 1, 0);
 	popup.addChild(resetButton);
 
@@ -226,7 +224,6 @@ function scoreOption() {
 				fill : '#ffffff'
 			});
 
-			console.log(highScoreList[i]);
 			var n = game.add.text(250, firstPlace, highScoreList[i][0], {
 				font : '30px Courier',
 				fill : '#ffffff'
@@ -245,9 +242,10 @@ function scoreOption() {
 
 }
 
-function resetScore () {
-	
+function resetScore() {
 	localStorage.clear();
+	closeWindow();
+	scoreOption();
 }
 
 function closeWindow() {
@@ -286,7 +284,7 @@ function closeWindow() {
 
 function highlightButton(player) {
 	/*
-	 switch (player) { case 1: player1.kill(); player1 = game.add.sprite(-314, -120, 'player1'); player1.frame = 0; background.addChild(player1);
+	 * switch (player) { case 1: player1.kill(); player1 = game.add.sprite(-314, -120, 'player1'); player1.frame = 0; background.addChild(player1);
 	 * activeAstronaut = 1; break; case 2: player2.kill(); player2 = game.add.sprite(-314, -120, 'player2'); player2.frame = 0; background.addChild(player2);
 	 * activeAstronaut = 2; break; case 3: player3.kill(); player3 = game.add.sprite(-314, -120, 'player1'); player3.frame = 0; background.addChild(player3);
 	 * activeAstronaut = 3; break; case 4: player4.kill(); player4 = game.add.sprite(-314, -120, 'player1'); player4.frame = 0; background.addChild(player4);
