@@ -33,21 +33,17 @@ var playerRegEx = /8|6[5-9]|7[0-9]|8[0-9]|90/;
 var highScoreGroup;
 var activeAstronaut = 1;
 
-var startButton
-
 menu.prototype = {
 
 	create : function() {
-
-		console.log("bin jetzt im menu");
-
+/*
 		sound = game.add.audio('music');
 		sound.play();
-
+*/
 		background = game.add.sprite(game.world.centerX, game.world.centerY, 'optionBackground');
 		background.alpha = 1.0;
 		background.anchor.set(0.5);
-
+		
 		/* characterauswahl */
 
 		player1 = game.add.button(-286, -120, 'player1', highlightButton, this, 0, 1);
