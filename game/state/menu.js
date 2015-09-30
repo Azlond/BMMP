@@ -15,7 +15,7 @@ var musicControl
 var sound;
 var missionVideo;
 var introVideo;
-var introFinished = false;
+var introFinished;
 var mControlX = -66;
 var mControlY = -185;
 var sControlX = -156;
@@ -103,6 +103,7 @@ function startGame() {
 	introVideo.stop();
 	missionVideo = this.game.add.video('mission');
 	missionVideo.play(true);
+	introFinished = false;
 	missionVideo.loop = false;
 	missionVideo.onComplete.add(handleComplete);
 	missionVideo.addToWorld(400, 300, 0.5, 0.5);
@@ -126,11 +127,9 @@ function updateName(e) {
 
 function handleComplete() {
 	if (!introFinished) {
-		game.state.start('play');
 		introFinished = true;
-
 		missionVideo.stop(true);
-		missionVideo.destroy();
+		game.state.start('play');
 	}
 }
 

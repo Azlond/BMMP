@@ -48,7 +48,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 2;// first level
+		this.levelNumber = 1;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -641,6 +641,7 @@ play.prototype = {
 
 	restartGame : function() {
 
+		lifeCounter = 3;
 		console.log("Restart the game");
 		this.loadLevel("restart");
 
