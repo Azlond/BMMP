@@ -23,7 +23,6 @@ loading.prototype = {
 
 		game.load.video('intro', './assets/videos/Intro.mp4');
 		game.load.video('mission', './assets/videos/Mission.mp4');
-		
 
 		/* Menu-state images */
 
@@ -34,7 +33,6 @@ loading.prototype = {
 		game.load.image('scoreBackground', './assets/menu/scoreMenu/scoreBackground.png');
 		game.load.image('pauseBackground', './assets/menu/pauseMenu/background.png');
 
-
 		// button
 		game.load.spritesheet('startButton', './assets/menu/startMenu/startButtonSprite.png', 100, 35, 2);
 		game.load.spritesheet('soundButton', './assets/menu/startMenu/soundButtonSprite.png', 43, 43, 2);
@@ -44,31 +42,30 @@ loading.prototype = {
 		game.load.spritesheet('controlSound', './assets/menu/soundMenu/soundControlSprite.png', 82, 114, 2);
 		game.load.spritesheet('restartButton', './assets/menu/pauseMenu/restartButtonSprite.png', 111, 29, 2);
 
-		game.load.image('continueButton','./assets/menu/pauseMenu/continueButton.png');
-		game.load.image('continueHighlight','./assets/menu/pauseMenu/continueButtonHighlight.png');
-		game.load.image('quitButton','./assets/menu/pauseMenu/quitButton.png');
-		game.load.image('quitHighlight','./assets/menu/pauseMenu/quitButtonHighlight.png');
-		game.load.image('restartButton','./assets/menu/pauseMenu/restartButton.png');
-		game.load.image('restartHighlight','./assets/menu/pauseMenu/restartButtonHighlight.png');
-		game.load.image('off','./assets/menu/pauseMenu/off.png');
-		game.load.image('on','./assets/menu/pauseMenu/on.png');
+		game.load.image('continueButton', './assets/menu/pauseMenu/continueButton.png');
+		game.load.image('continueHighlight', './assets/menu/pauseMenu/continueButtonHighlight.png');
+		game.load.image('quitButton', './assets/menu/pauseMenu/quitButton.png');
+		game.load.image('quitHighlight', './assets/menu/pauseMenu/quitButtonHighlight.png');
+		game.load.image('restartButton', './assets/menu/pauseMenu/restartButton.png');
+		game.load.image('restartHighlight', './assets/menu/pauseMenu/restartButtonHighlight.png');
+		game.load.image('off', './assets/menu/pauseMenu/off.png');
+		game.load.image('on', './assets/menu/pauseMenu/on.png');
 
-		//characters
-		game.load.image ('player1', './assets/menu/startMenu/player1.png');
-		game.load.image ('player2', './assets/menu/startMenu/player2.png');
-		game.load.image ('player3', './assets/menu/startMenu/player3.png');
-		game.load.image ('player4', './assets/menu/startMenu/player4.png');
-
+		// characters
+		game.load.image('player1', './assets/menu/startMenu/player1.png');
+		game.load.image('player2', './assets/menu/startMenu/player2.png');
+		game.load.image('player3', './assets/menu/startMenu/player3.png');
+		game.load.image('player4', './assets/menu/startMenu/player4.png');
 
 		// audio
-		
+
 		game.load.audio('music', './assets/audio/background_music.mp3');
 		game.load.audio('loseLife', './assets/audio/loseLifeSound.wav');
 		game.load.audio('collectTool', './assets/audio/collectToolSound.wav');
 		game.load.audio('collectOxygen', './assets/audio/collectOxygenSound.wav');
 		game.load.audio('completeLevel', './assets/audio/completeLevelSound.wav');
 		game.load.audio('collideWithAlien', './assets/audio/collideWithAlienSound.wav');
-		
+
 		/*
 		 * backgrounds - three layers for each level
 		 */
@@ -110,16 +107,24 @@ loading.prototype = {
 		/*
 		 * other assets
 		 */
+		game.load.spritesheet('char1', './assets/astronauts/astronaut_jennifer.png', 32, 64, 24);
+		game.load.spritesheet('rocket1', './assets/astronauts/rocket_spritesheet_jennifer.png', 154, 412, 2);
+		game.load.spritesheet('char2', './assets/astronauts/astronaut_patrick.png', 32, 64, 24);
+		game.load.spritesheet('rocket2', './assets/astronauts/rocket_spritesheet_patrick.png', 154, 412, 2);
+		game.load.spritesheet('char3', './assets/astronauts/astronaut_carla.png', 32, 64, 24);
+		game.load.spritesheet('rocket3', './assets/astronauts/rocket_spritesheet_carla.png', 154, 412, 2);
+		game.load.spritesheet('char4', './assets/astronauts/astronaut_hector.png', 32, 64, 24);
+		game.load.spritesheet('rocket4', './assets/astronauts/rocket_spritesheet_hector.png', 154, 412, 2);
+
 		game.load.image('toolbar', './assets/toolbar.png');
 		game.load.spritesheet('lifeCounter', './assets/Status/livesSprite.png', 55, 40, 4);
-		game.load.spritesheet('char1', './assets/Astronaut2.png', 32, 64, 24);
-		game.load.spritesheet('rocket', './assets/rocket_spritesheet.png', 154, 412, 2);
+
 		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
 		game.load.image('gameOver', './assets/gameOver.jpg');
 		game.load.image('win', './assets/win.jpg');
 		game.load.spritesheet('alien', './assets/alien.png', 48, 48, 8);
 		game.load.spritesheet('tank', './assets/Status/oxygenStatusSprite.png', 43, 82);
-		game.load.image('oxygen','./assets/oxygen.png');
+		game.load.image('oxygen', './assets/oxygen.png');
 		game.load.image('invisWall', './assets/invisibleWall.png');
 
 	},
