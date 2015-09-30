@@ -11,7 +11,11 @@ var oldScore;// the score at the beginning of a level - needed for restarting a 
 var lifeCounter; // the amount of lives the player has
 var oxygenCounter;
 var pathCounter = 0;
+<<<<<<< HEAD
 // var timer;
+=======
+//var timer;
+>>>>>>> branch 'master' of https://github.com/Azlond/BMMP
 var life;
 var alienGroup;
 var oxygenGroup;
@@ -67,10 +71,18 @@ play.prototype = {
 		collectOxygenSound = game.add.audio('collectOxygen');
 		completeLevelSound = game.add.audio('completeLevel');
 		collideWithAlienSound = game.add.audio('collideWithAlien');
+<<<<<<< HEAD
 		animation1 = game.add.video('animation1');
 		animation2 = game.add.video('animation2');
 		animation3 = game.add.video('animation3');
 
+=======
+		animation1 = game.add.video ('animation1');
+		animation2 = game.add.video ('animation2');
+		animation3 = game.add.video ('animation3');
+		
+		
+>>>>>>> branch 'master' of https://github.com/Azlond/BMMP
 	},
 
 	update : function() {
@@ -153,7 +165,11 @@ play.prototype = {
 		 */
 		if (this.astronaut.body.y > 600 && !this.fallen) {
 			lifeCounter--;
+<<<<<<< HEAD
 			if (soundIsOn == 1) {
+=======
+			if (soundIsOn == 1){
+>>>>>>> branch 'master' of https://github.com/Azlond/BMMP
 				loseLifeSound.play();
 			}
 			showLife(lifeCounter);
@@ -173,12 +189,32 @@ play.prototype = {
 
 		/*
 		 * check if the rocket has left the camera fov
+<<<<<<< HEAD
 		 * 
 		 * if (this.rocket.body.y <= -420) { this.rocketGone = true; }
 		 *  /* rocket has left camera fov, either load the next level or display win message
 		 * 
 		 * if (this.rocketGone) { if (this.levelNumber == this.finalLevel) { game.state.start('bonus'); } else { this.levelNumber += 1; this.loadLevel(""); } }
 		 */
+=======
+		
+		if (this.rocket.body.y <= -420) {
+			this.rocketGone = true;
+		}
+
+		/*
+		 * rocket has left camera fov, either load the next level or display win message
+		 
+		if (this.rocketGone) {
+			if (this.levelNumber == this.finalLevel) {
+				game.state.start('win');
+			} else {
+				this.levelNumber += 1;
+				this.loadLevel("");
+			}
+		}
+		*/
+>>>>>>> branch 'master' of https://github.com/Azlond/BMMP
 
 		/*
 		 * alien movement and interaction
@@ -250,7 +286,7 @@ play.prototype = {
 	 * function to load each level
 	 */
 	loadLevel : function(string) {
-
+		console.log(this);
 		/*
 		 * reset values
 		 */
@@ -532,12 +568,21 @@ play.prototype = {
 			default:
 				break;
 			}
+<<<<<<< HEAD
 
 			this.timer2 = game.time.create(false);
 			this.timer2.add(3500, this.playVideo, this);
 			this.timer2.start();
+=======
+			console.log(this);
+		
+			this.timer2 = game.time.create(false);
+			this.timer2.add(3500, this.playVideo, this);
+			this.timer2.start();	
+>>>>>>> branch 'master' of https://github.com/Azlond/BMMP
 		}
 
+<<<<<<< HEAD
 	},
 
 	playVideo : function() {
@@ -581,7 +626,50 @@ play.prototype = {
 		videoBackground.kill();
 		this.levelNumber += 1;
 		this.loadLevel("");
+=======
+>>>>>>> branch 'master' of https://github.com/Azlond/BMMP
 	},
+	
+	playVideo : function () {		
+		this.timer2.stop();
+		this.timer3 = game.time.create(false);
+		this.timer3.add(20000, this.endLevel, this);
+		this.timer3.start();	
+		if (this.levelNumber < this.finalLevel) {
+			switch (this.levelNumber) {
+				case 1: videoBackground = game.add.sprite(1600, 8, 'startBackground');
+						animation1.add(videoBackground);
+						animation1.play();
+						break;
+					
+				case 2: videoBackground = game.add.sprite(4000, 8, 'startBackground');
+						animation2.add(videoBackground);
+						animation2.play();
+						break;	
+							
+				case 3: videoBackground = game.add.sprite(4000, 8, 'startBackground');
+						animation3.add(videoBackground);
+						animation3.play();
+						break;
+			}
+			videoBackground.bringToTop();
+			game.input.keyboard.onUpCallback = function(e) {
+				endLevel();
+			}
+		
+		} else if (this.levelNumber == this.finalLevel) {
+			game.state.start('win');
+		}
+		
+	},
+	
+	endLevel : function () {
+		this.timer3.stop();
+		videoBackground.kill();
+		this.levelNumber += 1;
+		this.loadLevel("");
+	},
+	
 
 	/*
 	 * called when player collides with an alien
@@ -606,7 +694,11 @@ play.prototype = {
 	collectOxygen : function(astronaut, oxygenBottle) {
 		oxygenBottle.kill();
 		this.timer.stop();
+<<<<<<< HEAD
 		if (soundIsOn == 1) {
+=======
+		if (soundIsOn== 1) {
+>>>>>>> branch 'master' of https://github.com/Azlond/BMMP
 			collectOxygenSound.play();
 		}
 		oxygenCounter = 9;
@@ -626,7 +718,11 @@ play.prototype = {
 
 		if (tools == this.collectpliers) {
 			this.nopliers.kill();
+<<<<<<< HEAD
 			if (soundIsOn == 1) {
+=======
+			if (soundIsOn== 1) {
+>>>>>>> branch 'master' of https://github.com/Azlond/BMMP
 				collectToolSound.play();
 			}
 			this.pliers = new Tools(this.game, 230, 15, 0);
@@ -635,7 +731,11 @@ play.prototype = {
 		}
 		if (tools == this.collectscrewdriver) {
 			this.noscrewdriver.kill();
+<<<<<<< HEAD
 			if (soundIsOn == 1) {
+=======
+			if (soundIsOn== 1) {
+>>>>>>> branch 'master' of https://github.com/Azlond/BMMP
 				collectToolSound.play();
 			}
 			this.screwdriver = new Tools(this.game, 290, 15, 4);
@@ -644,7 +744,11 @@ play.prototype = {
 		}
 		if (tools == this.collectwrench) {
 			this.nowrench.kill();
+<<<<<<< HEAD
 			if (soundIsOn == 1) {
+=======
+			if (soundIsOn== 1) {
+>>>>>>> branch 'master' of https://github.com/Azlond/BMMP
 				collectToolSound.play();
 			}
 			this.wrench = new Tools(this.game, 260, 15, 2);

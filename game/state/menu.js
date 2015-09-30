@@ -32,16 +32,22 @@ var playerName;
 var playerRegEx = /8|6[5-9]|7[0-9]|8[0-9]|90/;
 var highScoreGroup;
 var activeAstronaut = 1;
+var buttonSound;
 
 menu.prototype = {
 
 	create : function() {
 		
-		sound = game.add.audio('music'); sound.play();
+		if (musicOn == 1) {
+			sound = game.add.audio('music');
+			sound.play();
+		}
 		
 		background = game.add.sprite(400, 300, 'optionBackground');
 		background.alpha = 1.0;
 		background.anchor.set(0.5);
+		
+		buttonSound = game.add.audio('buttonSound');
 
 		/* characterauswahl */
 
@@ -93,7 +99,7 @@ function startIntro() {
 		game.input.keyboard.onUpCallback = function(e) {
 			startGame();
 		}
-		if (soundOn) {
+		if (musicOn == 1) {
 			sound.stop();
 		}
 	}
@@ -101,7 +107,7 @@ function startIntro() {
 
 function startGame() {
 	introVideo.stop();
-	missionVideo = this.game.add.video('mission');
+	missionVideo = game.add.video('mission');
 	missionVideo.play(true);
 	introFinished = false;
 	missionVideo.loop = false;
@@ -127,11 +133,11 @@ function updateName(e) {
 
 function handleComplete() {
 	if (!introFinished) {
+		game.state.start('play', true, false);
 		introFinished = true;
 		missionVideo.stop(true);
 		game.state.start('play');
-		missionVideo.destroy();
-		if (soundOn) {
+		if (soundOn == 1) {
 		sound.play();
 		}
 	}
@@ -163,12 +169,18 @@ function soundOption() {
 
 function changeMusic() {
 	if (musicOn == 1) {
+		if (soundIsOn==1) {
+			buttonSound.play();
+		}
 		musicOn = 0;
 		musicControl.kill();
 		musicControl = new button(game, mControlX, mControlY, 0, changeMusic, 'controlSound');
 		popup.addChild(musicControl);
 		sound.pause();
 	} else {
+		if (soundIsOn==1) {
+			buttonSound.play();
+		}
 		musicOn = 1;
 		musicControl.kill();
 		musicControl = new button(game, mControlX, mControlY, 1, changeMusic, 'controlSound');
@@ -176,8 +188,10 @@ function changeMusic() {
 		sound.resume();
 	}
 }
+
 function changeSound() {
 	if (soundIsOn == 1) {
+		buttonSound.play();
 		soundIsOn = 0;
 		soundControl.kill();
 		soundControl = new button(game, sControlX, sControlY, 0, changeSound, 'controlSound');
@@ -242,7 +256,6 @@ function scoreOption() {
 			firstPlace += 35;
 		}
 	}
-
 }
 
 function resetScore() {
@@ -253,8 +266,6 @@ function resetScore() {
 
 function closeWindow() {
 	popup.kill();
-	soundButton = new button(game, 280, 188, 0, soundOption, 'soundButton');
-	background.addChild(soundButton);
 
 	player1 = game.add.button(-314, -120, 'player1', highlightButton(1), this, 0);
 	background.addChild(player1);
@@ -303,7 +314,6 @@ var button = function(game, x, y, frame, option, keyName) {
 	this.input.priorityID = 1;
 	this.input.useHandCursor = true;
 	this.events.onInputDown.add(option, this);
-
 };
 button.prototype = Object.create(Phaser.Sprite.prototype);
 button.prototype.constructor = button;
