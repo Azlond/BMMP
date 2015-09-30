@@ -23,6 +23,9 @@ loading.prototype = {
 
 		game.load.video('intro', './assets/videos/Intro.mp4');
 		game.load.video('mission', './assets/videos/Mission.mp4');
+		game.load.video ('animation1', './assets/videos/animation1.mp4');
+		game.load.video ('animation2', './assets/videos/animation2.mp4');
+		game.load.video ('animation3', './assets/videos/animation3.mp4');
 		
 
 		/* Menu-state images */
@@ -62,7 +65,7 @@ loading.prototype = {
 
 		// audio
 		
-		game.load.audio('music', './assets/audio/background_music.mp3');
+		game.load.audio('music', './assets/audio/background_music.wav');
 		game.load.audio('loseLife', './assets/audio/loseLifeSound.wav');
 		game.load.audio('collectTool', './assets/audio/collectToolSound.wav');
 		game.load.audio('collectOxygen', './assets/audio/collectOxygenSound.wav');

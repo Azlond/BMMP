@@ -36,9 +36,13 @@ var activeAstronaut = 1;
 menu.prototype = {
 
 	create : function() {
-		/*
-		 * sound = game.add.audio('music'); sound.play();
-		 */
+		
+		if (musicOn == 1) {
+			sound = game.add.audio('music');
+			sound.play();
+		}
+		
+		
 		background = game.add.sprite(400, 300, 'optionBackground');
 		background.alpha = 1.0;
 		background.anchor.set(0.5);
@@ -93,7 +97,7 @@ function startIntro() {
 		game.input.keyboard.onUpCallback = function(e) {
 			startGame();
 		}
-		if (soundOn) {
+		if (soundIsOn) {
 			sound.stop();
 		}
 	}
@@ -101,7 +105,7 @@ function startIntro() {
 
 function startGame() {
 	introVideo.stop();
-	missionVideo = this.game.add.video('mission');
+	missionVideo = game.add.video('mission');
 	missionVideo.play(true);
 	missionVideo.loop = false;
 	missionVideo.onComplete.add(handleComplete);
@@ -126,7 +130,7 @@ function updateName(e) {
 
 function handleComplete() {
 	if (!introFinished) {
-		game.state.start('play');
+		game.state.start('play', true, false);
 		introFinished = true;
 
 		missionVideo.stop(true);
@@ -267,7 +271,7 @@ function closeWindow() {
 
 	/* buttons */
 
-	startButton = game.add.button(-36, 193, 'startButton', startGame, this, 1, 0);
+	startButton = game.add.button(-36, 193, 'startButton', startIntro, this, 1, 0);
 	background.addChild(startButton);
 
 	soundButton = game.add.button(280, 188, 'soundButton', soundOption, this, 1, 0);

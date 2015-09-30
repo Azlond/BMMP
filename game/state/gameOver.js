@@ -15,6 +15,15 @@ gameOver.prototype = {
 };
 
 function restartGame () {
-		game.state.start ('menu');
+		game.state.start ('menu', true, false);
 		introFinished = false;
+		if (musicOn == 1) {
+			sound.stop();
+		} else {
+			musicOn = 1;
+		}
+		
+		if (soundIsOn == 0) {
+			soundIsOn == 1;
+		}
 }
