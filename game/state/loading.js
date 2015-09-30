@@ -59,7 +59,7 @@ loading.prototype = {
 
 		// audio
 
-		game.load.audio('music', './assets/audio/background_music.mp3');
+		game.load.audio('music', './assets/audio/background_music.wav');
 		game.load.audio('loseLife', './assets/audio/loseLifeSound.wav');
 		game.load.audio('collectTool', './assets/audio/collectToolSound.wav');
 		game.load.audio('collectOxygen', './assets/audio/collectOxygenSound.wav');

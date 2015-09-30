@@ -36,9 +36,9 @@ var activeAstronaut = 1;
 menu.prototype = {
 
 	create : function() {
-		/*
-		 * sound = game.add.audio('music'); sound.play();
-		 */
+		
+		sound = game.add.audio('music'); sound.play();
+		
 		background = game.add.sprite(400, 300, 'optionBackground');
 		background.alpha = 1.0;
 		background.anchor.set(0.5);
@@ -130,6 +130,10 @@ function handleComplete() {
 		introFinished = true;
 		missionVideo.stop(true);
 		game.state.start('play');
+		missionVideo.destroy();
+		if (soundOn) {
+		sound.play();
+		}
 	}
 }
 
