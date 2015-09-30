@@ -16,14 +16,12 @@ var life;
 var alienGroup;
 var oxygenGroup;
 
-//sounds
+// sounds
 var loseLifeSound;
 var collectToolSound;
 var collectOxygenSound;
 var completeLevelSound;
 var collideWithAlienSound;
-
-
 
 var restartButton;
 var quitButton;
@@ -50,7 +48,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 1;// first level
+		this.levelNumber = 2;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -61,10 +59,10 @@ play.prototype = {
 
 		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
-		
+
 		loseLifeSound = game.add.audio('loseLife');
 		collectToolSound = game.add.audio('collectTool');
-		collectOxygenSound = game.add.audio ('collectOxygen');
+		collectOxygenSound = game.add.audio('collectOxygen');
 		completeLevelSound = game.add.audio('completeLevel');
 		collideWithAlienSound = game.add.audio('collideWithAlien');
 	},
@@ -98,9 +96,9 @@ play.prototype = {
 
 		/*
 		 * Moving the player
-		 *
+		 * 
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 *
+		 * 
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
 		if (cursors.left.isDown && this.rocket.body.y == 69) {
@@ -150,7 +148,7 @@ play.prototype = {
 
 		/*
 		 * check if the player has fallen into a rift
-		 *
+		 * 
 		 * if the player has more than 0 lives left, restart the level
 		 */
 		if (this.astronaut.body.y > 600 && !this.fallen) {
@@ -351,9 +349,9 @@ play.prototype = {
 
 		/*
 		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
-		 *
+		 * 
 		 * rocket needs to be immovable until player is inside so that it can't be kicked around
-		 *
+		 * 
 		 * no gravity to make departure cleaner
 		 */
 		switch (this.levelNumber) {
@@ -380,6 +378,8 @@ play.prototype = {
 		this.astronaut.animations.add('stop', [ 0 ], 26, true);
 		this.astronaut.anchor.setTo(0.5, 0.5);
 		this.game.camera.follow(this.astronaut);
+
+		console.log(this.astronaut);
 
 		score = oldScore;// update the score
 
@@ -437,21 +437,24 @@ play.prototype = {
 	 * collecting an element and removing it from the game
 	 */
 	collectElement : function(astronaut, tile) {
-		// if (astronaut.key.contains("char")) {
-		// astronaut.key does not work in safari
-		this.map.removeTile(tile.x, tile.y, this.layer);
 
-		score += 1;
-		this.scoreText.text = 'Score: ' + score;
+		var str = astronaut.key.toString();
+		if (str.indexOf("char") != -1) {
 
-		return false;
-		// }
+			// astronaut.key does not work in safari
+			this.map.removeTile(tile.x, tile.y, this.layer);
+
+			score += 1;
+			this.scoreText.text = 'Score: ' + score;
+
+			return false;
+		}
 
 	},
 
 	/*
 	 * called when the player collides with the rocket
-	 *
+	 * 
 	 * checks if all tools have been collected
 	 */
 	hitFinish : function(astronaut, finish) {
@@ -470,7 +473,7 @@ play.prototype = {
 
 	/*
 	 * called when player collides with an alien
-	 *
+	 * 
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
 	collideWithAlien : function(astronaut, alien) {
