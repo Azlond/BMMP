@@ -569,7 +569,7 @@ play.prototype = {
 			}
 
 		} else if (this.levelNumber == this.finalLevel) {
-			game.state.start('win');
+			game.state.start('bonus');
 		}
 
 	},
