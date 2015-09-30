@@ -32,12 +32,14 @@ var playerName;
 var playerRegEx = /8|6[5-9]|7[0-9]|8[0-9]|90/;
 var highScoreGroup;
 var activeAstronaut = 1;
+var buttonSound;
 
 menu.prototype = {
 
 	create : function() {
 		
 		sound = game.add.audio('music'); sound.play();
+		buttonSound = game.add.audio('buttonSound');
 		
 		background = game.add.sprite(400, 300, 'optionBackground');
 		background.alpha = 1.0;
@@ -192,6 +194,7 @@ function changeSound() {
 }
 
 function scoreOption() {
+	buttonSound.play();
 	popup = game.add.sprite(400, 300, 'scoreBackground');
 	popup.alpha = 1.0;
 	popup.anchor.set(0.5);
@@ -302,6 +305,7 @@ var button = function(game, x, y, frame, option, keyName) {
 	this.input.priorityID = 1;
 	this.input.useHandCursor = true;
 	this.events.onInputDown.add(option, this);
+	buttonSound.play();
 
 };
 button.prototype = Object.create(Phaser.Sprite.prototype);
