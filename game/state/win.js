@@ -7,10 +7,14 @@ var hectoranimation4;
 var patrickanimation4;
 
 var videoBackground;
+var videoOn = false
 
 win.prototype = {
 
 	create : function() {
+
+		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
 
 		jenniferanimation4 = game.add.video('jenniferanimation4');
 		carlaanimation4 = game.add.video('carlaanimation4');
@@ -26,19 +30,31 @@ win.prototype = {
 			case 1 :
 				jenniferanimation4.add(videoBackground);
 				jenniferanimation4.play();
+				videoOn = true;
 			break;
 			case 2 :
 				patrickanimation4.add(videoBackground);
 				patrickanimation4.play();
+				videoOn = true;
 			break;
 			case 3 :
 				carlaanimation4.add(videoBackground);
 				carlaanimation4.play();
+				videoOn = true;
 			break;
 			case 4 :
 				hectoranimation4.add(videoBackground);
 				hectoranimation4.play();
+				videoOn = true;
 			break;
+		}
+
+	},
+
+	update : function() {
+
+		if (this.spaceKey.isDown && videoOn) {
+			this.endIntro();
 		}
 
 	},
@@ -46,6 +62,7 @@ win.prototype = {
 	endIntro : function() {
 
 		this.timer5.stop();
+		videoOn = false;
 
 		console.log("End intro");
 	
