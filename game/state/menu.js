@@ -84,12 +84,12 @@ menu.prototype = {
 
 		if (playerName == null) {
 			playerName = game.add.text(370, 139, "", {
-				font : '30px Courier',
+				font : '30px Raleway',
 				fill : '#ffffff'
 			});
 		} else {
 			playerName = game.add.text(370, 139, playerName.text, {
-				font : '30px Courier',
+				font : '30px Raleway',
 				fill : '#ffffff'
 			});
 		}
@@ -253,17 +253,17 @@ function scoreOption() {
 		for (i = 0; (i < highScoreList.length) && (i < 10); i++) {
 
 			var p = game.add.text(190, firstPlace, i + 1 + ". ", {
-				font : '30px Courier',
+				font : '30px Raleway',
 				fill : '#ffffff'
 			});
 
 			var n = game.add.text(250, firstPlace, highScoreList[i][0], {
-				font : '30px Courier',
+				font : '30px Raleway',
 				fill : '#ffffff'
 			});
 
 			var s = game.add.text(550, firstPlace, highScoreList[i][1], {
-				font : '30px Courier',
+				font : '30px Raleway',
 				fill : '#ffffff'
 			});
 			highScoreGroup.add(n);
