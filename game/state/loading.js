@@ -36,7 +36,11 @@ loading.prototype = {
 		game.load.image('soundBackground', './assets/menu/soundMenu/soundBackground.png');
 		game.load.image('scoreBackground', './assets/menu/scoreMenu/scoreBackground.png');
 		game.load.image('pauseBackground', './assets/menu/pauseMenu/background.png');
-
+		
+		//elements
+		game.load.image('elementScore', './assets/elements/gesteinKlein.png');
+		
+		
 		// button
 		game.load.spritesheet('startButton', './assets/menu/startMenu/startButtonSprite.png', 100, 35, 2);
 		game.load.spritesheet('soundButton', './assets/menu/startMenu/soundButtonSprite.png', 43, 43, 2);

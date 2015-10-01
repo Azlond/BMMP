@@ -1,7 +1,7 @@
 function showLife (lifeCounter) {
 	
 	if (lifeCounter == 3){
-	life = game.add.sprite(375.5, 6, 'lifeCounter');
+		life = game.add.sprite(375.5, 6, 'lifeCounter'); //375.5
 	life.fixedToCamera = true;
 	} else {
 		life.kill();

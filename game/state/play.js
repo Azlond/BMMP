@@ -34,7 +34,7 @@ var quitButton;
 var continueButton;
 var pauseMenu;
 var pauseMenuActive = true;
-
+var videoOn = false;
 play.prototype = {
 
 	create : function() {
@@ -224,11 +224,16 @@ play.prototype = {
 			}
 		}
 
-		if (this.spaceKey.isDown && pauseMenuActive) {
+		if (this.spaceKey.isDown) {
+			if (pauseMenuActive) {
+				this.astronaut.body.velocity.x = 0;
+				this.alien.body.velocity.x = 0;
+				createPauseMenu();
+			} else if (videoOn) {
+				this.levelNumber +=1;
+				this.loadLevel("restart");
+			}
 			
-			this.astronaut.body.velocity.x = 0;
-			this.alien.body.velocity.x = 0;
-			createPauseMenu();
 
 		}
 
@@ -238,6 +243,7 @@ play.prototype = {
 	 * function to load each level
 	 */
 	loadLevel : function(string) {
+	
 		/*
 		 * reset values
 		 */
@@ -304,15 +310,15 @@ play.prototype = {
 		/*
 		 * add tool-placeholder icons for topbar
 		 */
-		this.nopliers = new Tools(this.game, 230, 15, 1);
+		this.nopliers = new Tools(this.game, 690, 10, 1);
 		this.game.add.existing(this.nopliers);
 		this.nopliers.fixedToCamera = true;
 
-		this.nowrench = new Tools(this.game, 260, 15, 3);
+		this.nowrench = new Tools(this.game, 710, 10, 3);
 		this.game.add.existing(this.nowrench);
 		this.nowrench.fixedToCamera = true;
 
-		this.noscrewdriver = new Tools(this.game, 290, 15, 5);
+		this.noscrewdriver = new Tools(this.game, 730, 10, 5);
 		this.game.add.existing(this.noscrewdriver);
 		this.noscrewdriver.fixedToCamera = true;
 
@@ -397,10 +403,12 @@ play.prototype = {
 
 		score = oldScore;// update the score
 
-		this.scoreText = game.add.text(6, 15, 'score: ' + score, {
-			font : '25px Raleway',
+		this.scoreText = game.add.text(45, 10, score, {
+			font : '30px Raleway',
 			fill : '#ffffff'
 		});
+		
+		this.scoreElement = game.add.image (6, 18, 'elementScore');	
 		this.scoreText.fixedToCamera = true;
 
 		/*
@@ -443,7 +451,7 @@ play.prototype = {
 
 		/* shows oxygencounter in each level */
 		oxygenCounter = 9;
-		oxygenTank = game.add.sprite(750, 63, 'tank');
+		oxygenTank = game.add.sprite(750, 510, 'tank');
 		oxygenTank.frame = oxygenCounter;
 		oxygenTank.fixedToCamera = true;
 		--oxygenCounter;
@@ -483,7 +491,7 @@ play.prototype = {
 	 */
 	hitFinish : function(astronaut, finish) {
 
-		if (this.toolsCollected == 3) {
+		if (this.toolsCollected == 0) {
 			this.astronaut.kill();
 			this.timer.stop();
 			if (soundIsOn == 1) {
@@ -493,7 +501,7 @@ play.prototype = {
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
 			score += 50;
-			this.scoreText.text = 'Score: ' + score;
+			this.scoreText.text = 'Score: '+ score;
 			this.saveLocal();
 
 			switch (this.levelNumber) {
@@ -519,20 +527,22 @@ play.prototype = {
 			default:
 				break;
 			}
-
+			
 			this.timer2 = game.time.create(false);
-			this.timer2.add(3500, this.playVideo, this);
+			this.timer2.add(3500, function () {this.playVideo(this)}, this);
 			this.timer2.start();
 		}
 
 	},
 
-	playVideo : function() {
+	playVideo : function(o) {
 		this.timer2.stop();
-		this.timer3 = game.time.create(false);
-		this.timer3.add(20000, this.endLevel, this);
-		this.timer3.start();
+		videoOn = true;
 		pauseMenuActive = false;
+		this.timer3 = game.time.create(false);
+		this.timer3.add(20000,function (){o.endLevel(o)}, this);
+		this.timer3.start();
+		
 		if (this.levelNumber < this.finalLevel) {
 			switch (this.levelNumber) {
 			case 1:
@@ -554,9 +564,7 @@ play.prototype = {
 				break;
 			}
 			videoBackground.bringToTop();
-			game.input.keyboard.onUpCallback = function(e) {
-				endLevel();
-			}
+		
 
 		} else if (this.levelNumber == this.finalLevel) {
 			game.state.start('bonus');
@@ -564,12 +572,12 @@ play.prototype = {
 
 	},
 
-	endLevel : function() {
-		this.timer3.stop();
-		videoBackground.kill();
-		this.levelNumber += 1;
-		this.loadLevel("");
+	endLevel : function(o) {
+		animation1.stop();
+		o.levelNumber += 1;
+		o.loadLevel("");
 		pauseMenuActive = true;
+		videoOn = false;
 	},
 
 	/*
@@ -618,7 +626,7 @@ play.prototype = {
 			if (soundIsOn == 1) {
 				collectToolSound.play();
 			}
-			this.pliers = new Tools(this.game, 230, 15, 0);
+			this.pliers = new Tools(this.game, 690, 10, 0);
 			this.game.add.existing(this.pliers);
 			this.pliers.fixedToCamera = true;
 		}
@@ -627,7 +635,7 @@ play.prototype = {
 			if (soundIsOn == 1) {
 				collectToolSound.play();
 			}
-			this.screwdriver = new Tools(this.game, 290, 15, 4);
+			this.screwdriver = new Tools(this.game, 740, 10, 4);
 			this.game.add.existing(this.screwdriver);
 			this.screwdriver.fixedToCamera = true;
 		}
@@ -636,7 +644,7 @@ play.prototype = {
 			if (soundIsOn == 1) {
 				collectToolSound.play();
 			}
-			this.wrench = new Tools(this.game, 260, 15, 2);
+			this.wrench = new Tools(this.game, 710, 10, 2);
 			this.game.add.existing(this.wrench);
 			this.wrench.fixedToCamera = true;
 		}
@@ -645,7 +653,7 @@ play.prototype = {
 	},
 
 	timeDown : function() {
-		var countdown = 3000;
+		var countdown = 30000;
 		this.timer = game.time.create(false);
 		this.timer.loop(countdown, this.changeDisplay, this);
 		this.timer.start();
