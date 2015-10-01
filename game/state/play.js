@@ -757,7 +757,7 @@ play.prototype = {
 		}
 		oxygenCounter = 9;
 		oxygenTank.kill();
-		oxygenTank = game.add.sprite(750, 63, 'tank');
+		oxygenTank = game.add.sprite(750, 510, 'tank');
 		oxygenTank.frame = oxygenCounter;
 		oxygenTank.fixedToCamera = true;
 		--oxygenCounter;
