@@ -406,7 +406,7 @@ play.prototype = {
 				this.rocket = this.game.add.sprite(2246, 69, 'rocket3');
 				break;
 			case 4:
-				this.rocket = this.game.add.sprite(2246, 69, 'rocket3');
+				this.rocket = this.game.add.sprite(2246, 69, 'rocket4');
 				break;
 			default:
 				break;
