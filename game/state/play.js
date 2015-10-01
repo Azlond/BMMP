@@ -32,13 +32,8 @@ var videoBackground;
 var restartButton;
 var quitButton;
 var continueButton;
-var popup;
-var soundOn;
-var soundOff;
-var musicOn;
-var musicOff;
-
-var soundOn = true;
+var pauseMenu;
+var pauseMenuActive = true;
 
 play.prototype = {
 
@@ -229,21 +224,9 @@ play.prototype = {
 			}
 		}
 
-		if (this.spaceKey.isDown) {
-
-			popup = game.add.image(400, 300, 'pauseBackground');
-			popup.alpha = 1.0;
-			popup.anchor.set(0.5);
-			popup.fixedToCamera = true;
-
-			restartButton = game.add.button(-300, 180, 'restartButton', this.restartGame, this, 1, 0);
-			popup.addChild(restartButton);
-
-			continueButton = game.add.button(-50, 180, 'continueButton', this.continueGame, this, 1, 0);
-			popup.addChild(continueButton);
-
-			quitButton = game.add.button(210, 185, 'quitButton', this.quitGame, this, 1, 0);
-			popup.addChild(quitButton);
+		if (this.spaceKey.isDown && pauseMenuActive) {
+			
+			createPauseMenu();
 
 		}
 
@@ -697,40 +680,6 @@ play.prototype = {
 		}
 	},
 
-	quitGame : function() { // quits the game
-
-		console.log("Quit the game");
-		this.game.state.start('intro');
-
-	},
-
-	restartGame : function() {
-
-		lifeCounter = 3;
-		console.log("Restart the game");
-		this.loadLevel("restart");
-
-	},
-
-	continueGame : function() {
-
-		popup.kill();
-		console.log("Continue the game");
-
-	},
-
-	restartHover : function() {
-		this.game.add.button(-300, 180, 'restartHighlight', this.restartGame, this, 1, 0);
-	},
-
-	continueHover : function() {
-
-	},
-
-	quitHover : function() {
-
-	},
-
 	parseJson : function(json) {
 		var pName = playerName.text.toString();
 		var playerExists = false;
@@ -797,4 +746,84 @@ function sortHighScore(highScoreList) {
 	} while (swapped);
 
 	return highScoreList;
+}
+
+function createPauseMenu() {
+
+	pauseMenuActive = false;			
+
+	pauseMenu = game.add.sprite(400, 300, 'pauseBackground');
+	pauseMenu.alpha = 1.0;
+	pauseMenu.anchor.set(0.5);
+	pauseMenu.fixedToCamera = true;
+		
+	musicControl = new button(this.game, 75, -165, musicOn, changeMusicOnPauseMenu, 'controlSound');
+	pauseMenu.addChild(musicControl);
+
+	soundControl = new button(this.game, -20, -70, soundIsOn, changeSoundOnPauseMenu, 'controlSound');
+	pauseMenu.addChild(soundControl);
+
+	restartButton = this.game.add.button(-300, 180, 'restartButton', restart, this, 1, 0);
+	pauseMenu.addChild(this.restartButton);
+
+	continueButton = this.game.add.button(-50, 180, 'continueButton', continueGame, this, 1, 0);
+	pauseMenu.addChild(this.continueButton);
+
+	quitButton = this.game.add.button(210, 185, 'quitButton', quitGame, this, 1, 0);
+	pauseMenu.addChild(this.quitButton);
+
+}
+
+function quitGame() { // quits the game
+
+	game.state.start('intro');
+	pauseMenuActive = true;
+
+}
+
+function restart() {
+
+	lifeCounter = 3;
+	play.prototype.loadLevel("restart");
+	pauseMenuActive = true;
+
+}
+
+function continueGame() {
+
+	pauseMenu.kill();
+	pauseMenuActive = true;
+
+}
+
+function changeMusicOnPauseMenu() {
+	if (musicOn == 1) {
+		musicOn = 0;
+		musicControl.kill();
+		musicControl = new button(game, 75, -165, 0, changeMusicOnPauseMenu, 'controlSound');
+		pauseMenu.addChild(musicControl);
+		sound.pause();
+	} else {
+		musicOn = 1;
+		musicControl.kill();
+		musicControl = new button(game, 75, -165, 1, changeMusicOnPauseMenu, 'controlSound');
+		pauseMenu.addChild(musicControl);
+		sound.resume();
+	}
+}
+
+function changeSoundOnPauseMenu() {
+	if (soundIsOn == 1) {
+		soundIsOn = 0;
+		soundControl.kill();
+		soundControl = new button(game, -20, -70, 0, changeSoundOnPauseMenu, 'controlSound');
+		pauseMenu.addChild(soundControl);
+		// sound.pause();
+	} else {
+		soundIsOn = 1;
+		soundControl.kill();
+		soundControl = new button(game, -20, -70, 1, changeSoundOnPauseMenu, 'controlSound');
+		pauseMenu.addChild(soundControl);
+		// sound.resume();
+	}
 }
