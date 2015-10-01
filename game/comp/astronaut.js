@@ -32,8 +32,8 @@ Astronaut.prototype = Object.create(Phaser.Sprite.prototype);
 Astronaut.prototype.constructor = Astronaut;
 
 var amountElements = {
-		"level1" : 0,
-		"level2" : 32,
-		"level3" : 35,
-		"level4" : 28
+	"level1" : 0,
+	"level2" : 32,
+	"level3" : 35,
+	"level4" : 28
 }

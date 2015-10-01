@@ -54,11 +54,13 @@ bonus.prototype = {
 
 		this.layer.resizeWorld();
 
-		this.scoreText = game.add.text(0, 0, 'Score: ' + score, {
+		this.scoreText = game.add.text(45, 10, score, {
 			font : '30px Raleway',
 			fill : '#ffffff'
 		});
 
+		this.scoreElement = game.add.image(9, 10, 'elementScore');
+		this.scoreElement.fixedToCamera = true;
 		this.scoreText.fixedToCamera = true;
 
 		this.collisionTimer = 0;
@@ -101,7 +103,6 @@ bonus.prototype = {
 
 				game.state.start('win');
 
-
 			}
 
 			if (this.rocket.body.velocity.y != -300 && this.game.time.now > this.collisionTimer) {
@@ -119,8 +120,8 @@ bonus.prototype = {
 
 	collision : function() {
 		if (this.game.time.now > this.collisionTimer) {
-			score -= 1;
-			this.scoreText.text = 'Score: ' + score;
+			score -= 10;
+			this.scoreText.text = score;
 			this.collisionTimer = game.time.now + 500;
 		}
 	},

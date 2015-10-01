@@ -27,25 +27,25 @@ win.prototype = {
 
 		videoBackground = game.add.sprite(0, 0, 'startBackground');
 		switch (activeAstronaut) {
-			case 1 :
-				jenniferanimation4.add(videoBackground);
-				jenniferanimation4.play();
-				videoOn = true;
+		case 1:
+			jenniferanimation4.add(videoBackground);
+			jenniferanimation4.play();
+			videoOn = true;
 			break;
-			case 2 :
-				patrickanimation4.add(videoBackground);
-				patrickanimation4.play();
-				videoOn = true;
+		case 2:
+			patrickanimation4.add(videoBackground);
+			patrickanimation4.play();
+			videoOn = true;
 			break;
-			case 3 :
-				carlaanimation4.add(videoBackground);
-				carlaanimation4.play();
-				videoOn = true;
+		case 3:
+			carlaanimation4.add(videoBackground);
+			carlaanimation4.play();
+			videoOn = true;
 			break;
-			case 4 :
-				hectoranimation4.add(videoBackground);
-				hectoranimation4.play();
-				videoOn = true;
+		case 4:
+			hectoranimation4.add(videoBackground);
+			hectoranimation4.play();
+			videoOn = true;
 			break;
 		}
 
@@ -64,13 +64,11 @@ win.prototype = {
 		this.timer5.stop();
 		videoOn = false;
 
-		console.log("End intro");
-	
 		this.game.add.image(0, 0, 'win');
 
 		var restartButton = game.add.button(345.5, 570, 'restartButton', restartGame, this, 1, 0);
 		background.addChild(startButton);
 
-	}		
+	}
 
 }

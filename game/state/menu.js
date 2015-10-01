@@ -354,24 +354,28 @@ function highlightButton(player) {
 
 	switch (player) {
 	case 1:
+		console.log("uno");
 		player1 = game.add.sprite(-306, -130, 'player1');
 		player1.frame = 1;
 		background.addChild(player1);
 		activeAstronaut = 1;
 		break;
 	case 2:
+		console.log("deux");
 		player2 = game.add.sprite(-153, -130, 'player2');
 		player2.frame = 1;
 		background.addChild(player2);
 		activeAstronaut = 2;
 		break;
 	case 3:
+		console.log("three");
 		player3 = game.add.sprite(0, -130, 'player3');
 		player3.frame = 1;
 		background.addChild(player3);
 		activeAstronaut = 3;
 		break;
 	case 4:
+		console.log("vier");
 		player4 = game.add.sprite(153, -130, 'player4');
 		player4.frame = 1;
 		background.addChild(player4);

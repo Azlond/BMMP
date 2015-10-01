@@ -65,7 +65,7 @@ play.prototype = {
 		// Keyboard controls
 		cursors = game.input.keyboard.createCursorKeys();
 
-		// loads the first level level number has to be increased once the player has reached the finish line
+		// loads the first level level number, has to be increased once the player has reached the finish line
 		this.loadLevel("");
 
 		this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -92,16 +92,9 @@ play.prototype = {
 		hectoranimation3 = game.add.video('hectoranimation3');
 		patrickanimation3 = game.add.video('patrickanimation3');
 
-		this.enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-
 	},
 
 	update : function() {
-
-		if (this.enterKey.isDown) {
-			console.log(this.astronaut.body.x);
-			console.log(this.astronaut.body.y);
-		}
 
 		/*
 		 * collision between astronaut/alien/rocket and the platform/ground layer
@@ -277,7 +270,6 @@ play.prototype = {
 			if (pauseMenuActive) {
 				isPaused = true;
 				createPauseMenu(this);
-				console.log(isPaused);
 			} else if (videoOn) {
 				this.endLevel(this);
 			}
@@ -296,6 +288,8 @@ play.prototype = {
 	 */
 	loadLevel : function(string) {
 
+		console.log(activeAstronaut);
+		
 		/*
 		 * reset values
 		 */
@@ -318,7 +312,6 @@ play.prototype = {
 		this.timer4 = game.time.create(false);
 		this.timer4.add(300, this.startPauseMenu, this);
 		this.timer4.start();
-		console.log(musicOn);
 
 		if (musicOn == 1) {
 			sound.play();
@@ -413,40 +406,13 @@ play.prototype = {
 		 * 
 		 * no gravity to make departure cleaner
 		 */
+
 		switch (this.levelNumber) {
 		case 1:
-			switch (activeAstronaut) {
-			case 1:
-				this.rocket = this.game.add.sprite(2246, 69, 'rocket1');
-				break;
-			case 2:
-				this.rocket = this.game.add.sprite(2246, 69, 'rocket2');
-				break;
-			case 3:
-				this.rocket = this.game.add.sprite(2246, 69, 'rocket3');
-				break;
-			case 4:
-				this.rocket = this.game.add.sprite(2246, 69, 'rocket4');
-				break;
-			default:
-				break;
-			}
+			this.rocket = this.game.add.sprite(2246, 69, 'rocket' + activeAstronaut);
 			break;
 		default: // 2, 3,4
-			switch (activeAstronaut) {
-			case 1:
-				this.rocket = this.game.add.sprite(4646, 69, 'rocket1');
-				break;
-			case 2:
-				this.rocket = this.game.add.sprite(4646, 69, 'rocket2');
-				break;
-			case 3:
-				this.rocket = this.game.add.sprite(4646, 69, 'rocket3');
-				break;
-			case 4:
-				this.rocket = this.game.add.sprite(4646, 69, 'rocket4');
-				break;
-			}
+			this.rocket = this.game.add.sprite(4646, 69, 'rocket' + activeAstronaut);
 			break;
 		}
 		this.game.physics.arcade.enableBody(this.rocket);
@@ -544,7 +510,7 @@ play.prototype = {
 			if (soundIsOn) {
 				collectElementSound.play();
 			}
-			score += 1;
+			score += 5;
 			this.scoreText.text = score;
 
 			this.astronaut.collected++;
@@ -571,7 +537,7 @@ play.prototype = {
 			this.rocket.body.immovable = false;
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
-			score += 50;
+			score += 25;
 			this.scoreText.text = score;
 
 			if (this.astronaut.collected == amountElements["level" + this.levelNumber] && lifeCounter < 3) {
@@ -669,6 +635,9 @@ play.prototype = {
 			videoBackground.bringToTop();
 
 		} else if (this.levelNumber == this.finalLevel) {
+			for (i = 0; i < lifeCounter; i++) {
+				score += 50;
+			}
 			game.state.start('bonus');
 		}
 
@@ -748,9 +717,6 @@ play.prototype = {
 				collideWithAlienSound.play();
 			}
 			showLife(lifeCounter);
-			if (lifeCounter <= 3 && lifeCounter > 0) {
-				console.log(lifeCounter);
-			}
 
 			this.lifeTimer = game.time.now + 1000;
 		}
@@ -849,40 +815,6 @@ play.prototype = {
 
 	}
 };
-
-function readLocal() {
-	// get the highscores object
-	var scores = localStorage.getItem("highScore");
-	scores = JSON.parse(scores);
-
-	return scores;
-}
-
-/*
- * bubbleSort
- */
-function sortHighScore(highScoreList) {
-	var swapped;
-
-	do {
-		swapped = false;
-		for (var i = 0; i < highScoreList.length - 1; i++) {
-			v1 = highScoreList[i];
-			v2 = highScoreList[i + 1];
-
-			if (v1[1] < v2[1]) {
-				var temp = [ v1[0], v1[1] ];
-				v1 = [ v2[0], v2[1] ];
-				v2 = temp;
-				highScoreList[i] = v1;
-				highScoreList[i + 1] = v2;
-				swapped = true;
-			}
-		}
-	} while (swapped);
-
-	return highScoreList;
-}
 
 function createPauseMenu(o) {
 
