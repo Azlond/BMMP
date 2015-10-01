@@ -132,18 +132,18 @@ play.prototype = {
 
 		/*
 		 * Moving the player
-		 *
+		 * 
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 *
+		 * 
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
-		
-		if(isPaused) {
+
+		if (isPaused) {
 
 			this.astronaut.body.velocity.x = 0;
 			this.astronaut.animations.play('stop', 6, true);
 
-		} else if(!isPaused) {
+		} else if (!isPaused) {
 
 			if (cursors.left.isDown && this.rocket.body.y == 69) {
 				this.astronaut.body.velocity.x = -175;
@@ -184,7 +184,7 @@ play.prototype = {
 
 			/*
 			 * check if the player has fallen into a rift
-			 *
+			 * 
 			 * if the player has more than 0 lives left, restart the level
 			 */
 			if (this.astronaut.body.y > 600 && !this.fallen) {
@@ -318,13 +318,13 @@ play.prototype = {
 		this.timer4 = game.time.create(false);
 		this.timer4.add(300, this.startPauseMenu, this);
 		this.timer4.start();
-		console.log (musicOn);
-		
+		console.log(musicOn);
+
 		if (musicOn == 1) {
 			sound.play();
 			sound.loopFull();
-		} 
-		
+		}
+
 		this.toolsCollected = 0;
 		this.lifeTimer = 0;
 		this.fallen = false;
@@ -408,9 +408,9 @@ play.prototype = {
 
 		/*
 		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
-		 *
+		 * 
 		 * rocket needs to be immovable until player is inside so that it can't be kicked around
-		 *
+		 * 
 		 * no gravity to make departure cleaner
 		 */
 		switch (this.levelNumber) {
@@ -556,9 +556,9 @@ play.prototype = {
 
 	/*
 	 * called when the player collides with the rocket
-	 *
+	 * 
 	 * checks if all tools have been collected
-	 *
+	 * 
 	 */
 	hitFinish : function(astronaut, finish) {
 
@@ -574,28 +574,9 @@ play.prototype = {
 			score += 50;
 			this.scoreText.text = score;
 
-			switch (this.levelNumber) {
-			case 2:
-				if (this.astronaut.collected == amountElements["level" + this.levelNumber]) {
-					lifeCounter++;
-					showLife(lifeCounter);
-				}
-				break;
-			case 3:
-				if (this.astronaut.collected == amountElements["level" + this.levelNumber]) {
-					lifeCounter++;
-					showLife(lifeCounter);
-				}
-				break;
-			case 4:
-				if (this.astronaut.collected == amountElements["level" + this.levelNumber]) {
-					lifeCounter++;
-					showLife(lifeCounter);
-				}
-				break;
-
-			default:
-				break;
+			if (this.astronaut.collected == amountElements["level" + this.levelNumber] && lifeCounter < 3) {
+				lifeCounter++;
+				showLife(lifeCounter);
 			}
 
 			this.timer2 = game.time.create(false);
@@ -757,7 +738,7 @@ play.prototype = {
 
 	/*
 	 * called when player collides with an alien
-	 *
+	 * 
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
 	collideWithAlien : function(astronaut, alien) {

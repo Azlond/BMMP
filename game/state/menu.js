@@ -106,7 +106,6 @@ function startIntro() {
 	var str = playerName.text;
 
 	if (!(str.length < 1) && activeAstronaut != null) {
-		console.log("astronaut: " + activeAstronaut)
 		introVideo = this.game.add.video('intro');
 		introVideo.play(true);
 		introVideo.loop = false;
@@ -181,7 +180,7 @@ function soundOption() {
 }
 
 function changeMusic() {
-	if (musicOn == 1) { 
+	if (musicOn == 1) {
 		if (soundIsOn == 1) {
 			buttonSound.play();
 		}

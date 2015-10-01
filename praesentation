@@ -85,3 +85,4 @@ Game Over:
 - Bonuslevel als Zwischenlevel zwischen den Planeten --> muss repariert werden
   wegen den Kometen
 - Zugriff auf Webcam um eigenen Spieler zu erstellen (bzw. beim Gamewon Bildschirm)
+- Unterschiedliche Aspekte der Planeten/Charaktere - variable Schwerkraft je nach Planet, schnellere/langsamere Charaktere

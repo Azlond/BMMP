@@ -33,7 +33,7 @@ loading.prototype = {
 		game.load.video('hectoranimation2', './assets/videos/hector_animation2.mp4');
 		game.load.video('hectoranimation3', './assets/videos/hector_animation3.mp4');
 		game.load.video('hectoranimation4', './assets/videos/hector_animation4.mp4');
-	
+
 		game.load.video('carlaanimation1', './assets/videos/carla_animation1.mp4');
 		game.load.video('carlaanimation2', './assets/videos/carla_animation2.mp4');
 		game.load.video('carlaanimation3', './assets/videos/carla_animation3.mp4');
@@ -52,11 +52,10 @@ loading.prototype = {
 		game.load.image('soundBackground', './assets/menu/soundMenu/soundBackground.png');
 		game.load.image('scoreBackground', './assets/menu/scoreMenu/scoreBackground.png');
 		game.load.image('pauseBackground', './assets/menu/pauseMenu/background.png');
-		
-		//elements
+
+		// elements
 		game.load.image('elementScore', './assets/elements/gesteinKlein.png');
-		
-		
+
 		// button
 		game.load.spritesheet('startButton', './assets/menu/startMenu/startButtonSprite.png', 100, 35, 2);
 		game.load.spritesheet('soundButton', './assets/menu/startMenu/soundButtonSprite.png', 43, 43, 2);
@@ -80,7 +79,7 @@ loading.prototype = {
 		game.load.audio('loseLife', './assets/audio/loseLifeSound.wav');
 		game.load.audio('collectTool', './assets/audio/collectToolSound.wav');
 		game.load.audio('collectElement', './assets/audio/collectElementSound.wav');
-		
+
 		game.load.audio('collectOxygen', './assets/audio/collectOxygenSound.wav');
 		game.load.audio('completeLevel', './assets/audio/completeLevelSound.wav');
 		game.load.audio('collideWithAlien', './assets/audio/collideWithAlienSound.wav');
@@ -157,7 +156,7 @@ loading.prototype = {
 	},
 
 	create : function() {
-		game.state.start('intro'); // opens the menu
+		game.state.start('intro');
 	}
 
 };
