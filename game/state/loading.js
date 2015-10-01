@@ -49,10 +49,13 @@ loading.prototype = {
 		game.load.spritesheet('quitButton', './assets/menu/pauseMenu/quitButtonSprite.png', 99, 26, 2);
 
 		// characters
-		game.load.image('player1', './assets/menu/startMenu/player1.png');
-		game.load.image('player2', './assets/menu/startMenu/player2.png');
-		game.load.image('player3', './assets/menu/startMenu/player3.png');
-		game.load.image('player4', './assets/menu/startMenu/player4.png');
+		game.load.spritesheet('player1', './assets/menu/startMenu/player1Sprite.png', 153, 278, 2);
+		game.load.spritesheet('player2', './assets/menu/startMenu/player2Sprite.png', 153, 278, 2);
+		game.load.spritesheet('player3', './assets/menu/startMenu/player3Sprite.png', 153, 278, 2);
+		game.load.spritesheet('player4', './assets/menu/startMenu/player4Sprite.png', 153, 278, 2);
+		
+		//game.load.image('player3', './assets/menu/startMenu/player3.png');
+		//game.load.image('player4', './assets/menu/startMenu/player4.png');
 
 		// audio
 

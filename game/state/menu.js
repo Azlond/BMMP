@@ -51,16 +51,16 @@ menu.prototype = {
 
 		/* characterauswahl */
 
-		player1 = game.add.button(-286, -120, 'player1', highlightButton, this, 0, 1);
+		player1 = game.add.button(-306, -130, 'player1', highlightButton, this, 1, 0);
 		background.addChild(player1);
 
-		player2 = game.add.button(-138, -120, 'player2', highlightButton, this, 0);
+		player2 = game.add.button(-153, -130, 'player2', highlightButton, this, 1, 0);
 		background.addChild(player2);
 
-		player3 = game.add.button(10, -120, 'player3', highlightButton, this, 0);
+		player3 = game.add.button(0, -130, 'player3', highlightButton, this, 1,0);
 		background.addChild(player3);
 
-		player4 = game.add.button(158, -120, 'player4', highlightButton, this, 0);
+		player4 = game.add.button(153, -130, 'player4', highlightButton, this, 1, 0);
 		background.addChild(player4);
 
 		/* buttons */
