@@ -23,9 +23,9 @@ loading.prototype = {
 
 		game.load.video('intro', './assets/videos/Intro.mp4');
 		game.load.video('mission', './assets/videos/Mission.mp4');
-		game.load.video('animation1', './assets/videos/animation1.mp4');
-		game.load.video('animation2', './assets/videos/animation2.mp4');
-		game.load.video('animation3', './assets/videos/animation3.mp4');
+		game.load.video('animation1', './assets/videos/jennifer_animation1.mp4');
+		game.load.video('animation2', './assets/videos/jennifer_animation2.mp4');
+		game.load.video('animation3', './assets/videos/jennifer_animation3.mp4');
 
 		/* Menu-state images */
 
