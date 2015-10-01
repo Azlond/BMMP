@@ -12,10 +12,12 @@ oxygen.prototype.constructor = oxygen;
 
 var oxygens = {
 	 "level1" :  {
-		 "amount" : 2,
+		 "amount" : 3,
 		 "coordinates" : {
 			 "oxygen1" : [ 90, 140],
-			 "oxygen2" : [ 1760, 305 ]
+			 "oxygen2" : [ 1405, 224 ],
+			 "oxygen3" : [ 1760, 305 ]
+
 		}
 	},
  "level2" :  {
