@@ -22,9 +22,19 @@ var collectToolSound;
 var collectOxygenSound;
 var completeLevelSound;
 var collideWithAlienSound;
-var animation1;
-var animation2;
-var animation3;
+
+var jenniferanimation1;
+var carlaanimation1;
+var hectoranimation1;
+var patrickanimation1;
+var jenniferanimation2;
+var carlaanimation2;
+var hectoranimation2;
+var patrickanimation2;
+var jenniferanimation3;
+var carlaanimation3;
+var hectoranimation3;
+var patrickanimation3;
 var videoBackground;
 
 var restartButton;
@@ -49,7 +59,11 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
+<<<<<<< HEAD
 		this.levelNumber = 1;// first level
+=======
+		this.levelNumber = 2;// first level
+>>>>>>> origin/master
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -66,13 +80,29 @@ play.prototype = {
 		collectOxygenSound = game.add.audio('collectOxygen');
 		completeLevelSound = game.add.audio('completeLevel');
 		collideWithAlienSound = game.add.audio('collideWithAlien');
-		animation1 = game.add.video('animation1');
-		animation2 = game.add.video('animation2');
-		animation3 = game.add.video('animation3');
+		jenniferanimation1 = game.add.video('jenniferanimation1');
+		carlaanimation1 = game.add.video('carlaanimation1');
+		hectoranimation1 = game.add.video('hectoranimation1');
+		patrickanimation1 = game.add.video('patrickanimation1');
+		jenniferanimation2 = game.add.video('jenniferanimation2');
+		carlaanimation2 = game.add.video('carlaanimation2');
+		hectoranimation2 = game.add.video('hectoranimation2');
+		patrickanimation2 = game.add.video('patrickanimation2');
+		jenniferanimation3 = game.add.video('jenniferanimation3');
+		carlaanimation3 = game.add.video('carlaanimation3');
+		hectoranimation3 = game.add.video('hectoranimation3');
+		patrickanimation3 = game.add.video('patrickanimation3');
+
+		this.enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
 	},
 
 	update : function() {
+
+		if (this.enterKey.isDown) {
+			console.log(this.astronaut.body.x);
+			console.log(this.astronaut.body.y);
+		}
 
 		/*
 		 * collision between astronaut/alien/rocket and the platform/ground layer
@@ -237,6 +267,7 @@ play.prototype = {
 				}
 			}
 		}
+<<<<<<< HEAD
 		/*
 		if (this.spaceKey.isDown && pauseMenuActive) {  			
 				
@@ -290,20 +321,35 @@ play.prototype = {
 				this.loadLevel("restart");
 			}
 
+=======
+
+		if (this.spaceKey.isDown && pauseMenuActive) {
+			isPaused = true;
+			this.astronaut.body.velocity.x = 0;
+			this.astronaut.body.velocity.y = 0;
+			this.astronaut.body.allowGravity = false;
+			createPauseMenu(this);
+			console.log(isPaused);
+		}
+>>>>>>> origin/master
 		if (isPaused == true) {
 			this.timer.pause();
 		} else if (isPaused == false) {
 			this.timer.resume();
 		}
-	}
 	},
-			*/
+	/*
+	 * if (this.spaceKey.isDown) { if (pauseMenuActive) { isPaused = true; this.astronaut.body.velocity.x = 0; this.alien.body.velocity.x = 0;
+	 * createPauseMenu(); } else if (videoOn) { this.levelNumber +=1; this.loadLevel("restart"); }
+	 * 
+	 * if (isPaused == true) { this.timer.pause(); } else if (isPaused == false) { this.timer.resume(); } } },
+	 */
 
 	/*
 	 * function to load each level
 	 */
 	loadLevel : function(string) {
-	
+
 		/*
 		 * reset values
 		 */
@@ -476,9 +522,14 @@ play.prototype = {
 			font : '30px Raleway',
 			fill : '#ffffff'
 		});
+<<<<<<< HEAD
 		
 		this.scoreElement = game.add.image (9, 10, 'elementScore');	
 		this.scoreElement.fixedToCamera = true;
+=======
+
+		this.scoreElement = game.add.image(6, 18, 'elementScore');
+>>>>>>> origin/master
 		this.scoreText.fixedToCamera = true;
 
 		/*
@@ -573,7 +624,11 @@ play.prototype = {
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
 			score += 50;
+<<<<<<< HEAD
 			this.scoreText.text = score;
+=======
+			this.scoreText.text = 'Score: ' + score;
+>>>>>>> origin/master
 
 			switch (this.levelNumber) {
 			case 2:
@@ -598,9 +653,11 @@ play.prototype = {
 			default:
 				break;
 			}
-			
+
 			this.timer2 = game.time.create(false);
-			this.timer2.add(3500, function () {this.playVideo(this)}, this);
+			this.timer2.add(3500, function() {
+				this.playVideo(this)
+			}, this);
 			this.timer2.start();
 		}
 
@@ -611,31 +668,80 @@ play.prototype = {
 		videoOn = true;
 		pauseMenuActive = false;
 		this.timer3 = game.time.create(false);
-		this.timer3.add(20000,function (){o.endLevel(o)}, this);
+		this.timer3.add(20000, function() {
+			o.endLevel(o)
+		}, this);
 		this.timer3.start();
-		
+
 		if (this.levelNumber < this.finalLevel) {
 			switch (this.levelNumber) {
 			case 1:
 				videoBackground = game.add.sprite(1600, 8, 'startBackground');
-				animation1.add(videoBackground);
-				animation1.play();
+				switch (activeAstronaut) {
+					case 1 :
+						jenniferanimation1.add(videoBackground);
+						jenniferanimation1.play();
+					break;
+					case 2 :
+						patrickanimation1.add(videoBackground);
+						patrickanimation1.play();
+					break;
+					case 3 :
+						carlaanimation1.add(videoBackground);
+						carlaanimation1.play();
+					break;
+					case 4 :
+						hectoranimation1.add(videoBackground);
+						hectoranimation1.play();
+					break;
+				}
 				break;
 
 			case 2:
 				videoBackground = game.add.sprite(4000, 8, 'startBackground');
-				animation2.add(videoBackground);
-				animation2.play();
+				switch (activeAstronaut) {
+					case 1 :
+						jenniferanimation2.add(videoBackground);
+						jenniferanimation2.play();
+					break;
+					case 2 :
+						patrickanimation2.add(videoBackground);
+						patrickanimation2.play();
+					break;
+					case 3 :
+						carlaanimation2.add(videoBackground);
+						carlaanimation2.play();
+					break;
+					case 4 :
+						hectoranimation2.add(videoBackground);
+						hectoranimation2.play();
+					break;
+				}
 				break;
 
 			case 3:
 				videoBackground = game.add.sprite(4000, 8, 'startBackground');
-				animation3.add(videoBackground);
-				animation3.play();
+				switch (activeAstronaut) {
+					case 1 :
+						jenniferanimation3.add(videoBackground);
+						jenniferanimation3.play();
+					break;
+					case 2 :
+						patrickanimation3.add(videoBackground);
+						patrickanimation3.play();
+					break;
+					case 3 :
+						carlaanimation3.add(videoBackground);
+						carlaanimation3.play();
+					break;
+					case 4 :
+						hectoranimation3.add(videoBackground);
+						hectoranimation3.play();
+					break;
+				}
 				break;
 			}
 			videoBackground.bringToTop();
-		
 
 		} else if (this.levelNumber == this.finalLevel) {
 			game.state.start('bonus');
@@ -644,7 +750,58 @@ play.prototype = {
 	},
 
 	endLevel : function(o) {
-		animation1.stop();
+		switch (this.levelNumber) {
+			case 1:
+				switch (activeAstronaut) {
+					case 1 :
+						jenniferanimation1.destroy();
+					break;
+					case 2 :
+						patrickanimation1.destroy();
+					break;
+					case 3 :
+						carlaanimation1.destroy();
+					break;
+					case 4 :
+						hectoranimation1.destroy();
+					break;
+				}
+				break;
+
+			case 2:
+				switch (activeAstronaut) {
+					case 1 :
+						jenniferanimation2.destroy();
+					break;
+					case 2 :
+						patrickanimation2.destroy();
+					break;
+					case 3 :
+						carlaanimation2.destroy();
+					break;
+					case 4 :
+						hectoranimation2.destroy();
+					break;
+				}
+				break;
+
+			case 3:
+				switch (activeAstronaut) {
+					case 1 :
+						jenniferanimation3.destroy();
+					break;
+					case 2 :
+						patrickanimation3.destroy();
+					break;
+					case 3 :
+						carlaanimation3.destroy();
+					break;
+					case 4 :
+						hectoranimation3.destroy();
+					break;
+				}
+				break;
+			}
 		o.levelNumber += 1;
 		o.loadLevel("");
 	},
@@ -722,7 +879,7 @@ play.prototype = {
 	},
 
 	timeDown : function() {
-		var countdown = 30000;
+		var countdown = 3000;
 		this.timer = game.time.create(false);
 		this.timer.loop(countdown, this.changeDisplay, this);
 		this.timer.start();
@@ -811,7 +968,9 @@ function createPauseMenu(o) {
 	}, this, 1, 0);
 	pauseMenu.addChild(this.restartButton);
 
-	continueButton = this.game.add.button(-50, 180, 'continueButton', continueGame, this, 1, 0);
+	continueButton = this.game.add.button(-50, 180, 'continueButton', function() {
+		continueGame(o)
+	}, this, 1, 0);
 	pauseMenu.addChild(this.continueButton);
 
 	quitButton = this.game.add.button(210, 185, 'quitButton', quitGame, this, 1, 0);
@@ -836,9 +995,10 @@ function restart(o) {
 
 }
 
-function continueGame() {
+function continueGame(o) {
 
 	isPaused = false;
+	o.astronaut.body.allowGravity = true;
 	pauseMenu.kill();
 	pauseMenuActive = true;
 
