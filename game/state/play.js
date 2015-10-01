@@ -671,40 +671,6 @@ play.prototype = {
 	}
 };
 
-function readLocal() {
-	// get the highscores object
-	var scores = localStorage.getItem("highScore");
-	scores = JSON.parse(scores);
-
-	return scores;
-}
-
-/*
- * bubbleSort
- */
-function sortHighScore(highScoreList) {
-	var swapped;
-
-	do {
-		swapped = false;
-		for (var i = 0; i < highScoreList.length - 1; i++) {
-			v1 = highScoreList[i];
-			v2 = highScoreList[i + 1];
-
-			if (v1[1] < v2[1]) {
-				var temp = [ v1[0], v1[1] ];
-				v1 = [ v2[0], v2[1] ];
-				v2 = temp;
-				highScoreList[i] = v1;
-				highScoreList[i + 1] = v2;
-				swapped = true;
-			}
-		}
-	} while (swapped);
-
-	return highScoreList;
-}
-
 function createPauseMenu() {
 
 	pauseMenuActive = false;
