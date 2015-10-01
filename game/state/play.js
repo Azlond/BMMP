@@ -33,6 +33,7 @@ var quitButton;
 var continueButton;
 var pauseMenu;
 var pauseMenuActive = true;
+var isPaused = false;
 
 play.prototype = {
 
@@ -68,6 +69,7 @@ play.prototype = {
 		animation1 = game.add.video('animation1');
 		animation2 = game.add.video('animation2');
 		animation3 = game.add.video('animation3');
+
 
 	},
 
@@ -107,6 +109,8 @@ play.prototype = {
 		 * 
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
+		if(isPaused == false) {
+
 		if (cursors.left.isDown && this.rocket.body.y == 69) {
 			this.astronaut.body.velocity.x = -175;
 			if (this.astronaut.body.onFloor()) {
@@ -168,6 +172,8 @@ play.prototype = {
 			this.game.state.start('gameOver', true, false);
 		}
 
+		}
+
 		/*
 		 * check if the rocket has left the camera fov
 		 * 
@@ -180,15 +186,27 @@ play.prototype = {
 		 * alien movement and interaction
 		 */
 
+		if(isPaused) {
+		
+			for (i = 0; i < alienGroup.children.length; i++) {
+				var enemy = alienGroup.children[i];
+				enemy.body.velocity.x = 0;
+			}
+		} else {
 		for (i = 0; i < alienGroup.children.length; i++) {
 			var enemy = alienGroup.children[i];
 			if (enemy.pathCounter >= 0) {
 				enemy.pathCounter++;
 			}
+			if (enemy.scale.x == 1) {
+				enemy.body.velocity.x = 50;
+			} else {
+				enemy.body.velocity.x = -50;
+			}
+
 			if (enemy.pathCounter >= enemy.distance) {
 				enemy.pathCounter = 0;
-				enemy.scale.x = -enemy.scale.x;
-				enemy.body.velocity.x = -enemy.body.velocity.x;
+				enemy.scale.x = -enemy.scale.x;		
 			}
 
 			// enemy facing right,the astronaut is within walking distance of the alien and the alien is facing the wrong direction
@@ -221,13 +239,26 @@ play.prototype = {
 				}
 			}
 		}
+		}
 
 		if (this.spaceKey.isDown && pauseMenuActive) {
 
+<<<<<<< Updated upstream
 			this.astronaut.body.velocity.x = 0;
 			this.alien.body.velocity.x = 0;
 			createPauseMenu();
+=======
+			isPaused = true;
+			createPauseMenu(this);
+			console.log(isPaused);
+>>>>>>> Stashed changes
 
+		}
+
+		if(isPaused == true) { 
+			this.timer.pause();
+		} else if (isPaused == false) {
+			this.timer.resume();
 		}
 
 	},
@@ -409,6 +440,7 @@ play.prototype = {
 		this.game.physics.arcade.enableBody(this.wall);
 		this.wall.body.allowGravity = false;
 		this.wall.body.immovable = true;
+
 		/**
 		 * add aliens
 		 */
@@ -424,6 +456,10 @@ play.prototype = {
 			this.alien.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
 			this.alien.anchor.setTo(0.5, 0.5);
 			this.alien.animations.play('walk');
+			this.alien.animations.add('stop',[ 0 ], 7, true);
+			if(isPaused == true) {
+				this.alien.animations.play('stop');
+			}
 			alienGroup.add(this.alien);
 		}
 
@@ -671,9 +707,51 @@ play.prototype = {
 	}
 };
 
+<<<<<<< Updated upstream
 function createPauseMenu() {
 
 	pauseMenuActive = false;
+=======
+function readLocal() {
+	// localStorage.clear();
+	// get the highscores object
+	var scores = localStorage.getItem("highScore");
+	scores = JSON.parse(scores);
+
+	return scores;
+}
+
+/*
+ * bubbleSort
+ */
+function sortHighScore(highScoreList) {
+	var swapped;
+
+	do {
+		swapped = false;
+		for (var i = 0; i < highScoreList.length - 1; i++) {
+			v1 = highScoreList[i];
+			v2 = highScoreList[i + 1];
+
+			if (v1[1] < v2[1]) {
+				var temp = [ v1[0], v1[1] ];
+				v1 = [ v2[0], v2[1] ];
+				v2 = temp;
+				highScoreList[i] = v1;
+				highScoreList[i + 1] = v2;
+				swapped = true;
+			}
+		}
+	} while (swapped);
+
+	return highScoreList;
+}
+
+function createPauseMenu(o) {
+
+	isPaused = true;
+	pauseMenuActive = false;			
+>>>>>>> Stashed changes
 
 	pauseMenu = game.add.sprite(400, 300, 'pauseBackground');
 	pauseMenu.alpha = 1.0;
@@ -686,7 +764,7 @@ function createPauseMenu() {
 	soundControl = new button(this.game, -20, -70, soundIsOn, changeSoundOnPauseMenu, 'controlSound');
 	pauseMenu.addChild(soundControl);
 
-	restartButton = this.game.add.button(-300, 180, 'restartButton', restart, this, 1, 0);
+	restartButton = this.game.add.button(-300, 180, 'restartButton', function() {restart(o)}, this, 1, 0);
 	pauseMenu.addChild(this.restartButton);
 
 	continueButton = this.game.add.button(-50, 180, 'continueButton', continueGame, this, 1, 0);
@@ -699,21 +777,24 @@ function createPauseMenu() {
 
 function quitGame() { // quits the game
 
+	isPaused = false;
 	game.state.start('intro');
 	pauseMenuActive = true;
 
 }
 
-function restart() {
+function restart(o) {
 
+	isPaused = false;
 	lifeCounter = 3;
-	play.prototype.loadLevel("restart");
+	o.loadLevel("restart");
 	pauseMenuActive = true;
 
 }
 
 function continueGame() {
 
+	isPaused = false;
 	pauseMenu.kill();
 	pauseMenuActive = true;
 
@@ -750,3 +831,4 @@ function changeSoundOnPauseMenu() {
 		// sound.resume();
 	}
 }
+
