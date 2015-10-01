@@ -372,7 +372,7 @@ play.prototype = {
 		this.game.add.existing(this.nowrench);
 		this.nowrench.fixedToCamera = true;
 
-		this.noscrewdriver = new Tools(this.game, 750, 10, 2);
+		this.noscrewdriver = new Tools(this.game, 755, 10, 2);
 		this.game.add.existing(this.noscrewdriver);
 		this.noscrewdriver.fixedToCamera = true;
 
@@ -781,7 +781,7 @@ play.prototype = {
 			if (soundIsOn == 1) {
 				collectToolSound.play();
 			}
-			this.screwdriver = new Tools(this.game, 750, 10, 3);
+			this.screwdriver = new Tools(this.game, 755, 10, 3);
 			this.game.add.existing(this.screwdriver);
 			this.screwdriver.fixedToCamera = true;
 		}
