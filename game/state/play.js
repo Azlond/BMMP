@@ -59,7 +59,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 2;// first level
+		this.levelNumber = 1;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -539,7 +539,7 @@ play.prototype = {
 	 */
 	hitFinish : function(astronaut, finish) {
 
-		if (this.toolsCollected == 0) {
+		if (this.toolsCollected == 1) {
 			this.astronaut.kill();
 			this.timer.stop();
 			if (soundIsOn == 1) {
@@ -671,8 +671,13 @@ play.prototype = {
 	},
 
 	endLevel : function(o) {
+		o.levelNumber += 1;
+		o.loadLevel("");
+		pauseMenuActive = true;
+		videoOn = false;
+		/**
 		switch (this.levelNumber) {
-			case 1:
+			case 2:
 				switch (activeAstronaut) {
 					case 1 :
 						jenniferanimation1.destroy();
@@ -689,7 +694,7 @@ play.prototype = {
 				}
 				break;
 
-			case 2:
+			case 3:
 				switch (activeAstronaut) {
 					case 1 :
 						jenniferanimation2.destroy();
@@ -705,28 +710,8 @@ play.prototype = {
 					break;
 				}
 				break;
-
-			case 3:
-				switch (activeAstronaut) {
-					case 1 :
-						jenniferanimation3.destroy();
-					break;
-					case 2 :
-						patrickanimation3.destroy();
-					break;
-					case 3 :
-						carlaanimation3.destroy();
-					break;
-					case 4 :
-						hectoranimation3.destroy();
-					break;
-				}
-				break;
 			}
-		o.levelNumber += 1;
-		o.loadLevel("");
-		pauseMenuActive = true;
-		videoOn = false;
+		**/
 	},
 
 	/*
