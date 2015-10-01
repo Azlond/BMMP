@@ -78,6 +78,7 @@ play.prototype = {
 		collectOxygenSound = game.add.audio('collectOxygen');
 		completeLevelSound = game.add.audio('completeLevel');
 		collideWithAlienSound = game.add.audio('collideWithAlien');
+
 		jenniferanimation1 = game.add.video('jenniferanimation1');
 		carlaanimation1 = game.add.video('carlaanimation1');
 		hectoranimation1 = game.add.video('hectoranimation1');
@@ -136,7 +137,13 @@ play.prototype = {
 		 *
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
-		if (isPaused == false) {
+		
+		if(isPaused) {
+
+			this.astronaut.body.velocity.x = 0;
+			this.astronaut.animations.play('stop', 6, true);
+
+		} else if(!isPaused) {
 
 			if (cursors.left.isDown && this.rocket.body.y == 69) {
 				this.astronaut.body.velocity.x = -175;
