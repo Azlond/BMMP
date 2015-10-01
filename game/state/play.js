@@ -76,7 +76,7 @@ play.prototype = {
 
 	update : function() {
 
-		if (this.enterKey.isDown){
+		if (this.enterKey.isDown) {
 			console.log(this.astronaut.body.x);
 			console.log(this.astronaut.body.y);
 		}
@@ -110,9 +110,9 @@ play.prototype = {
 
 		/*
 		 * Moving the player
-		 *
+		 * 
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 *
+		 * 
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
 		if (isPaused == false) {
@@ -156,7 +156,7 @@ play.prototype = {
 
 			/*
 			 * check if the player has fallen into a rift
-			 *
+			 * 
 			 * if the player has more than 0 lives left, restart the level
 			 */
 			if (this.astronaut.body.y > 600 && !this.fallen) {
@@ -246,33 +246,25 @@ play.prototype = {
 		}
 
 		if (this.spaceKey.isDown && pauseMenuActive) {
-				isPaused = true;
-				createPauseMenu(this);
-				console.log(isPaused);
-			}
-			if(isPaused == true) {
-				this.timer.pause(); 		}
-				else if (isPaused == false)
-					{ 			this.timer.resume(); 		}  	},
-		/*if (this.spaceKey.isDown) {
-			if (pauseMenuActive) {
-				isPaused = true;
-				this.astronaut.body.velocity.x = 0;
-				this.alien.body.velocity.x = 0;
-				createPauseMenu();
-			} else if (videoOn) {
-				this.levelNumber +=1;
-				this.loadLevel("restart");
-			}
-
+			isPaused = true;
+			this.astronaut.body.velocity.x = 0;
+			this.astronaut.body.velocity.y = 0;
+			this.astronaut.body.allowGravity = false;
+			createPauseMenu(this);
+			console.log(isPaused);
+		}
 		if (isPaused == true) {
 			this.timer.pause();
 		} else if (isPaused == false) {
 			this.timer.resume();
 		}
-	}
 	},
-			*/
+	/*
+	 * if (this.spaceKey.isDown) { if (pauseMenuActive) { isPaused = true; this.astronaut.body.velocity.x = 0; this.alien.body.velocity.x = 0;
+	 * createPauseMenu(); } else if (videoOn) { this.levelNumber +=1; this.loadLevel("restart"); }
+	 * 
+	 * if (isPaused == true) { this.timer.pause(); } else if (isPaused == false) { this.timer.resume(); } } },
+	 */
 
 	/*
 	 * function to load each level
@@ -377,9 +369,9 @@ play.prototype = {
 
 		/*
 		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
-		 *
+		 * 
 		 * rocket needs to be immovable until player is inside so that it can't be kicked around
-		 *
+		 * 
 		 * no gravity to make departure cleaner
 		 */
 		switch (this.levelNumber) {
@@ -443,7 +435,7 @@ play.prototype = {
 			fill : '#ffffff'
 		});
 
-		this.scoreElement = game.add.image (6, 18, 'elementScore');
+		this.scoreElement = game.add.image(6, 18, 'elementScore');
 		this.scoreText.fixedToCamera = true;
 
 		/*
@@ -522,9 +514,9 @@ play.prototype = {
 
 	/*
 	 * called when the player collides with the rocket
-	 *
+	 * 
 	 * checks if all tools have been collected
-	 *
+	 * 
 	 */
 	hitFinish : function(astronaut, finish) {
 
@@ -538,7 +530,7 @@ play.prototype = {
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
 			score += 50;
-			this.scoreText.text = 'Score: '+ score;
+			this.scoreText.text = 'Score: ' + score;
 
 			switch (this.levelNumber) {
 			case 2:
@@ -565,7 +557,9 @@ play.prototype = {
 			}
 
 			this.timer2 = game.time.create(false);
-			this.timer2.add(3500, function () {this.playVideo(this)}, this);
+			this.timer2.add(3500, function() {
+				this.playVideo(this)
+			}, this);
 			this.timer2.start();
 		}
 
@@ -576,7 +570,9 @@ play.prototype = {
 		videoOn = true;
 		pauseMenuActive = false;
 		this.timer3 = game.time.create(false);
-		this.timer3.add(20000,function (){o.endLevel(o)}, this);
+		this.timer3.add(20000, function() {
+			o.endLevel(o)
+		}, this);
 		this.timer3.start();
 
 		if (this.levelNumber < this.finalLevel) {
@@ -601,7 +597,6 @@ play.prototype = {
 			}
 			videoBackground.bringToTop();
 
-
 		} else if (this.levelNumber == this.finalLevel) {
 			game.state.start('bonus');
 		}
@@ -618,7 +613,7 @@ play.prototype = {
 
 	/*
 	 * called when player collides with an alien
-	 *
+	 * 
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
 	collideWithAlien : function(astronaut, alien) {
@@ -773,7 +768,9 @@ function createPauseMenu(o) {
 	}, this, 1, 0);
 	pauseMenu.addChild(this.restartButton);
 
-	continueButton = this.game.add.button(-50, 180, 'continueButton', continueGame, this, 1, 0);
+	continueButton = this.game.add.button(-50, 180, 'continueButton', function() {
+		continueGame(o)
+	}, this, 1, 0);
 	pauseMenu.addChild(this.continueButton);
 
 	quitButton = this.game.add.button(210, 185, 'quitButton', quitGame, this, 1, 0);
@@ -798,9 +795,10 @@ function restart(o) {
 
 }
 
-function continueGame() {
+function continueGame(o) {
 
 	isPaused = false;
+	o.astronaut.body.allowGravity = true;
 	pauseMenu.kill();
 	pauseMenuActive = true;
 
