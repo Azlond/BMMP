@@ -237,16 +237,47 @@ play.prototype = {
 				}
 			}
 		}
-
+		/*
 		if (this.spaceKey.isDown && pauseMenuActive) {  			
+				
 				isPaused = true; 			
 				createPauseMenu(this); 			
 				console.log(isPaused); 
 			}  		
 			if(isPaused == true) { 			
 				this.timer.pause(); 		} 
-				else if (isPaused == false) 
-					{ 			this.timer.resume(); 		}  	},
+				else if (isPaused == false) { 			this.timer.resume(); 		}  	},
+		*/
+		
+		if (this.spaceKey.isDown) {  			
+			if (pauseMenuActive) {
+				isPaused = true; 			
+				createPauseMenu(this); 			
+				console.log(isPaused); 
+			} else if (videoOn) {
+				this.levelNumber += 1;
+				this.loadLevel("restart");
+			}
+				
+			
+		}
+			
+			  		
+		if(isPaused == true) { 			
+			this.timer.pause(); 		
+		} else if (isPaused == false) { 			
+			this.timer.resume();
+		}  
+		
+		
+		
+		},
+		
+		
+		
+		
+		
+		
 		/*if (this.spaceKey.isDown) {
 			if (pauseMenuActive) {
 				isPaused = true;	
@@ -522,7 +553,7 @@ play.prototype = {
 	 */
 	hitFinish : function(astronaut, finish) {
 
-		if (this.toolsCollected == 0) {
+		if (this.toolsCollected == 3) {
 			this.astronaut.kill();
 			this.timer.stop();
 			if (soundIsOn == 1) {
