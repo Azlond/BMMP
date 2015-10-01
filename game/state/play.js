@@ -72,6 +72,8 @@ play.prototype = {
 		this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
 
 		loseLifeSound = game.add.audio('loseLife');
+		collectElementSound = game.add.audio('collectElement');
+	
 		collectToolSound = game.add.audio('collectTool');
 		collectOxygenSound = game.add.audio('collectOxygen');
 		completeLevelSound = game.add.audio('completeLevel');
@@ -270,9 +272,8 @@ play.prototype = {
 				createPauseMenu(this); 			
 				console.log(isPaused); 
 			} else if (videoOn) {
-				this.levelNumber += 1;
-				this.loadLevel("");	
-			}
+				this.endLevel(this);
+			} 
 		}
 			
 			  		
@@ -312,7 +313,9 @@ play.prototype = {
 		this.timer4.add(300, this.startPauseMenu, this);
 		this.timer4.start();
 		
-		sound.play();
+		if (musicOn == 1) {
+			sound.play('', 0, 1, true);
+		}
 		this.toolsCollected = 0;
 		this.lifeTimer = 0;
 		this.fallen = false;
@@ -447,7 +450,7 @@ play.prototype = {
 		/*
 		 * adds the character
 		 */
-		this.astronaut = new Astronaut(this.game, 100, 440);
+		this.astronaut = new Astronaut(this.game, 2000, 440);
 		this.game.add.existing(this.astronaut);
 		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 26, true);
 		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ], 26, true);
@@ -529,7 +532,9 @@ play.prototype = {
 		if (str.indexOf("char") != -1) {
 
 			this.map.removeTile(tile.x, tile.y, this.layer);
-
+			if (soundIsOn) {
+				collectElementSound.play();
+			}
 			score += 1;
 			this.scoreText.text = score;
 
@@ -548,7 +553,7 @@ play.prototype = {
 	 */
 	hitFinish : function(astronaut, finish) {
 
-		if (this.toolsCollected == 1) {
+		if (this.toolsCollected == 0) {
 			this.astronaut.kill();
 			this.timer.stop();
 			if (soundIsOn == 1) {
@@ -607,7 +612,7 @@ play.prototype = {
 		if (this.levelNumber < this.finalLevel) {
 			switch (this.levelNumber) {
 			case 1:
-				videoBackground = game.add.sprite(1600, 8, 'startBackground');
+						videoBackground = game.add.sprite(1600, 8, 'startBackground');
 				switch (activeAstronaut) {
 					case 1 :
 						jenniferanimation1.add(videoBackground);
@@ -681,49 +686,36 @@ play.prototype = {
 	},
 
 	endLevel : function(o) {
-		o.levelNumber += 1;
-		o.loadLevel("");
-		pauseMenuActive = true;
-		videoOn = false;
-		/**
+		
 		switch (this.levelNumber) {
-			case 2:
+			case 1:videoBackground.kill(); 
 				switch (activeAstronaut) {
-					case 1 :
-						jenniferanimation1.destroy();
-					break;
-					case 2 :
-						patrickanimation1.destroy();
-					break;
-					case 3 :
-						carlaanimation1.destroy();
-					break;
-					case 4 :
-						hectoranimation1.destroy();
-					break;
-				}
-				break;
+						case 1 : jenniferanimation1.stop(); break;
+						case 2 : patrickanimation1.stop(); break;
+						case 3 : carlaanimation1.stop(); break;
+						case 4 : hectoranimation1.stop(); break;
+				} break;
 
-			case 3:
+			case 2: videoBackground.kill();
 				switch (activeAstronaut) {
-					case 1 :
-						jenniferanimation2.destroy();
-					break;
-					case 2 :
-						patrickanimation2.destroy();
-					break;
-					case 3 :
-						carlaanimation2.destroy();
-					break;
-					case 4 :
-						hectoranimation2.destroy();
-					break;
-				}
-				break;
+					case 1 : jenniferanimation2.stop(); break;
+					case 2 : patrickanimation2.stop(); break;
+					case 3 :carlaanimation2.stop(); break;
+					case 4 : hectoranimation2.stop(); break;
+				} break;
+				
+			case 3: videoBackground.kill();
+				switch (activeAstronaut) {
+					case 1 : jenniferanimation2.destroy(); break;
+					case 2 : patrickanimation2.destroy(); break;
+					case 3 : carlaanimation2.destroy(); break;
+					case 4 : hectoranimation2.destroy(); break;
 			}
+			break;
+		}
+
 		o.levelNumber += 1;
 		o.loadLevel("");
-		**/
 	},
 
 	/*

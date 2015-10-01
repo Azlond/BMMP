@@ -40,7 +40,7 @@ menu.prototype = {
 
 		if (musicOn == 1) {
 			sound = game.add.audio('music');
-			sound.play();
+			sound.play('', 0, 1, true);
 		}
 
 		background = game.add.sprite(400, 300, 'optionBackground');
