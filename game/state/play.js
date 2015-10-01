@@ -667,9 +667,9 @@ play.prototype = {
 				loseLifeSound.play();
 			}
 			this.loadLevel("restart");
-			timer.stop();
+			this.timer.stop();
 		} else {
-			timer.stop();
+			this.timer.stop();
 		}
 	},
 
