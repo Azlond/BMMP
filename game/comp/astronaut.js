@@ -23,7 +23,7 @@ var Astronaut = function(game, x, y) {
 
 	this.body.gravity.y = 1000;
 	this.body.maxVelocity.y = 500;
-	
+
 	this.collected = 0;
 
 };
@@ -34,6 +34,6 @@ Astronaut.prototype.constructor = Astronaut;
 var amountElements = {
 		"level1" : 0,
 		"level2" : 32,
-		"level3" : 37,
+		"level3" : 35,
 		"level4" : 28
 }

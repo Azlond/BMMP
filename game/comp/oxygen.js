@@ -29,17 +29,22 @@ var oxygens = {
 	}
 },
  "level3" :  {
-	 "amount" : 2,
+	 "amount" : 5,
 	 "coordinates" : {
-		 "oxygen1" : [ 300, 400],
-		 "oxygen2" : [ 1800, 350 ]
+		 "oxygen1" : [ 1291, 64],
+		 "oxygen2" : [ 3003, 416 ],
+		 "oxygen3" : [ 1370, 416 ],
+		 "oxygen4" : [ 3960, 416 ],
+		 "oxygen5" : [ 2052, 416 ]
+
 	}
+
 },
  "level4" :  {
 	 "amount" : 2,
 	 "coordinates" : {
-		 "oxygen1" : [ 300, 400],
-		 "oxygen2" : [ 1800, 350 ]
+		 "oxygen1" : [ 43, 32],
+		 "oxygen2" : [ 3147, 256 ]
 	}
 }
 };
