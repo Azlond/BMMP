@@ -59,11 +59,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-<<<<<<< HEAD
 		this.levelNumber = 1;// first level
-=======
-		this.levelNumber = 2;// first level
->>>>>>> origin/master
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -267,19 +263,7 @@ play.prototype = {
 				}
 			}
 		}
-<<<<<<< HEAD
-		/*
-		if (this.spaceKey.isDown && pauseMenuActive) {  			
-				
-				isPaused = true; 			
-				createPauseMenu(this); 			
-				console.log(isPaused); 
-			}  		
-			if(isPaused == true) { 			
-				this.timer.pause(); 		} 
-				else if (isPaused == false) { 			this.timer.resume(); 		}  	},
-		*/
-		
+
 		if (this.spaceKey.isDown) {  			
 			if (pauseMenuActive) {
 				isPaused = true; 			
@@ -287,11 +271,8 @@ play.prototype = {
 				console.log(isPaused); 
 			} else if (videoOn) {
 				this.levelNumber += 1;
-				this.loadLevel("");
-				
+				this.loadLevel("");	
 			}
-				
-			
 		}
 			
 			  		
@@ -299,51 +280,9 @@ play.prototype = {
 			this.timer.pause(); 		
 		} else if (isPaused == false) { 			
 			this.timer.resume();
-		}  
-		
-		
-		
-		},
-		
-		
-		
-		
-		
-		
-		/*if (this.spaceKey.isDown) {
-			if (pauseMenuActive) {
-				isPaused = true;	
-				this.astronaut.body.velocity.x = 0;
-				this.alien.body.velocity.x = 0;
-				createPauseMenu();
-			} else if (videoOn) {
-				this.levelNumber +=1;
-				this.loadLevel("restart");
-			}
-
-=======
-
-		if (this.spaceKey.isDown && pauseMenuActive) {
-			isPaused = true;
-			this.astronaut.body.velocity.x = 0;
-			this.astronaut.body.velocity.y = 0;
-			this.astronaut.body.allowGravity = false;
-			createPauseMenu(this);
-			console.log(isPaused);
 		}
->>>>>>> origin/master
-		if (isPaused == true) {
-			this.timer.pause();
-		} else if (isPaused == false) {
-			this.timer.resume();
-		}
+		
 	},
-	/*
-	 * if (this.spaceKey.isDown) { if (pauseMenuActive) { isPaused = true; this.astronaut.body.velocity.x = 0; this.alien.body.velocity.x = 0;
-	 * createPauseMenu(); } else if (videoOn) { this.levelNumber +=1; this.loadLevel("restart"); }
-	 * 
-	 * if (isPaused == true) { this.timer.pause(); } else if (isPaused == false) { this.timer.resume(); } } },
-	 */
 
 	/*
 	 * function to load each level
@@ -522,14 +461,9 @@ play.prototype = {
 			font : '30px Raleway',
 			fill : '#ffffff'
 		});
-<<<<<<< HEAD
 		
 		this.scoreElement = game.add.image (9, 10, 'elementScore');	
 		this.scoreElement.fixedToCamera = true;
-=======
-
-		this.scoreElement = game.add.image(6, 18, 'elementScore');
->>>>>>> origin/master
 		this.scoreText.fixedToCamera = true;
 
 		/*
@@ -624,11 +558,8 @@ play.prototype = {
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
 			score += 50;
-<<<<<<< HEAD
 			this.scoreText.text = score;
-=======
-			this.scoreText.text = 'Score: ' + score;
->>>>>>> origin/master
+
 
 			switch (this.levelNumber) {
 			case 2:
