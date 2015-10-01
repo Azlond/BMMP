@@ -83,13 +83,13 @@ menu.prototype = {
 		background.addChild(scoreButton);
 
 		if (playerName == null) {
-			playerName = game.add.text(370, 139, "", {
-				font : '30px Raleway',
+			playerName = game.add.text(370, 136, "", {
+				font : '27px Raleway',
 				fill : '#ffffff'
 			});
 		} else {
-			playerName = game.add.text(370, 139, playerName.text, {
-				font : '30px Raleway',
+			playerName = game.add.text(370, 136, playerName.text, {
+				font : '27px Raleway',
 				fill : '#ffffff'
 			});
 		}
