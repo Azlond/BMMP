@@ -395,7 +395,7 @@ play.prototype = {
 
 		score = oldScore;// update the score
 
-		this.scoreText = game.add.text(0, 20, 'Score: ' + score, {
+		this.scoreText = game.add.text(0, 15, 'Score: ' + score, {
 			font : '30px Courier',
 			fill : '#ffffff'
 		});
@@ -641,7 +641,7 @@ play.prototype = {
 	},
 
 	timeDown : function() {
-		var countdown = 30000;
+		var countdown = 3000;
 		this.timer = game.time.create(false);
 		this.timer.loop(countdown, this.changeDisplay, this);
 		this.timer.start();

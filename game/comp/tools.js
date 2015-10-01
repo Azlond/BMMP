@@ -12,8 +12,8 @@ Tools.prototype = Object.create(Phaser.Sprite.prototype);
 Tools.prototype.constructor = Tools;
 
 var toolLocations = {
-	'level1PliersX' : 115,
-	'level1PliersY' : 124,
+	'level1PliersX' : 170,
+	'level1PliersY' : 140,
 
 	'level1ScrewX' : 1600,
 	'level1ScrewY' : 153,

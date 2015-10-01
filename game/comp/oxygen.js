@@ -14,8 +14,8 @@ var oxygens = {
 	 "level1" :  {
 		 "amount" : 2,
 		 "coordinates" : {
-			 "oxygen1" : [ 300, 400],
-			 "oxygen2" : [ 1800, 350 ]
+			 "oxygen1" : [ 90, 140],
+			 "oxygen2" : [ 1760, 305 ]
 		}
 	}, 
  "level2" :  {
