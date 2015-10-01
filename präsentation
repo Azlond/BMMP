@@ -56,6 +56,7 @@ Game Over:
 - Spiel ist zu schwierig
 - Leichtsinnsfehler
 - Phaserdoc. ohne Beispiele/ spärlich
+- Browserkompatibilität
 
 + die Kamera zeigt das Menü an
 + Lerneffekt
@@ -80,3 +81,7 @@ Game Over:
 // Sonstige Ideen:
 
 - Weiterflug mit der Rackete: kleine Puzzelspiele müssen gelöst werden
+- Astronaut wird jedes Mal mehr fertig aussehen
+- Bonuslevel als Zwischenlevel zwischen den Planeten --> muss repariert werden
+  wegen den Kometen
+- Zugriff auf Webcam um eigenen Spieler zu erstellen (bzw. beim Gamewon Bildschirm)
