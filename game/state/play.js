@@ -548,7 +548,7 @@ play.prototype = {
 	 */
 	hitFinish : function(astronaut, finish) {
 
-		if (this.toolsCollected == 1) {
+		if (this.toolsCollected == 3) {
 			this.astronaut.kill();
 			this.timer.stop();
 			if (soundIsOn == 1) {
