@@ -22,7 +22,7 @@ var oxygens = {
 	 "amount" : 5,
 	 "coordinates" : {
 		 "oxygen1" : [ 1008, 256],
-		 "oxygen2" : [ 1734, 256 ],
+		 "oxygen2" : [ 1737, 256 ],
 		 "oxygen3" : [ 3330, 416 ],
 		 "oxygen4" : [ 4269, 416 ],
 		 "oxygen5" : [ 1746, 320]
