@@ -42,10 +42,12 @@ var oxygens = {
 
 },
  "level4" :  {
-	 "amount" : 2,
+	 "amount" : 3,
 	 "coordinates" : {
 		 "oxygen1" : [ 43, 32],
-		 "oxygen2" : [ 3147, 256 ]
+		 "oxygen2" : [ 2175, 416 ],
+		 "oxygen3" : [ 3146, 256 ]
+
 	}
 }
 };
