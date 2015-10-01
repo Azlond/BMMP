@@ -256,7 +256,8 @@ play.prototype = {
 				console.log(isPaused); 
 			} else if (videoOn) {
 				this.levelNumber += 1;
-				this.loadLevel("restart");
+				this.loadLevel("");
+				
 			}
 				
 			
@@ -317,6 +318,15 @@ play.prototype = {
 			this.noscrewdriver.kill();
 			alienGroup.destroy();
 		}
+		
+		if (videoOn) {
+			videoOn = false;
+		}
+		
+		this.timer4 = game.time.create(false);
+		this.timer4.add(300, this.startPauseMenu, this);
+		this.timer4.start();
+		
 		sound.play();
 		this.toolsCollected = 0;
 		this.lifeTimer = 0;
@@ -536,7 +546,7 @@ play.prototype = {
 			this.map.removeTile(tile.x, tile.y, this.layer);
 
 			score += 1;
-			this.scoreText.text = 'Score: ' + score;
+			this.scoreText.text = score;
 
 			this.astronaut.collected++;
 
@@ -553,7 +563,7 @@ play.prototype = {
 	 */
 	hitFinish : function(astronaut, finish) {
 
-		if (this.toolsCollected == 3) {
+		if (this.toolsCollected == 1) {
 			this.astronaut.kill();
 			this.timer.stop();
 			if (soundIsOn == 1) {
@@ -563,7 +573,7 @@ play.prototype = {
 			this.rocket.body.velocity.y = -150;
 			this.rocket.animations.play('full');
 			score += 50;
-			this.scoreText.text = 'Score: '+ score;
+			this.scoreText.text = score;
 
 			switch (this.levelNumber) {
 			case 2:
@@ -637,8 +647,6 @@ play.prototype = {
 		animation1.stop();
 		o.levelNumber += 1;
 		o.loadLevel("");
-		pauseMenuActive = true;
-		videoOn = false;
 	},
 
 	/*
@@ -740,6 +748,11 @@ play.prototype = {
 		} else {
 			this.timer.stop();
 		}
+	},
+	startPauseMenu : function () {
+		pauseMenuActive = true;
+		this.timer4.stop();
+		
 	}
 };
 
