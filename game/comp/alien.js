@@ -23,11 +23,8 @@ Alien.prototype.constructor = Alien;
 
 var aliens = {
 	"level1" : {
-		"amount" : 2,
-		"coordinates" : {
-			"alien1" : [ 600, 450, 250 ], // x, y, distance
-			"alien2" : [ 1800, 450, 250 ]
-		}
+		"amount" : 0,
+		"coordinates" : {}
 	},
 	"level2" : {
 		"amount" : 5,

@@ -43,7 +43,7 @@ bonus.prototype = {
 		this.layer.resizeWorld();
 
 		this.scoreText = game.add.text(0, 0, 'Score: ' + score, {
-			font : '30px Courier',
+			font : '30px Raleway',
 			fill : '#ffffff'
 		});
 
@@ -53,8 +53,8 @@ bonus.prototype = {
 
 		this.started = false;
 
-		this.infoText = game.add.text(game.width / 4, game.height / 10, "Travel back to Earth \nAvoid the meteoroids \nPress ENTER to start", {
-			font : '30px Courier',
+		this.infoText = game.add.text(game.width / 3, game.height / 10, "Travel back to Earth \nAvoid the meteoroids \nPress ENTER to start", {
+			font : '30px Raleway',
 			fill : '#ffffff'
 		});
 
@@ -111,6 +111,50 @@ bonus.prototype = {
 	},
 
 	finish : function() {
+		this.saveLocal();
 		this.rocket.body.velocity.y -= 1000;
+	},
+
+	saveLocal : function() {
+		if (score != 0) {
+			var scores = localStorage.getItem('highScore') || [];
+
+			if (scores.length != 0) {
+				scores = JSON.parse(scores);
+			}
+			this.parseJson(scores);
+		}
+	},
+
+	parseJson : function(json) {
+		var pName = playerName.text.toString();
+		var playerExists = false;
+
+		if (json.length == 0) {
+			var tjson = [ pName, score ];
+			json.push(tjson);
+			localStorage.setItem("highScore", JSON.stringify(json));
+		} else {
+			for (i = 0; i < json.length; i++) {
+				var tArray = json[i];
+				var highScoreName = tArray[0];
+				var playerHighScore = tArray[1];
+
+				if (highScoreName == pName) {
+					playerExists = true;
+					if (playerHighScore < score) {
+						json.splice(i, 1);
+						var tjson = [ pName, score ];
+						json.push(tjson);
+						localStorage.setItem("highScore", JSON.stringify(json));
+					}
+				}
+			}
+			if (!playerExists) {
+				var tjson = [ pName, score ];
+				json.push(tjson);
+				localStorage.setItem("highScore", JSON.stringify(json));
+			}
+		}
 	}
 };
