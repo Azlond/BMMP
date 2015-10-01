@@ -49,7 +49,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 4;// first level
+		this.levelNumber = 1;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -428,7 +428,7 @@ play.prototype = {
 		/*
 		 * adds the character
 		 */
-		this.astronaut = new Astronaut(this.game, 4000, 440);
+		this.astronaut = new Astronaut(this.game, 100, 440);
 		this.game.add.existing(this.astronaut);
 		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 26, true);
 		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ], 26, true);
@@ -528,7 +528,7 @@ play.prototype = {
 	 */
 	hitFinish : function(astronaut, finish) {
 
-		if (this.toolsCollected == 0) {
+		if (this.toolsCollected == 3) {
 			this.astronaut.kill();
 			this.timer.stop();
 			if (soundIsOn == 1) {
