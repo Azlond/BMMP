@@ -184,7 +184,7 @@ function soundOption() {
 }
 
 function changeMusic() {
-	if (musicOn == 1) {
+	if (musicOn == 1) { 
 		if (soundIsOn == 1) {
 			buttonSound.play();
 		}

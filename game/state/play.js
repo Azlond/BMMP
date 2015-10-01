@@ -687,7 +687,7 @@ play.prototype = {
 	},
 
 	endLevel : function(o) {
-		
+		this.timer3.stop();
 		switch (this.levelNumber) {
 			case 1:videoBackground.kill(); 
 				switch (activeAstronaut) {
