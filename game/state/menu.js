@@ -153,9 +153,6 @@ function handleComplete() {
 		introFinished = true;
 		missionVideo.stop(true);
 		game.state.start('play');
-		if (soundIsOn == 1) {
-			sound.play();
-		}
 	}
 }
 

@@ -311,10 +311,13 @@ play.prototype = {
 		this.timer4 = game.time.create(false);
 		this.timer4.add(300, this.startPauseMenu, this);
 		this.timer4.start();
-
+		console.log (musicOn);
+		
 		if (musicOn == 1) {
-			sound.play('', 0, 1, true);
-		}
+			sound.play();
+			sound.loopFull();
+		} 
+		
 		this.toolsCollected = 0;
 		this.lifeTimer = 0;
 		this.fallen = false;
@@ -684,8 +687,8 @@ play.prototype = {
 	},
 
 	endLevel : function(o) {
-		this.timer3.stop();
-		switch (this.levelNumber) {
+		o.timer3.stop();
+		switch (o.levelNumber) {
 		case 1:
 			videoBackground.kill();
 			switch (activeAstronaut) {
@@ -726,16 +729,16 @@ play.prototype = {
 			videoBackground.kill();
 			switch (activeAstronaut) {
 			case 1:
-				jenniferanimation2.destroy();
+				jenniferanimation3.stop();
 				break;
 			case 2:
-				patrickanimation2.destroy();
+				patrickanimation3.stop();
 				break;
 			case 3:
-				carlaanimation2.destroy();
+				carlaanimation3.stop();
 				break;
 			case 4:
-				hectoranimation2.destroy();
+				hectoranimation3.stop();
 				break;
 			}
 			break;
