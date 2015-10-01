@@ -70,9 +70,16 @@ play.prototype = {
 		animation2 = game.add.video('animation2');
 		animation3 = game.add.video('animation3');
 
+		this.enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+
 	},
 
 	update : function() {
+
+		if (this.enterKey.isDown){
+			console.log(this.astronaut.body.x);
+			console.log(this.astronaut.body.y);
+		}
 
 		/*
 		 * collision between astronaut/alien/rocket and the platform/ground layer
@@ -103,9 +110,9 @@ play.prototype = {
 
 		/*
 		 * Moving the player
-		 * 
+		 *
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 * 
+		 *
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
 		if (isPaused == false) {
@@ -149,7 +156,7 @@ play.prototype = {
 
 			/*
 			 * check if the player has fallen into a rift
-			 * 
+			 *
 			 * if the player has more than 0 lives left, restart the level
 			 */
 			if (this.astronaut.body.y > 600 && !this.fallen) {
@@ -238,14 +245,14 @@ play.prototype = {
 			}
 		}
 
-		if (this.spaceKey.isDown && pauseMenuActive) {  			
-				isPaused = true; 			
-				createPauseMenu(this); 			
-				console.log(isPaused); 
-			}  		
-			if(isPaused == true) { 			
-				this.timer.pause(); 		} 
-				else if (isPaused == false) 
+		if (this.spaceKey.isDown && pauseMenuActive) {
+				isPaused = true;
+				createPauseMenu(this);
+				console.log(isPaused);
+			}
+			if(isPaused == true) {
+				this.timer.pause(); 		}
+				else if (isPaused == false)
 					{ 			this.timer.resume(); 		}  	},
 		/*if (this.spaceKey.isDown) {
 			if (pauseMenuActive) {
@@ -271,7 +278,7 @@ play.prototype = {
 	 * function to load each level
 	 */
 	loadLevel : function(string) {
-	
+
 		/*
 		 * reset values
 		 */
@@ -370,9 +377,9 @@ play.prototype = {
 
 		/*
 		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
-		 * 
+		 *
 		 * rocket needs to be immovable until player is inside so that it can't be kicked around
-		 * 
+		 *
 		 * no gravity to make departure cleaner
 		 */
 		switch (this.levelNumber) {
@@ -435,8 +442,8 @@ play.prototype = {
 			font : '30px Raleway',
 			fill : '#ffffff'
 		});
-		
-		this.scoreElement = game.add.image (6, 18, 'elementScore');	
+
+		this.scoreElement = game.add.image (6, 18, 'elementScore');
 		this.scoreText.fixedToCamera = true;
 
 		/*
@@ -515,9 +522,9 @@ play.prototype = {
 
 	/*
 	 * called when the player collides with the rocket
-	 * 
+	 *
 	 * checks if all tools have been collected
-	 * 
+	 *
 	 */
 	hitFinish : function(astronaut, finish) {
 
@@ -556,7 +563,7 @@ play.prototype = {
 			default:
 				break;
 			}
-			
+
 			this.timer2 = game.time.create(false);
 			this.timer2.add(3500, function () {this.playVideo(this)}, this);
 			this.timer2.start();
@@ -571,7 +578,7 @@ play.prototype = {
 		this.timer3 = game.time.create(false);
 		this.timer3.add(20000,function (){o.endLevel(o)}, this);
 		this.timer3.start();
-		
+
 		if (this.levelNumber < this.finalLevel) {
 			switch (this.levelNumber) {
 			case 1:
@@ -593,7 +600,7 @@ play.prototype = {
 				break;
 			}
 			videoBackground.bringToTop();
-		
+
 
 		} else if (this.levelNumber == this.finalLevel) {
 			game.state.start('bonus');
@@ -611,7 +618,7 @@ play.prototype = {
 
 	/*
 	 * called when player collides with an alien
-	 * 
+	 *
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
 	collideWithAlien : function(astronaut, alien) {
