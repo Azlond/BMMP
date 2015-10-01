@@ -6,6 +6,8 @@ var carlaanimation4;
 var hectoranimation4;
 var patrickanimation4;
 
+var videoBackground;
+
 bonus.prototype = {
 
 	create : function() {
@@ -98,33 +100,7 @@ bonus.prototype = {
 			if (this.rocket.body.y <= -100) {
 
 				game.state.start('win');
-				/**
-				this.timer4 = game.time.create(false);
-				this.timer4.add(20000, function() {
-				o.endIntro(o)
-				}, this);
-				this.timer4.start();
 
-				videoBackground = game.add.sprite(1600, 8, 'startBackground');
-				switch (activeAstronaut) {
-					case 1 :
-						this.jenniferanimation4.add(videoBackground);
-						this.jenniferanimation4.play();
-					break;
-					case 2 :
-						this.patrickanimation4.add(videoBackground);
-						this.patrickanimation4.play();
-					break;
-					case 3 :
-						this.carlaanimation4.add(videoBackground);
-						this.carlaanimation4.play();
-					break;
-					case 4 :
-						this.hectoranimation4.add(videoBackground);
-						this.hectoranimation4.play();
-					break;
-				}
-				**/
 
 			}
 
@@ -140,14 +116,6 @@ bonus.prototype = {
 		}
 
 	},
-	
-	/**
-	endIntro : function() {
-
-		game.state.start('win');
-
-	},
-	**/
 
 	collision : function() {
 		if (this.game.time.now > this.collisionTimer) {
