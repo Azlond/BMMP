@@ -226,6 +226,8 @@ play.prototype = {
 
 		if (this.spaceKey.isDown && pauseMenuActive) {
 			
+			this.astronaut.body.velocity.x = 0;
+			this.alien.body.velocity.x = 0;
 			createPauseMenu();
 
 		}
@@ -530,6 +532,7 @@ play.prototype = {
 		this.timer3 = game.time.create(false);
 		this.timer3.add(20000, this.endLevel, this);
 		this.timer3.start();
+		pauseMenuActive = false;
 		if (this.levelNumber < this.finalLevel) {
 			switch (this.levelNumber) {
 			case 1:
@@ -566,6 +569,7 @@ play.prototype = {
 		videoBackground.kill();
 		this.levelNumber += 1;
 		this.loadLevel("");
+		pauseMenuActive = true;
 	},
 
 	/*
