@@ -22,6 +22,10 @@ Alien.prototype = Object.create(Phaser.Sprite.prototype);
 Alien.prototype.constructor = Alien;
 
 var aliens = {
+	"level1" : {
+		"amount" : 0,
+		"coordinates" : {}
+	},
 	"level2" : {
 		"amount" : 5,
 		"coordinates" : {
