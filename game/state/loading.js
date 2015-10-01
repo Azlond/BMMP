@@ -18,14 +18,31 @@ loading.prototype = {
 		});
 
 		/*
-		 * Intro
+		 * Videos
 		 */
 
 		game.load.video('intro', './assets/videos/Intro.mp4');
 		game.load.video('mission', './assets/videos/Mission.mp4');
-		game.load.video('animation1', './assets/videos/jennifer_animation1.mp4');
-		game.load.video('animation2', './assets/videos/jennifer_animation2.mp4');
-		game.load.video('animation3', './assets/videos/jennifer_animation3.mp4');
+
+		game.load.video('jenniferanimation1', './assets/videos/jennifer_animation1.mp4');
+		game.load.video('jenniferanimation2', './assets/videos/jennifer_animation2.mp4');
+		game.load.video('jenniferanimation3', './assets/videos/jennifer_animation3.mp4');
+		game.load.video('jenniferanimation4', './assets/videos/jennifer_animation4.mp4');
+
+		game.load.video('hectoranimation1', './assets/videos/hector_animation1.mp4');
+		game.load.video('hectoranimation2', './assets/videos/hector_animation2.mp4');
+		game.load.video('hectoranimation3', './assets/videos/hector_animation3.mp4');
+		game.load.video('hectoranimation4', './assets/videos/hector_animation4.mp4');
+	
+		game.load.video('carlaanimation1', './assets/videos/carla_animation1.mp4');
+		game.load.video('carlaanimation2', './assets/videos/carla_animation2.mp4');
+		game.load.video('carlaanimation3', './assets/videos/carla_animation3.mp4');
+		game.load.video('carlaanimation4', './assets/videos/carla_animation4.mp4');
+
+		game.load.video('patrickanimation1', './assets/videos/patrick_animation1.mp4');
+		game.load.video('patrickanimation2', './assets/videos/patrick_animation2.mp4');
+		game.load.video('patrickanimation3', './assets/videos/patrick_animation3.mp4');
+		game.load.video('patrickanimation4', './assets/videos/patrick_animation4.mp4');
 
 		/* Menu-state images */
 
