@@ -49,7 +49,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 4;// first level
+		this.levelNumber = 1;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -249,7 +249,7 @@ play.prototype = {
 					{ 			this.timer.resume(); 		}  	},
 		/*if (this.spaceKey.isDown) {
 			if (pauseMenuActive) {
-				isPaused = true;
+				isPaused = true;	
 				this.astronaut.body.velocity.x = 0;
 				this.alien.body.velocity.x = 0;
 				createPauseMenu();
@@ -421,7 +421,7 @@ play.prototype = {
 		/*
 		 * adds the character
 		 */
-		this.astronaut = new Astronaut(this.game, 4000, 440);
+		this.astronaut = new Astronaut(this.game, 100, 440);
 		this.game.add.existing(this.astronaut);
 		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 26, true);
 		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ], 26, true);
@@ -436,7 +436,8 @@ play.prototype = {
 			fill : '#ffffff'
 		});
 		
-		this.scoreElement = game.add.image (6, 18, 'elementScore');	
+		this.scoreElement = game.add.image (9, 10, 'elementScore');	
+		this.scoreElement.fixedToCamera = true;
 		this.scoreText.fixedToCamera = true;
 
 		/*
@@ -637,7 +638,7 @@ play.prototype = {
 		}
 		oxygenCounter = 9;
 		oxygenTank.kill();
-		oxygenTank = game.add.sprite(750, 63, 'tank');
+		oxygenTank = game.add.sprite(750, 510, 'tank');
 		oxygenTank.frame = oxygenCounter;
 		oxygenTank.fixedToCamera = true;
 		--oxygenCounter;
