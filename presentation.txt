@@ -1,0 +1,87 @@
+//Entwicklungsideen:
+
+1. Astronaut auf Planeten
+2. Puzzlespliel einbauen (Zeit zu wenig)
+3. Jump'n'Run
+
+//Grundlegende Idee/ Ansätze:
+
+Jump'n'Run, Platformer, Gegenstände einsammeln um nächstes Level zu erreichen, Timer, Score
+
+
+//Verwendete Technologien:
+
+- Phaser
+- Photoshop/ Illustrator/ After Effects
+- Programmiersprachen: HTML5, Javascript, CSS3
+
+
+//Spielidee Ideen:
+
+Story:  Erde hat wichtige Ressourcen verloren durch Umweltkatastrophe
+        auf anderen Planeten müssen nun diese Rohstoffe wieder zurückgebracht werden um diese auf
+        der Erde wieder "anzubauen".
+
+        - Sauerstoff wird zum Überleben des Levels benötigt (Timer) - Flaschen können eingesammelt werden
+        - Raumschiff muss für jedes Level repariert werden mit Tools - diese müssen eingesammelt werden (3 Stück)
+        - Aliens und Schluchten als Hindernisse
+        - Proben (Ressourcen) werden eingesammel um den Score zu definieren
+
+        - Tutorial
+        - Level 2
+        - Level 3
+        - Level 4
+        - Bonuslevel
+
+man verliert ein Leben:
+  - man das Alien berührt
+  - eine Spalte runter fällt
+  - Sauerstofftank aus geht
+
+Sauerstoff verliert man durch Timer
+Anzahl der Leben: 3
+Eine Flasche Sauerstoff füllt den Tank komplett wieder auf
+
+Beginn am Levelanfang, wenn:
+  - man durch eine Spalte gefallen ist
+  - Sauerstoff ausgeht
+
+Game Over:
+  alle Leben verloren
+
+
+//Schwierigkeiten/ Erfolge bei der Entwicklung
+
+- prototype/ this.
+- Spiel ist zu schwierig
+- Leichtsinnsfehler
+- Phaserdoc. ohne Beispiele/ spärlich
+- Browserkompatibilität
+
++ die Kamera zeigt das Menü an
++ Lerneffekt
++ states haben die Entwicklung erleichtert
++ Angenehme Engine
+
+
+//Anwendung der verschiedenen XP-Techniken
+
+- schnelle Reaktion auf Bugs
+
+
+//Bugs
+
+- Alien konnte Punkte sammeln
+- Astronaut konnte fliegen während dem Pausemenü
+- Kamera war nicht richtig positioniert
+- Astronaut fliegt von Mond zu Mond
+
+//Eigene Einschätzung
+
+// Sonstige Ideen:
+
+- Weiterflug mit der Rackete: kleine Puzzelspiele müssen gelöst werden
+- Astronaut wird jedes Mal mehr fertig aussehen
+- Bonuslevel als Zwischenlevel zwischen den Planeten --> muss repariert werden
+  wegen den Kometen
+- Zugriff auf Webcam um eigenen Spieler zu erstellen (bzw. beim Gamewon Bildschirm)
