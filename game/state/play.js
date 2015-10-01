@@ -288,8 +288,6 @@ play.prototype = {
 	 */
 	loadLevel : function(string) {
 
-		console.log(activeAstronaut);
-		
 		/*
 		 * reset values
 		 */
