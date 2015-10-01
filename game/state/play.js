@@ -73,7 +73,7 @@ play.prototype = {
 
 		loseLifeSound = game.add.audio('loseLife');
 		collectElementSound = game.add.audio('collectElement');
-	
+
 		collectToolSound = game.add.audio('collectTool');
 		collectOxygenSound = game.add.audio('collectOxygen');
 		completeLevelSound = game.add.audio('completeLevel');
@@ -131,9 +131,9 @@ play.prototype = {
 
 		/*
 		 * Moving the player
-		 * 
+		 *
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 * 
+		 *
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
 		if (isPaused == false) {
@@ -177,7 +177,7 @@ play.prototype = {
 
 			/*
 			 * check if the player has fallen into a rift
-			 * 
+			 *
 			 * if the player has more than 0 lives left, restart the level
 			 */
 			if (this.astronaut.body.y > 600 && !this.fallen) {
@@ -266,23 +266,22 @@ play.prototype = {
 			}
 		}
 
-		if (this.spaceKey.isDown) {  			
+		if (this.spaceKey.isDown) {
 			if (pauseMenuActive) {
-				isPaused = true; 			
-				createPauseMenu(this); 			
-				console.log(isPaused); 
+				isPaused = true;
+				createPauseMenu(this);
+				console.log(isPaused);
 			} else if (videoOn) {
 				this.endLevel(this);
-			} 
+			}
 		}
-			
-			  		
-		if(isPaused == true) { 			
-			this.timer.pause(); 		
-		} else if (isPaused == false) { 			
+
+		if (isPaused == true) {
+			this.timer.pause();
+		} else if (isPaused == false) {
 			this.timer.resume();
 		}
-		
+
 	},
 
 	/*
@@ -304,15 +303,15 @@ play.prototype = {
 			this.noscrewdriver.kill();
 			alienGroup.destroy();
 		}
-		
+
 		if (videoOn) {
 			videoOn = false;
 		}
-		
+
 		this.timer4 = game.time.create(false);
 		this.timer4.add(300, this.startPauseMenu, this);
 		this.timer4.start();
-		
+
 		if (musicOn == 1) {
 			sound.play('', 0, 1, true);
 		}
@@ -399,9 +398,9 @@ play.prototype = {
 
 		/*
 		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
-		 * 
+		 *
 		 * rocket needs to be immovable until player is inside so that it can't be kicked around
-		 * 
+		 *
 		 * no gravity to make departure cleaner
 		 */
 		switch (this.levelNumber) {
@@ -464,8 +463,8 @@ play.prototype = {
 			font : '30px Raleway',
 			fill : '#ffffff'
 		});
-		
-		this.scoreElement = game.add.image (9, 10, 'elementScore');	
+
+		this.scoreElement = game.add.image(9, 10, 'elementScore');
 		this.scoreElement.fixedToCamera = true;
 		this.scoreText.fixedToCamera = true;
 
@@ -547,12 +546,11 @@ play.prototype = {
 
 	/*
 	 * called when the player collides with the rocket
-	 * 
+	 *
 	 * checks if all tools have been collected
-	 * 
+	 *
 	 */
 	hitFinish : function(astronaut, finish) {
-
 
 		if (this.toolsCollected == 3) {
 			this.astronaut.kill();
@@ -565,7 +563,6 @@ play.prototype = {
 			this.rocket.animations.play('full');
 			score += 50;
 			this.scoreText.text = score;
-
 
 			switch (this.levelNumber) {
 			case 2:
@@ -613,23 +610,23 @@ play.prototype = {
 		if (this.levelNumber < this.finalLevel) {
 			switch (this.levelNumber) {
 			case 1:
-						videoBackground = game.add.sprite(1600, 8, 'startBackground');
+				videoBackground = game.add.sprite(1600, 8, 'startBackground');
 				switch (activeAstronaut) {
-					case 1 :
-						jenniferanimation1.add(videoBackground);
-						jenniferanimation1.play();
+				case 1:
+					jenniferanimation1.add(videoBackground);
+					jenniferanimation1.play();
 					break;
-					case 2 :
-						patrickanimation1.add(videoBackground);
-						patrickanimation1.play();
+				case 2:
+					patrickanimation1.add(videoBackground);
+					patrickanimation1.play();
 					break;
-					case 3 :
-						carlaanimation1.add(videoBackground);
-						carlaanimation1.play();
+				case 3:
+					carlaanimation1.add(videoBackground);
+					carlaanimation1.play();
 					break;
-					case 4 :
-						hectoranimation1.add(videoBackground);
-						hectoranimation1.play();
+				case 4:
+					hectoranimation1.add(videoBackground);
+					hectoranimation1.play();
 					break;
 				}
 				break;
@@ -637,21 +634,21 @@ play.prototype = {
 			case 2:
 				videoBackground = game.add.sprite(4000, 8, 'startBackground');
 				switch (activeAstronaut) {
-					case 1 :
-						jenniferanimation2.add(videoBackground);
-						jenniferanimation2.play();
+				case 1:
+					jenniferanimation2.add(videoBackground);
+					jenniferanimation2.play();
 					break;
-					case 2 :
-						patrickanimation2.add(videoBackground);
-						patrickanimation2.play();
+				case 2:
+					patrickanimation2.add(videoBackground);
+					patrickanimation2.play();
 					break;
-					case 3 :
-						carlaanimation2.add(videoBackground);
-						carlaanimation2.play();
+				case 3:
+					carlaanimation2.add(videoBackground);
+					carlaanimation2.play();
 					break;
-					case 4 :
-						hectoranimation2.add(videoBackground);
-						hectoranimation2.play();
+				case 4:
+					hectoranimation2.add(videoBackground);
+					hectoranimation2.play();
 					break;
 				}
 				break;
@@ -659,21 +656,21 @@ play.prototype = {
 			case 3:
 				videoBackground = game.add.sprite(4000, 8, 'startBackground');
 				switch (activeAstronaut) {
-					case 1 :
-						jenniferanimation3.add(videoBackground);
-						jenniferanimation3.play();
+				case 1:
+					jenniferanimation3.add(videoBackground);
+					jenniferanimation3.play();
 					break;
-					case 2 :
-						patrickanimation3.add(videoBackground);
-						patrickanimation3.play();
+				case 2:
+					patrickanimation3.add(videoBackground);
+					patrickanimation3.play();
 					break;
-					case 3 :
-						carlaanimation3.add(videoBackground);
-						carlaanimation3.play();
+				case 3:
+					carlaanimation3.add(videoBackground);
+					carlaanimation3.play();
 					break;
-					case 4 :
-						hectoranimation3.add(videoBackground);
-						hectoranimation3.play();
+				case 4:
+					hectoranimation3.add(videoBackground);
+					hectoranimation3.play();
 					break;
 				}
 				break;
@@ -689,28 +686,57 @@ play.prototype = {
 	endLevel : function(o) {
 		this.timer3.stop();
 		switch (this.levelNumber) {
-			case 1:videoBackground.kill(); 
-				switch (activeAstronaut) {
-						case 1 : jenniferanimation1.stop(); break;
-						case 2 : patrickanimation1.stop(); break;
-						case 3 : carlaanimation1.stop(); break;
-						case 4 : hectoranimation1.stop(); break;
-				} break;
+		case 1:
+			videoBackground.kill();
+			switch (activeAstronaut) {
+			case 1:
+				jenniferanimation1.stop();
+				break;
+			case 2:
+				patrickanimation1.stop();
+				break;
+			case 3:
+				carlaanimation1.stop();
+				break;
+			case 4:
+				hectoranimation1.stop();
+				break;
+			}
+			break;
 
-			case 2: videoBackground.kill();
-				switch (activeAstronaut) {
-					case 1 : jenniferanimation2.stop(); break;
-					case 2 : patrickanimation2.stop(); break;
-					case 3 :carlaanimation2.stop(); break;
-					case 4 : hectoranimation2.stop(); break;
-				} break;
-				
-			case 3: videoBackground.kill();
-				switch (activeAstronaut) {
-					case 1 : jenniferanimation2.destroy(); break;
-					case 2 : patrickanimation2.destroy(); break;
-					case 3 : carlaanimation2.destroy(); break;
-					case 4 : hectoranimation2.destroy(); break;
+		case 2:
+			videoBackground.kill();
+			switch (activeAstronaut) {
+			case 1:
+				jenniferanimation2.stop();
+				break;
+			case 2:
+				patrickanimation2.stop();
+				break;
+			case 3:
+				carlaanimation2.stop();
+				break;
+			case 4:
+				hectoranimation2.stop();
+				break;
+			}
+			break;
+
+		case 3:
+			videoBackground.kill();
+			switch (activeAstronaut) {
+			case 1:
+				jenniferanimation2.destroy();
+				break;
+			case 2:
+				patrickanimation2.destroy();
+				break;
+			case 3:
+				carlaanimation2.destroy();
+				break;
+			case 4:
+				hectoranimation2.destroy();
+				break;
 			}
 			break;
 		}
@@ -721,7 +747,7 @@ play.prototype = {
 
 	/*
 	 * called when player collides with an alien
-	 * 
+	 *
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
 	collideWithAlien : function(astronaut, alien) {
@@ -792,7 +818,14 @@ play.prototype = {
 	},
 
 	timeDown : function() {
-		var countdown = 3000;
+		switch (this.levelNumber) {
+		case 1:
+			var countdown = 5000;
+			break;
+		default:
+			var countdown = 3000;
+			break;
+		}
 		this.timer = game.time.create(false);
 		this.timer.loop(countdown, this.changeDisplay, this);
 		this.timer.start();
@@ -819,10 +852,10 @@ play.prototype = {
 			this.timer.stop();
 		}
 	},
-	startPauseMenu : function () {
+	startPauseMenu : function() {
 		pauseMenuActive = true;
 		this.timer4.stop();
-		
+
 	}
 };
 
