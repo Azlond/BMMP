@@ -395,8 +395,8 @@ play.prototype = {
 
 		score = oldScore;// update the score
 
-		this.scoreText = game.add.text(0, 15, 'Score: ' + score, {
-			font : '30px Courier',
+		this.scoreText = game.add.text(6, 15, 'score: ' + score, {
+			font : '25px Raleway',
 			fill : '#ffffff'
 		});
 		this.scoreText.fixedToCamera = true;

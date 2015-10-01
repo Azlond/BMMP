@@ -13,7 +13,7 @@ loading.prototype = {
 		 */
 
 		var loadingLabel = game.add.text(80, 150, 'loading...', {
-			font : '30px Courier',
+			font : '30px Raleway',
 			fill : '#ffffff'
 		});
 
