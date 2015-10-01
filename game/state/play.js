@@ -689,7 +689,7 @@ play.prototype = {
 	},
 
 	timeDown : function() {
-		var countdown = 30000;
+		var countdown = 3000;
 		this.timer = game.time.create(false);
 		this.timer.loop(countdown, this.changeDisplay, this);
 		this.timer.start();
