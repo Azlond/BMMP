@@ -17,13 +17,17 @@ var alienGroup;
 var oxygenGroup;
 
 // sounds
+/*
 var loseLifeSound;
 var collectToolSound;
 var collectOxygenSound;
 var completeLevelSound;
 var collideWithAlienSound;
 var animation1;
+var animation2;
+var animation3;
 var videoBackground;
+*/
 
 var restartButton;
 var quitButton;

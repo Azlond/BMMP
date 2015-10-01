@@ -51,16 +51,16 @@ menu.prototype = {
 
 		/* characterauswahl */
 
-		player1 = game.add.button(-306, -130, 'player1', highlightButton, this, 1, 0);
+		player1 = game.add.button(-306, -130, 'player1',   function() {highlightButton(1)} , this, 1, 0);
 		background.addChild(player1);
 
-		player2 = game.add.button(-153, -130, 'player2', highlightButton, this, 1, 0);
+		player2 = game.add.button(-153, -130, 'player2', function() {highlightButton(2)}, this, 1, 0);
 		background.addChild(player2);
 
-		player3 = game.add.button(0, -130, 'player3', highlightButton, this, 1,0);
+		player3 = game.add.button(0, -130, 'player3', function() {highlightButton(3)}, this, 1,0);
 		background.addChild(player3);
 
-		player4 = game.add.button(153, -130, 'player4', highlightButton, this, 1, 0);
+		player4 = game.add.button(153, -130, 'player4', function() {highlightButton(4)}, this, 1, 0);
 		background.addChild(player4);
 
 		/* buttons */
@@ -267,16 +267,16 @@ function resetScore() {
 function closeWindow() {
 	popup.kill();
 
-	player1 = game.add.button(-306, -130, 'player1', highlightButton, this, 1, 0);
+	player1 = game.add.button(-306, -130, 'player1',   function() {highlightButton(1)} , this, 1, 0);
 	background.addChild(player1);
 
-	player2 = game.add.button(-153, -130, 'player2', highlightButton, this, 1, 0);
+	player2 = game.add.button(-153, -130, 'player2', function() {highlightButton(2)}, this, 1, 0);
 	background.addChild(player2);
 
-	player3 = game.add.button(0, -130, 'player3', highlightButton, this, 1,0);
+	player3 = game.add.button(0, -130, 'player3', function() {highlightButton(3)}, this, 1,0);
 	background.addChild(player3);
 
-	player4 = game.add.button(153, -130, 'player4', highlightButton, this, 1, 0);
+	player4 = game.add.button(153, -130, 'player4', function() {highlightButton(4)}, this, 1, 0);
 	background.addChild(player4);
 
 	/* buttons */
@@ -297,14 +297,46 @@ function closeWindow() {
 }
 
 function highlightButton(player) {
-	/*
-	 * switch (player) { case 1: player1.kill(); player1 = game.add.sprite(-314, -120, 'player1'); player1.frame = 0; background.addChild(player1);
-	 * activeAstronaut = 1; break; case 2: player2.kill(); player2 = game.add.sprite(-314, -120, 'player2'); player2.frame = 0; background.addChild(player2);
-	 * activeAstronaut = 2; break; case 3: player3.kill(); player3 = game.add.sprite(-314, -120, 'player1'); player3.frame = 0; background.addChild(player3);
-	 * activeAstronaut = 3; break; case 4: player4.kill(); player4 = game.add.sprite(-314, -120, 'player1'); player4.frame = 0; background.addChild(player4);
-	 * activeAstronaut = 4; break; default: break; }
-	 * 
-	 */
+	
+	if (activeAstronaut != null) {
+		switch (activeAstronaut) {
+			case 1: player1.kill(); player1 = game.add.button(-306, -130, 'player1',   function() {highlightButton(1)} , this, 1, 0);
+	background.addChild(player1);break;
+			case 2: player2.kill(); player2 = game.add.button(-153, -130, 'player2', function() {highlightButton(2)}, this, 1, 0);
+	background.addChild(player2);break;
+			case 3: player3.kill(); player3 = game.add.button(0, -130, 'player3', function() {highlightButton(3)}, this, 1,0);
+	background.addChild(player3);break;
+			case 4: player4.kill(); player4 = game.add.button(153, -130, 'player4', function() {highlightButton(4)}, this, 1, 0);
+	background.addChild(player4);break;
+		}
+		
+	}
+	
+	switch (player) {
+		case 1: player1 = game.add.sprite(-306, -130, 'player1'); 
+				player1.frame = 1;
+				background.addChild(player1);
+				activeAstronaut = 1;
+				break; 
+		case 2:	player2 = game.add.sprite(-153, -130, 'player2');
+				player2.frame = 1; 
+				background.addChild(player2);
+				activeAstronaut = 2; 
+				break; 
+		case 3:	player3 = game.add.sprite(0, -130, 'player3'); 
+				player3.frame = 1; 
+				background.addChild(player3);
+				activeAstronaut = 3; 
+				break; 
+		case 4: player4 = game.add.sprite(153, -130, 'player4'); 
+				player4.frame = 1; 
+				background.addChild(player4);
+				activeAstronaut = 4; 
+				break; 
+		default: break; 
+	}
+
+	
 }
 
 var button = function(game, x, y, frame, option, keyName) {
