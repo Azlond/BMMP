@@ -82,10 +82,17 @@ menu.prototype = {
 		scoreButton = game.add.button(-316, 188, 'scoreButton', scoreOption, this, 1, 0);
 		background.addChild(scoreButton);
 
-		playerName = game.add.text(370, 139, "", {
-			font : '30px Courier',
-			fill : '#ffffff'
-		});
+		if (playerName == null) {
+			playerName = game.add.text(370, 139, "", {
+				font : '30px Courier',
+				fill : '#ffffff'
+			});
+		} else {
+			playerName = game.add.text(370, 139, playerName.text, {
+				font : '30px Courier',
+				fill : '#ffffff'
+			});
+		}
 
 		game.input.keyboard.onUpCallback = function(e) {
 			if (playerRegEx.test(e.keyCode)) {
