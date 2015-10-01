@@ -23,10 +23,9 @@ loading.prototype = {
 
 		game.load.video('intro', './assets/videos/Intro.mp4');
 		game.load.video('mission', './assets/videos/Mission.mp4');
-		game.load.video ('animation1', './assets/videos/animation1.mp4');
-		game.load.video ('animation2', './assets/videos/animation2.mp4');
-		game.load.video ('animation3', './assets/videos/animation3.mp4');
-		
+		game.load.video('animation1', './assets/videos/animation1.mp4');
+		game.load.video('animation2', './assets/videos/animation2.mp4');
+		game.load.video('animation3', './assets/videos/animation3.mp4');
 
 		/* Menu-state images */
 
@@ -53,9 +52,6 @@ loading.prototype = {
 		game.load.spritesheet('player2', './assets/menu/startMenu/player2Sprite.png', 153, 278, 2);
 		game.load.spritesheet('player3', './assets/menu/startMenu/player3Sprite.png', 153, 278, 2);
 		game.load.spritesheet('player4', './assets/menu/startMenu/player4Sprite.png', 153, 278, 2);
-		
-		//game.load.image('player3', './assets/menu/startMenu/player3.png');
-		//game.load.image('player4', './assets/menu/startMenu/player4.png');
 
 		// audio
 
@@ -65,7 +61,7 @@ loading.prototype = {
 		game.load.audio('collectOxygen', './assets/audio/collectOxygenSound.wav');
 		game.load.audio('completeLevel', './assets/audio/completeLevelSound.wav');
 		game.load.audio('collideWithAlien', './assets/audio/collideWithAlienSound.wav');
-		//game.load.audio('buttonSound', './assets/audio/menuSelection.wav');
+		// game.load.audio('buttonSound', './assets/audio/menuSelection.wav');
 
 		/*
 		 * backgrounds - three layers for each level
@@ -85,7 +81,7 @@ loading.prototype = {
 		game.load.image('level4background3', './assets/Level4/Level4_Ebene3.png');
 		game.load.image('level4background2', './assets/Level4/Level4_Ebene2.png');
 		game.load.image('level4background1', './assets/Level4/Level4_Ebene1.png');
-		
+
 		game.load.image('bonusLevelBackground', './assets/darkstars.png');
 
 		/*
@@ -106,7 +102,7 @@ loading.prototype = {
 		game.load.tilemap('level4', './assets/Tilemap/level4_tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('level4_tilemap', './assets/Tilemap/level4_tilemap.png');
 		game.load.image('level4_tilemap_ground', './assets/Tilemap/level4_tilemap_ground.png');
-		
+
 		game.load.tilemap('bonusLevel', './assets/Tilemap/bonus_level.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('bonusLevel_tilemap', './assets/Tilemap/level2_tilemap.png');
 		game.load.image('bonusLevel_tilemap_finish', './assets/Tilemap/bonusLevel_tilemap_finish.png');

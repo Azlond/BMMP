@@ -11,7 +11,6 @@ var oldScore;// the score at the beginning of a level - needed for restarting a 
 var lifeCounter; // the amount of lives the player has
 var oxygenCounter;
 var pathCounter = 0;
-// var timer;
 var life;
 var alienGroup;
 var oxygenGroup;
