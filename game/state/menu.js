@@ -267,16 +267,16 @@ function resetScore() {
 function closeWindow() {
 	popup.kill();
 
-	player1 = game.add.button(-314, -120, 'player1', highlightButton(1), this, 0);
+	player1 = game.add.button(-306, -130, 'player1', highlightButton, this, 1, 0);
 	background.addChild(player1);
 
-	player2 = game.add.button(-157, -120, 'player2', highlightButton(2), this, 0);
+	player2 = game.add.button(-153, -130, 'player2', highlightButton, this, 1, 0);
 	background.addChild(player2);
 
-	player3 = game.add.button(20, -120, 'player3', highlightButton(3), this, 0);
+	player3 = game.add.button(0, -130, 'player3', highlightButton, this, 1,0);
 	background.addChild(player3);
 
-	player4 = game.add.button(177, -120, 'player4', highlightButton(4), this, 0);
+	player4 = game.add.button(153, -130, 'player4', highlightButton, this, 1, 0);
 	background.addChild(player4);
 
 	/* buttons */
