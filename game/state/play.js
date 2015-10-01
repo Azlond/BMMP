@@ -243,15 +243,9 @@ play.prototype = {
 
 		if (this.spaceKey.isDown && pauseMenuActive) {
 
-<<<<<<< Updated upstream
-			this.astronaut.body.velocity.x = 0;
-			this.alien.body.velocity.x = 0;
-			createPauseMenu();
-=======
 			isPaused = true;
 			createPauseMenu(this);
 			console.log(isPaused);
->>>>>>> Stashed changes
 
 		}
 
@@ -707,11 +701,6 @@ play.prototype = {
 	}
 };
 
-<<<<<<< Updated upstream
-function createPauseMenu() {
-
-	pauseMenuActive = false;
-=======
 function readLocal() {
 	// localStorage.clear();
 	// get the highscores object
@@ -750,8 +739,7 @@ function sortHighScore(highScoreList) {
 function createPauseMenu(o) {
 
 	isPaused = true;
-	pauseMenuActive = false;			
->>>>>>> Stashed changes
+	pauseMenuActive = false;
 
 	pauseMenu = game.add.sprite(400, 300, 'pauseBackground');
 	pauseMenu.alpha = 1.0;
