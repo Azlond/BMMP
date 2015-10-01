@@ -131,9 +131,9 @@ play.prototype = {
 
 		/*
 		 * Moving the player
-		 * 
+		 *
 		 * from http://phaser.io/examples/v2/arcade-physics/platformer-tight
-		 * 
+		 *
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
 		if (isPaused == false) {
@@ -177,7 +177,7 @@ play.prototype = {
 
 			/*
 			 * check if the player has fallen into a rift
-			 * 
+			 *
 			 * if the player has more than 0 lives left, restart the level
 			 */
 			if (this.astronaut.body.y > 600 && !this.fallen) {
@@ -398,9 +398,9 @@ play.prototype = {
 
 		/*
 		 * adds the rocket switch-case needed because level 1 is only half as long as the other levels
-		 * 
+		 *
 		 * rocket needs to be immovable until player is inside so that it can't be kicked around
-		 * 
+		 *
 		 * no gravity to make departure cleaner
 		 */
 		switch (this.levelNumber) {
@@ -546,9 +546,9 @@ play.prototype = {
 
 	/*
 	 * called when the player collides with the rocket
-	 * 
+	 *
 	 * checks if all tools have been collected
-	 * 
+	 *
 	 */
 	hitFinish : function(astronaut, finish) {
 
@@ -684,7 +684,7 @@ play.prototype = {
 	},
 
 	endLevel : function(o) {
-
+		this.timer3.stop();
 		switch (this.levelNumber) {
 		case 1:
 			videoBackground.kill();
@@ -747,7 +747,7 @@ play.prototype = {
 
 	/*
 	 * called when player collides with an alien
-	 * 
+	 *
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
 	collideWithAlien : function(astronaut, alien) {
