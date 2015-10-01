@@ -49,7 +49,7 @@ play.prototype = {
 		score = 0;
 		lifeCounter = 3;
 
-		this.levelNumber = 1;// first level
+		this.levelNumber = 2;// first level
 		this.finalLevel = 4;// last level
 
 		// Keyboard controls
@@ -69,7 +69,6 @@ play.prototype = {
 		animation1 = game.add.video('animation1');
 		animation2 = game.add.video('animation2');
 		animation3 = game.add.video('animation3');
-
 
 	},
 
@@ -109,136 +108,134 @@ play.prototype = {
 		 * 
 		 * the second condition is needed to make the backgrounds stop moving once the player is inside the rocket
 		 */
-		if(isPaused == false) {
+		if (isPaused == false) {
 
-		if (cursors.left.isDown && this.rocket.body.y == 69) {
-			this.astronaut.body.velocity.x = -175;
-			if (this.astronaut.body.onFloor()) {
-				this.astronaut.animations.play('walk', 6, true);
+			if (cursors.left.isDown && this.rocket.body.y == 69) {
+				this.astronaut.body.velocity.x = -175;
+				if (this.astronaut.body.onFloor()) {
+					this.astronaut.animations.play('walk', 6, true);
+				}
+				this.astronaut.scale.x = -1;
+				if (this.astronaut.body.x > 50) {
+					this.background2.x += 0.25;
+					this.background1.x += 0.3;
+				}
+			} else if (cursors.right.isDown && this.rocket.body.y == 69) {
+				this.astronaut.body.velocity.x = 175;
+				this.astronaut.scale.x = 1;
+				if (this.astronaut.body.onFloor()) {
+					this.astronaut.animations.play('walk', 6, true);
+				}
+				if ((this.astronaut.body.x < 2200 && this.levelNumber == 1) || (this.astronaut.body.x < 4600 && this.levelNumber != 1)) {
+					this.background2.x -= 0.25;
+					this.background1.x -= 0.3;
+				}
+			} else {
+				this.astronaut.body.velocity.x = 0;
+				if (this.astronaut.body.onFloor()) {
+					this.astronaut.animations.play('stop', 6, true);
+				}
 			}
-			this.astronaut.scale.x = -1;
-			if (this.astronaut.body.x > 50) {
-				this.background2.x += 0.25;
-				this.background1.x += 0.3;
+
+			/*
+			 * Jumping
+			 */
+			if (cursors.up.isDown) {
+				this.astronaut.animations.play('jump', 12, true);
+				if (this.astronaut.body.onFloor()) {
+					this.astronaut.body.velocity.y = -700;
+				}
 			}
-		} else if (cursors.right.isDown && this.rocket.body.y == 69) {
-			this.astronaut.body.velocity.x = 175;
-			this.astronaut.scale.x = 1;
-			if (this.astronaut.body.onFloor()) {
-				this.astronaut.animations.play('walk', 6, true);
+
+			/*
+			 * check if the player has fallen into a rift
+			 * 
+			 * if the player has more than 0 lives left, restart the level
+			 */
+			if (this.astronaut.body.y > 600 && !this.fallen) {
+				lifeCounter--;
+				if (soundIsOn == 1) {
+					loseLifeSound.play();
+				}
+				showLife(lifeCounter);
+				this.fallen = true;
+				if (lifeCounter != 0) {
+					this.loadLevel("restart");
+				}
 			}
-			if ((this.astronaut.body.x < 2200 && this.levelNumber == 1) || (this.astronaut.body.x < 4600 && this.levelNumber != 1)) {
-				this.background2.x -= 0.25;
-				this.background1.x -= 0.3;
+
+			/*
+			 * check if the player is dead
+			 */
+			if (lifeCounter == 0) {
+				this.game.state.start('gameOver', true, false);
 			}
-		} else {
-			this.astronaut.body.velocity.x = 0;
-			if (this.astronaut.body.onFloor()) {
-				this.astronaut.animations.play('stop', 6, true);
-			}
+
 		}
-
-		/*
-		 * Jumping
-		 */
-		if (cursors.up.isDown) {
-			this.astronaut.animations.play('jump', 12, true);
-			if (this.astronaut.body.onFloor()) {
-				this.astronaut.body.velocity.y = -700;
-			}
-		}
-
-		/*
-		 * check if the player has fallen into a rift
-		 * 
-		 * if the player has more than 0 lives left, restart the level
-		 */
-		if (this.astronaut.body.y > 600 && !this.fallen) {
-			lifeCounter--;
-			if (soundIsOn == 1) {
-				loseLifeSound.play();
-			}
-			showLife(lifeCounter);
-			this.fallen = true;
-			if (lifeCounter != 0) {
-				this.loadLevel("restart");
-			}
-		}
-
-		/*
-		 * check if the player is dead
-		 */
-		if (lifeCounter == 0) {
-			this.game.state.start('gameOver', true, false);
-		}
-
-		}
-
-		/*
-		 * check if the rocket has left the camera fov
-		 * 
-		 * if (this.rocket.body.y <= -420) { this.rocketGone = true; } /* rocket has left camera fov, either load the next level or display win message
-		 * 
-		 * if (this.rocketGone) { if (this.levelNumber == this.finalLevel) { game.state.start('bonus'); } else { this.levelNumber += 1; this.loadLevel(""); } }
-		 */
 
 		/*
 		 * alien movement and interaction
 		 */
 
-		if(isPaused) {
-		
+		if (isPaused) {
+
 			for (i = 0; i < alienGroup.children.length; i++) {
 				var enemy = alienGroup.children[i];
 				enemy.body.velocity.x = 0;
+				if (isPaused == true) {
+					enemy.animations.play('stop');
+				}
 			}
 		} else {
-		for (i = 0; i < alienGroup.children.length; i++) {
-			var enemy = alienGroup.children[i];
-			if (enemy.pathCounter >= 0) {
-				enemy.pathCounter++;
-			}
-			if (enemy.scale.x == 1) {
-				enemy.body.velocity.x = 50;
-			} else {
-				enemy.body.velocity.x = -50;
-			}
+			for (i = 0; i < alienGroup.children.length; i++) {
+				var enemy = alienGroup.children[i];
+				if (enemy.pathCounter >= 0) {
+					enemy.pathCounter++;
+				}
 
-			if (enemy.pathCounter >= enemy.distance) {
-				enemy.pathCounter = 0;
-				enemy.scale.x = -enemy.scale.x;		
-			}
+				enemy.animations.play('walk');
 
-			// enemy facing right,the astronaut is within walking distance of the alien and the alien is facing the wrong direction
-			if ((enemy.scale.x == 1)
-					&& ((this.astronaut.body.x > (enemy.body.x - enemy.pathCounter)) && (this.astronaut.body.x < (enemy.body.x + (enemy.distance - enemy.pathCounter))))
-					&& (this.astronaut.body.x < enemy.body.x)) {
+				if (enemy.scale.x == 1) {
+					enemy.body.velocity.x = 50;
+				} else {
+					enemy.body.velocity.x = -50;
+				}
 
-				if (!enemy.timerLSet) {
-					enemy.turnLTimer = game.time.now + 100;
-					enemy.timerLSet = true;
+				if (enemy.pathCounter >= enemy.distance) {
+					enemy.pathCounter = 0;
+					enemy.scale.x = -enemy.scale.x;
 				}
-				if (game.time.now > enemy.turnLTimer) {
-					enemy.scale.x = -enemy.scale.x
-					enemy.pathCounter = enemy.distance - enemy.pathCounter;
-					enemy.body.velocity.x = -enemy.body.velocity.x;
-					enemy.timerLSet = false;
-				}
-			} else if ((enemy.scale.x != 1)
-					&& ((this.astronaut.body.x > (enemy.body.x - (enemy.distance - enemy.pathCounter))) && (this.astronaut.body.x < (enemy.body.x + enemy.pathCounter)))
-					&& (this.astronaut.body.x > enemy.body.x)) {
-				if (!enemy.timerRSet) {
-					enemy.turnRTimer = game.time.now + 100;
-					enemy.timerRSet = true;
-				}
-				if (game.time.now > enemy.turnRTimer) {
-					enemy.scale.x = -enemy.scale.x
-					enemy.pathCounter = enemy.distance - enemy.pathCounter;
-					enemy.body.velocity.x = -enemy.body.velocity.x;
-					enemy.timerRSet = false;
+
+				// enemy facing right,the astronaut is within walking distance of the alien and the alien is facing the wrong direction
+				if ((enemy.scale.x == 1)
+						&& ((this.astronaut.body.x > (enemy.body.x - enemy.pathCounter)) && (this.astronaut.body.x < (enemy.body.x + (enemy.distance - enemy.pathCounter))))
+						&& (this.astronaut.body.x < enemy.body.x)) {
+
+					if (!enemy.timerLSet) {
+						enemy.turnLTimer = game.time.now + 100;
+						enemy.timerLSet = true;
+					}
+					if (game.time.now > enemy.turnLTimer) {
+						enemy.scale.x = -enemy.scale.x
+						enemy.pathCounter = enemy.distance - enemy.pathCounter;
+						enemy.body.velocity.x = -enemy.body.velocity.x;
+						enemy.timerLSet = false;
+					}
+				} else if ((enemy.scale.x != 1)
+						&& ((this.astronaut.body.x > (enemy.body.x - (enemy.distance - enemy.pathCounter))) && (this.astronaut.body.x < (enemy.body.x + enemy.pathCounter)))
+						&& (this.astronaut.body.x > enemy.body.x)) {
+					if (!enemy.timerRSet) {
+						enemy.turnRTimer = game.time.now + 100;
+						enemy.timerRSet = true;
+					}
+					if (game.time.now > enemy.turnRTimer) {
+						enemy.scale.x = -enemy.scale.x
+						enemy.pathCounter = enemy.distance - enemy.pathCounter;
+						enemy.body.velocity.x = -enemy.body.velocity.x;
+						enemy.timerRSet = false;
+					}
 				}
 			}
-		}
 		}
 
 		if (this.spaceKey.isDown && pauseMenuActive) {
@@ -249,7 +246,7 @@ play.prototype = {
 
 		}
 
-		if(isPaused == true) { 
+		if (isPaused == true) {
 			this.timer.pause();
 		} else if (isPaused == false) {
 			this.timer.resume();
@@ -448,12 +445,9 @@ play.prototype = {
 			this.alien = new Alien(this.game, alienCoordinates["alien" + i][0], alienCoordinates["alien" + i][1], alienCoordinates["alien" + i][2]);
 			this.game.add.existing(this.alien);
 			this.alien.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
+			this.alien.animations.add('stop', [ 0 ], 7, true);
 			this.alien.anchor.setTo(0.5, 0.5);
 			this.alien.animations.play('walk');
-			this.alien.animations.add('stop',[ 0 ], 7, true);
-			if(isPaused == true) {
-				this.alien.animations.play('stop');
-			}
 			alienGroup.add(this.alien);
 		}
 
@@ -702,7 +696,6 @@ play.prototype = {
 };
 
 function readLocal() {
-	// localStorage.clear();
 	// get the highscores object
 	var scores = localStorage.getItem("highScore");
 	scores = JSON.parse(scores);
@@ -752,7 +745,9 @@ function createPauseMenu(o) {
 	soundControl = new button(this.game, -20, -70, soundIsOn, changeSoundOnPauseMenu, 'controlSound');
 	pauseMenu.addChild(soundControl);
 
-	restartButton = this.game.add.button(-300, 180, 'restartButton', function() {restart(o)}, this, 1, 0);
+	restartButton = this.game.add.button(-300, 180, 'restartButton', function() {
+		restart(o)
+	}, this, 1, 0);
 	pauseMenu.addChild(this.restartButton);
 
 	continueButton = this.game.add.button(-50, 180, 'continueButton', continueGame, this, 1, 0);
@@ -819,4 +814,3 @@ function changeSoundOnPauseMenu() {
 		// sound.resume();
 	}
 }
-
