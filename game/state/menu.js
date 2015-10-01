@@ -31,7 +31,7 @@ var closeButton;
 var playerName;
 var playerRegEx = /8|6[5-9]|7[0-9]|8[0-9]|90/;
 var highScoreGroup;
-var activeAstronaut = 1;
+var activeAstronaut;
 var buttonSound;
 
 menu.prototype = {
@@ -90,7 +90,7 @@ menu.prototype = {
 function startIntro() {
 	var str = playerName.text;
 
-	if (!(str.length < 1)) {
+	if (!(str.length < 1) && activeAstronaut != null) {
 		introVideo = this.game.add.video('intro');
 		introVideo.play(true);
 		introVideo.loop = false;
