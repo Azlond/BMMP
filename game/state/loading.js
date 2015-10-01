@@ -146,7 +146,7 @@ loading.prototype = {
 		game.load.image('toolbar', './assets/toolbar.png');
 		game.load.spritesheet('lifeCounter', './assets/Status/livesSprite.png', 55, 40, 4);
 
-		game.load.spritesheet('tools', './assets/Tools/alles.png', 59, 38, 6);
+		game.load.spritesheet('tools', './assets/Tools/alles.png', 37, 39, 6);
 		game.load.image('gameOver', './assets/gameOver.jpg');
 		game.load.image('win', './assets/win.jpg');
 		game.load.spritesheet('alien', './assets/alien.png', 48, 48, 8);

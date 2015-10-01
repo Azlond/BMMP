@@ -367,15 +367,15 @@ play.prototype = {
 		/*
 		 * add tool-placeholder icons for topbar
 		 */
-		this.nopliers = new Tools(this.game, 690, 10, 1);
+		this.nopliers = new Tools(this.game, 690, 10, 0);
 		this.game.add.existing(this.nopliers);
 		this.nopliers.fixedToCamera = true;
 
-		this.nowrench = new Tools(this.game, 710, 10, 3);
+		this.nowrench = new Tools(this.game, 720, 10, 4);
 		this.game.add.existing(this.nowrench);
 		this.nowrench.fixedToCamera = true;
 
-		this.noscrewdriver = new Tools(this.game, 730, 10, 5);
+		this.noscrewdriver = new Tools(this.game, 755, 10, 2);
 		this.game.add.existing(this.noscrewdriver);
 		this.noscrewdriver.fixedToCamera = true;
 
@@ -383,17 +383,17 @@ play.prototype = {
 		 * add tools to the levels
 		 */
 		this.collectpliers = new Tools(this.game, toolLocations['level' + this.levelNumber + 'PliersX'], toolLocations['level' + this.levelNumber + 'PliersY'],
-				0);
+				1);
 		this.game.add.existing(this.collectpliers);
 		this.collectpliers.body.allowGravity = false;
 
 		this.collectwrench = new Tools(this.game, toolLocations['level' + this.levelNumber + 'WrenchX'], toolLocations['level' + this.levelNumber + 'WrenchY'],
-				2);
+				5);
 		this.game.add.existing(this.collectwrench);
 		this.collectwrench.body.allowGravity = false;
 
 		this.collectscrewdriver = new Tools(this.game, toolLocations['level' + this.levelNumber + 'ScrewX'], toolLocations['level' + this.levelNumber
-				+ 'ScrewY'], 4);
+				+ 'ScrewY'], 3);
 		this.game.add.existing(this.collectscrewdriver);
 		this.collectscrewdriver.body.allowGravity = false;
 
@@ -450,7 +450,7 @@ play.prototype = {
 		/*
 		 * adds the character
 		 */
-		this.astronaut = new Astronaut(this.game, 2000, 440);
+		this.astronaut = new Astronaut(this.game, 100, 440);
 		this.game.add.existing(this.astronaut);
 		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 26, true);
 		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ], 26, true);
@@ -553,7 +553,8 @@ play.prototype = {
 	 */
 	hitFinish : function(astronaut, finish) {
 
-		if (this.toolsCollected == 0) {
+
+		if (this.toolsCollected == 3) {
 			this.astronaut.kill();
 			this.timer.stop();
 			if (soundIsOn == 1) {
@@ -764,7 +765,7 @@ play.prototype = {
 			if (soundIsOn == 1) {
 				collectToolSound.play();
 			}
-			this.pliers = new Tools(this.game, 690, 10, 0);
+			this.pliers = new Tools(this.game, 690, 10, 1);
 			this.game.add.existing(this.pliers);
 			this.pliers.fixedToCamera = true;
 		}
@@ -773,7 +774,7 @@ play.prototype = {
 			if (soundIsOn == 1) {
 				collectToolSound.play();
 			}
-			this.screwdriver = new Tools(this.game, 740, 10, 4);
+			this.screwdriver = new Tools(this.game, 755, 10, 3);
 			this.game.add.existing(this.screwdriver);
 			this.screwdriver.fixedToCamera = true;
 		}
@@ -782,7 +783,7 @@ play.prototype = {
 			if (soundIsOn == 1) {
 				collectToolSound.play();
 			}
-			this.wrench = new Tools(this.game, 710, 10, 2);
+			this.wrench = new Tools(this.game, 720, 10, 5);
 			this.game.add.existing(this.wrench);
 			this.wrench.fixedToCamera = true;
 		}

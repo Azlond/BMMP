@@ -1,6 +1,11 @@
 function bonus() {
 }
 
+var jenniferanimation4;
+var carlaanimation4;
+var hectoranimation4;
+var patrickanimation4;
+
 bonus.prototype = {
 
 	create : function() {
@@ -28,6 +33,11 @@ bonus.prototype = {
 		this.rocket.animations.play('empty');
 		this.game.camera.follow(this.rocket);
 		this.rocket.body.bounce.set(1.0);
+
+		this.jenniferanimation4 = this.game.add.video('jenniferanimation4');
+		this.carlaanimation4 = this.game.add.video('carlaanimation4');
+		this.hectoranimation4 = this.game.add.video('hectoranimation4');
+		this.patrickanimation4 = this.game.add.video('patrickanimation4');
 
 		this.map = game.add.tilemap('bonusLevel');
 
@@ -86,7 +96,36 @@ bonus.prototype = {
 			}
 
 			if (this.rocket.body.y <= -100) {
-				this.game.state.start('win');
+
+				game.state.start('win');
+				/**
+				this.timer4 = game.time.create(false);
+				this.timer4.add(20000, function() {
+				o.endIntro(o)
+				}, this);
+				this.timer4.start();
+
+				videoBackground = game.add.sprite(1600, 8, 'startBackground');
+				switch (activeAstronaut) {
+					case 1 :
+						this.jenniferanimation4.add(videoBackground);
+						this.jenniferanimation4.play();
+					break;
+					case 2 :
+						this.patrickanimation4.add(videoBackground);
+						this.patrickanimation4.play();
+					break;
+					case 3 :
+						this.carlaanimation4.add(videoBackground);
+						this.carlaanimation4.play();
+					break;
+					case 4 :
+						this.hectoranimation4.add(videoBackground);
+						this.hectoranimation4.play();
+					break;
+				}
+				**/
+
 			}
 
 			if (this.rocket.body.velocity.y != -300 && this.game.time.now > this.collisionTimer) {
@@ -101,6 +140,14 @@ bonus.prototype = {
 		}
 
 	},
+	
+	/**
+	endIntro : function() {
+
+		game.state.start('win');
+
+	},
+	**/
 
 	collision : function() {
 		if (this.game.time.now > this.collisionTimer) {
