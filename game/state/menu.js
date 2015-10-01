@@ -17,9 +17,9 @@ var missionVideo;
 var introVideo;
 var introFinished;
 var mControlX = -66;
-var mControlY = -185;
+var mControlY = -130;
 var sControlX = -156;
-var sControlY = -100;
+var sControlY = -45;
 var player1;
 var player2;
 var player3;
@@ -91,6 +91,7 @@ function startIntro() {
 	var str = playerName.text;
 
 	if (!(str.length < 1) && activeAstronaut != null) {
+		console.log("astronaut: "+activeAstronaut)
 		introVideo = this.game.add.video('intro');
 		introVideo.play(true);
 		introVideo.loop = false;
