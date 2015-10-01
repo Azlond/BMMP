@@ -28,7 +28,6 @@ var animation2;
 var animation3;
 var videoBackground;
 
-
 var restartButton;
 var quitButton;
 var continueButton;
@@ -166,7 +165,6 @@ play.prototype = {
 		 * check if the player is dead
 		 */
 		if (lifeCounter == 0) {
-			this.saveLocal();
 			this.game.state.start('gameOver', true, false);
 		}
 
@@ -225,7 +223,7 @@ play.prototype = {
 		}
 
 		if (this.spaceKey.isDown && pauseMenuActive) {
-			
+
 			this.astronaut.body.velocity.x = 0;
 			this.alien.body.velocity.x = 0;
 			createPauseMenu();
@@ -494,7 +492,6 @@ play.prototype = {
 			this.rocket.animations.play('full');
 			score += 50;
 			this.scoreText.text = 'Score: ' + score;
-			this.saveLocal();
 
 			switch (this.levelNumber) {
 			case 2:
@@ -671,54 +668,10 @@ play.prototype = {
 		} else {
 			this.timer.stop();
 		}
-	},
-
-	saveLocal : function() {
-		if (score != 0) {
-			var scores = localStorage.getItem('highScore') || [];
-
-			if (scores.length != 0) {
-				scores = JSON.parse(scores);
-			}
-			this.parseJson(scores);
-		}
-	},
-
-	parseJson : function(json) {
-		var pName = playerName.text.toString();
-		var playerExists = false;
-
-		if (json.length == 0) {
-			var tjson = [ pName, score ];
-			json.push(tjson);
-			localStorage.setItem("highScore", JSON.stringify(json));
-		} else {
-			for (i = 0; i < json.length; i++) {
-				var tArray = json[i];
-				var highScoreName = tArray[0];
-				var playerHighScore = tArray[1];
-
-				if (highScoreName == pName) {
-					playerExists = true;
-					if (playerHighScore < score) {
-						json.splice(i, 1);
-						var tjson = [ pName, score ];
-						json.push(tjson);
-						localStorage.setItem("highScore", JSON.stringify(json));
-					}
-				}
-			}
-			if (!playerExists) {
-				var tjson = [ pName, score ];
-				json.push(tjson);
-				localStorage.setItem("highScore", JSON.stringify(json));
-			}
-		}
 	}
 };
 
 function readLocal() {
-	// localStorage.clear();
 	// get the highscores object
 	var scores = localStorage.getItem("highScore");
 	scores = JSON.parse(scores);
@@ -754,13 +707,13 @@ function sortHighScore(highScoreList) {
 
 function createPauseMenu() {
 
-	pauseMenuActive = false;			
+	pauseMenuActive = false;
 
 	pauseMenu = game.add.sprite(400, 300, 'pauseBackground');
 	pauseMenu.alpha = 1.0;
 	pauseMenu.anchor.set(0.5);
 	pauseMenu.fixedToCamera = true;
-		
+
 	musicControl = new button(this.game, 75, -165, musicOn, changeMusicOnPauseMenu, 'controlSound');
 	pauseMenu.addChild(musicControl);
 
