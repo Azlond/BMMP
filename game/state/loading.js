@@ -83,7 +83,7 @@ loading.prototype = {
 		game.load.audio('collectOxygen', './assets/audio/collectOxygenSound.wav');
 		game.load.audio('completeLevel', './assets/audio/completeLevelSound.wav');
 		game.load.audio('collideWithAlien', './assets/audio/collideWithAlienSound.wav');
-		// game.load.audio('buttonSound', './assets/audio/menuSelection.wav');
+		game.load.audio('buttonSound', './assets/audio/menuSelection.wav');
 
 		/*
 		 * backgrounds - three layers for each level

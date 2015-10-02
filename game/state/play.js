@@ -873,6 +873,9 @@ function continueGame(o) {
 
 function changeMusicOnPauseMenu() {
 	if (musicOn == 1) {
+		if (soundIsOn == 1) {
+			buttonSound.play('', 0, 0.2);
+		}
 		musicOn = 0;
 		musicControl.kill();
 		musicControl = new button(game, 75, -165, 0, changeMusicOnPauseMenu, 'controlSound');
@@ -889,6 +892,7 @@ function changeMusicOnPauseMenu() {
 
 function changeSoundOnPauseMenu() {
 	if (soundIsOn == 1) {
+		buttonSound.play('', 0, 0.2);
 		soundIsOn = 0;
 		soundControl.kill();
 		soundControl = new button(game, -20, -70, 0, changeSoundOnPauseMenu, 'controlSound');
@@ -896,6 +900,7 @@ function changeSoundOnPauseMenu() {
 		// sound.pause();
 	} else {
 		soundIsOn = 1;
+		buttonSound.play('', 0, 0.2);
 		soundControl.kill();
 		soundControl = new button(game, -20, -70, 1, changeSoundOnPauseMenu, 'controlSound');
 		pauseMenu.addChild(soundControl);

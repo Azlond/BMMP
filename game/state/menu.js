@@ -106,6 +106,7 @@ function startIntro() {
 	var str = playerName.text;
 
 	if (!(str.length < 1) && activeAstronaut != null) {
+		background.kill();
 		introVideo = this.game.add.video('intro');
 		introVideo.play(true);
 		introVideo.loop = false;
@@ -182,7 +183,7 @@ function soundOption() {
 function changeMusic() {
 	if (musicOn == 1) {
 		if (soundIsOn == 1) {
-			buttonSound.play();
+			buttonSound.play('', 0, 0.2);
 		}
 		musicOn = 0;
 		musicControl.kill();
@@ -203,13 +204,14 @@ function changeMusic() {
 
 function changeSound() {
 	if (soundIsOn == 1) {
-		buttonSound.play();
+		buttonSound.play('', 0, 0.2);
 		soundIsOn = 0;
 		soundControl.kill();
 		soundControl = new button(game, sControlX, sControlY, 0, changeSound, 'controlSound');
 		popup.addChild(soundControl);
 		// sound.pause();
 	} else {
+		buttonSound.play('', 0, 0.2);
 		soundIsOn = 1;
 		soundControl.kill();
 		soundControl = new button(game, sControlX, sControlY, 1, changeSound, 'controlSound');
