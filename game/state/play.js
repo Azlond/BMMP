@@ -94,6 +94,8 @@ play.prototype = {
 		hectoranimation3 = game.add.video('hectoranimation3');
 		patrickanimation3 = game.add.video('patrickanimation3');
 
+		this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+
 	},
 
 	update : function() {
@@ -284,6 +286,15 @@ play.prototype = {
 			this.timer.pause();
 		} else if (isPaused == false) {
 			this.timer.resume();
+		}
+
+		if (this.enterKey.isDown) {
+			if (this.levelNumber != this.finalLevel) {
+				this.levelNumber += 1;
+				this.loadLevel("");
+			} else {
+				game.state.start('bonus');
+			}
 		}
 
 	},
