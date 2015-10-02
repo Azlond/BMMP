@@ -161,7 +161,7 @@ play.prototype = {
 			 */
 			if (this.astronaut.body.y > 600 && !this.fallen) {
 				lifeCounter--;
-				if (soundIsOn == 1) {
+				if (soundIsOn) {
 					loseLifeSound.play();
 				}
 				showLife(lifeCounter);
@@ -175,7 +175,7 @@ play.prototype = {
 			 * check if the player is dead
 			 */
 			if (lifeCounter == 0) {
-				if (soundIsOn == 1) {
+				if (soundIsOn) {
 					gameOverSound.play();
 				}
 				this.game.state.start('gameOver', true, false);
@@ -293,9 +293,9 @@ play.prototype = {
 		this.timer4.add(300, this.startPauseMenu, this);
 		this.timer4.start();
 
-		if (musicOn == 1) {
-			sound.play();
-			sound.loopFull();
+		if (musicOn) {
+			background_music.play();
+			background_music.loopFull();
 		}
 
 		this.toolsCollected = 0;
@@ -511,7 +511,7 @@ play.prototype = {
 		if (this.toolsCollected == 3) {
 			this.astronaut.kill();
 			this.timer.stop();
-			if (soundIsOn == 1) {
+			if (soundIsOn) {
 				completeLevelSound.play();
 			}
 			this.rocket.body.immovable = false;
@@ -536,7 +536,7 @@ play.prototype = {
 
 	playVideo : function(o) {
 		this.timer2.stop();
-		sound.stop();
+		background_music.stop();
 		videoOn = true;
 		pauseMenuActive = false;
 		this.timer3 = game.time.create(false);
@@ -590,7 +590,7 @@ play.prototype = {
 	collideWithAlien : function(astronaut, alien) {
 		if (game.time.now > this.lifeTimer) {
 			lifeCounter--;
-			if (soundIsOn == 1) {
+			if (soundIsOn) {
 				collideWithAlienSound.play();
 			}
 			showLife(lifeCounter);
@@ -602,7 +602,7 @@ play.prototype = {
 	collectOxygen : function(astronaut, oxygenBottle) {
 		oxygenBottle.kill();
 		this.timer.stop();
-		if (soundIsOn == 1) {
+		if (soundIsOn) {
 			collectOxygenSound.play();
 		}
 		oxygenCounter = 9;
@@ -622,7 +622,7 @@ play.prototype = {
 
 		if (tools == this.collectpliers) {
 			this.nopliers.kill();
-			if (soundIsOn == 1) {
+			if (soundIsOn) {
 				collectToolSound.play();
 			}
 			this.pliers = new Tools(this.game, 690, 10, 1);
@@ -631,7 +631,7 @@ play.prototype = {
 		}
 		if (tools == this.collectscrewdriver) {
 			this.noscrewdriver.kill();
-			if (soundIsOn == 1) {
+			if (soundIsOn) {
 				collectToolSound.play();
 			}
 			this.screwdriver = new Tools(this.game, 755, 10, 3);
@@ -640,7 +640,7 @@ play.prototype = {
 		}
 		if (tools == this.collectwrench) {
 			this.nowrench.kill();
-			if (soundIsOn == 1) {
+			if (soundIsOn) {
 				collectToolSound.play();
 			}
 			this.wrench = new Tools(this.game, 720, 10, 5);
@@ -677,7 +677,7 @@ play.prototype = {
 			oxygenTank.animations.stop();
 			oxygenTank.frame = 0;
 			--lifeCounter;
-			if (soundIsOn == 1) {
+			if (soundIsOn) {
 				loseLifeSound.play();
 			}
 			this.loadLevel("restart");
@@ -703,10 +703,10 @@ function createPauseMenu(o) {
 	pauseMenu.anchor.set(0.5);
 	pauseMenu.fixedToCamera = true;
 
-	musicControl = new button(this.game, 75, -165, musicOn, changeMusicOnPauseMenu, 'controlSound');
+	musicControl = new button(this.game, 75, -165, (musicOn ? 1 : 0), changeMusicOnPauseMenu, 'controlSound');
 	pauseMenu.addChild(musicControl);
 
-	soundControl = new button(this.game, -20, -70, soundIsOn, changeSoundOnPauseMenu, 'controlSound');
+	soundControl = new button(this.game, -20, -70, (soundIsOn ? 1 : 0), changeSoundOnPauseMenu, 'controlSound');
 	pauseMenu.addChild(soundControl);
 
 	restartButton = this.game.add.button(-300, 180, 'restartButton', function() {
@@ -751,38 +751,36 @@ function continueGame(o) {
 }
 
 function changeMusicOnPauseMenu() {
-	if (musicOn == 1) {
-		if (soundIsOn == 1) {
+	if (musicOn) {
+		if (soundIsOn) {
 			buttonSound.play('', 0, 0.2);
 		}
-		musicOn = 0;
+		musicOn = false;
 		musicControl.kill();
 		musicControl = new button(game, 75, -165, 0, changeMusicOnPauseMenu, 'controlSound');
 		pauseMenu.addChild(musicControl);
-		sound.pause();
+		background_music.pause();
 	} else {
-		musicOn = 1;
+		musicOn = true;
 		musicControl.kill();
 		musicControl = new button(game, 75, -165, 1, changeMusicOnPauseMenu, 'controlSound');
 		pauseMenu.addChild(musicControl);
-		sound.resume();
+		background_music.resume();
 	}
 }
 
 function changeSoundOnPauseMenu() {
-	if (soundIsOn == 1) {
+	if (soundIsOn) {
 		buttonSound.play('', 0, 0.2);
-		soundIsOn = 0;
+		soundIsOn = false;
 		soundControl.kill();
 		soundControl = new button(game, -20, -70, 0, changeSoundOnPauseMenu, 'controlSound');
 		pauseMenu.addChild(soundControl);
-		// sound.pause();
 	} else {
-		soundIsOn = 1;
+		soundIsOn = true;
 		buttonSound.play('', 0, 0.2);
 		soundControl.kill();
 		soundControl = new button(game, -20, -70, 1, changeSoundOnPauseMenu, 'controlSound');
 		pauseMenu.addChild(soundControl);
-		// sound.resume();
 	}
 }

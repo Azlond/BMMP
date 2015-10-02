@@ -6,13 +6,13 @@
 function menu() {
 }
 
-var musicOn = 1;
-var soundIsOn = 1;
+var musicOn = true;
+var soundIsOn = true;
 var popup;
 var background;
 var soundControl;
 var musicControl
-var sound;
+var background_music;
 var missionVideo;
 var introVideo;
 var introFinished;
@@ -29,7 +29,6 @@ var soundButton;
 var scoreButton;
 var closeButton;
 var playerName;
-var playerRegEx = /8|6[5-9]|7[0-9]|8[0-9]|90/;
 var highScoreGroup;
 var activeAstronaut;
 var buttonSound;
@@ -38,9 +37,9 @@ menu.prototype = {
 
 	create : function() {
 
-		if (musicOn == 1) {
-			sound = game.add.audio('music');
-			sound.play('', 0, 1, true);
+		if (musicOn) {
+			background_music = game.add.audio('background_music');
+			background_music.play('', 0, 1, true);
 		}
 
 		background = game.add.sprite(400, 300, 'optionBackground');
@@ -94,8 +93,9 @@ menu.prototype = {
 			});
 		}
 
+		/* The RegEx only allows letters and backspace */
 		game.input.keyboard.onUpCallback = function(e) {
-			if (playerRegEx.test(e.keyCode)) {
+			if (/8|6[5-9]|7[0-9]|8[0-9]|90/.test(e.keyCode)) {
 				updateName(e);
 			}
 		}
@@ -115,8 +115,8 @@ function startIntro() {
 		game.input.keyboard.onUpCallback = function(e) {
 			startGame();
 		}
-		if (musicOn == 1) {
-			sound.stop();
+		if (musicOn) {
+			background_music.stop();
 		}
 	}
 }
@@ -137,7 +137,7 @@ function startGame() {
 function updateName(e) {
 	var str = playerName.text;
 
-	// Backspace
+	/* Backspace */
 	if (e.keyCode == 8) {
 		str = str.substring(0, str.length - 1);
 		playerName.text = str;
@@ -170,10 +170,10 @@ function soundOption() {
 	player3.kill();
 	player4.kill();
 
-	musicControl = new button(game, mControlX, mControlY, musicOn, changeMusic, 'controlSound');
+	musicControl = new button(game, mControlX, mControlY, (musicOn ? 1 : 0), changeMusic, 'controlSound');
 	popup.addChild(musicControl);
 
-	soundControl = new button(game, sControlX, sControlY, soundIsOn, changeSound, 'controlSound');
+	soundControl = new button(game, sControlX, sControlY, (soundIsOn ? 1 : 0), changeSound, 'controlSound');
 	popup.addChild(soundControl);
 
 	closeButton = game.add.button(-36, 188, 'closeButton', closeWindow, this, 1, 0);
@@ -181,43 +181,24 @@ function soundOption() {
 }
 
 function changeMusic() {
-	if (musicOn == 1) {
-		if (soundIsOn == 1) {
-			buttonSound.play('', 0, 0.2);
-		}
-		musicOn = 0;
-		musicControl.kill();
-		musicControl = new button(game, mControlX, mControlY, 0, changeMusic, 'controlSound');
-		popup.addChild(musicControl);
-		sound.pause();
-	} else {
-		if (soundIsOn == 1) {
-			buttonSound.play();
-		}
-		musicOn = 1;
-		musicControl.kill();
-		musicControl = new button(game, mControlX, mControlY, 1, changeMusic, 'controlSound');
-		popup.addChild(musicControl);
-		sound.resume();
+	if (soundIsOn) {
+		buttonSound.play('', 0, 0.2);
 	}
+	musicOn = !musicOn;
+	musicControl.kill();
+	musicControl = new button(game, mControlX, mControlY, (musicOn ? 1 : 0), changeMusic, 'controlSound');
+	popup.addChild(musicControl);
+	background_music.pause();
 }
 
 function changeSound() {
-	if (soundIsOn == 1) {
+	soundIsOn = !soundIsOn;
+	if (soundIsOn) {
 		buttonSound.play('', 0, 0.2);
-		soundIsOn = 0;
-		soundControl.kill();
-		soundControl = new button(game, sControlX, sControlY, 0, changeSound, 'controlSound');
-		popup.addChild(soundControl);
-		// sound.pause();
-	} else {
-		buttonSound.play('', 0, 0.2);
-		soundIsOn = 1;
-		soundControl.kill();
-		soundControl = new button(game, sControlX, sControlY, 1, changeSound, 'controlSound');
-		popup.addChild(soundControl);
-		// sound.resume();
 	}
+	soundControl.kill();
+	soundControl = new button(game, sControlX, sControlY, (soundIsOn ? 1 : 0), changeSound, 'controlSound');
+	popup.addChild(soundControl);
 }
 
 function scoreOption() {
@@ -299,36 +280,35 @@ function closeWindow() {
 		highlightButton(4)
 	}, this, 1, 0);
 	background.addChild(player4);
-	
+
 	if (activeAstronaut != null) {
 
 		switch (activeAstronaut) {
-		case 1:
-			player1 = game.add.sprite(-306, -130, 'player1');
-			player1.frame = 1;
-			background.addChild(player1);
-			break;
-		case 2:
-			player2 = game.add.sprite(-153, -130, 'player2');
-			player2.frame = 1;
-			background.addChild(player2);
-			break;
-		case 3:
-			player3 = game.add.sprite(0, -130, 'player3');
-			player3.frame = 1;
-			background.addChild(player3);
-			break;
-		case 4:
-			player4 = game.add.sprite(153, -130, 'player4');
-			player4.frame = 1;
-			background.addChild(player4);
-			break;
-		default:
-			break;
+			case 1:
+				player1 = game.add.sprite(-306, -130, 'player1');
+				player1.frame = 1;
+				background.addChild(player1);
+				break;
+			case 2:
+				player2 = game.add.sprite(-153, -130, 'player2');
+				player2.frame = 1;
+				background.addChild(player2);
+				break;
+			case 3:
+				player3 = game.add.sprite(0, -130, 'player3');
+				player3.frame = 1;
+				background.addChild(player3);
+				break;
+			case 4:
+				player4 = game.add.sprite(153, -130, 'player4');
+				player4.frame = 1;
+				background.addChild(player4);
+				break;
+			default:
+				break;
 		}
 
 	}
-	
 
 	/* buttons */
 
@@ -350,71 +330,71 @@ function closeWindow() {
 function highlightButton(player) {
 	if (activeAstronaut != null) {
 		switch (activeAstronaut) {
-		case 1:
-			player1.kill();
-			player1 = game.add.button(-306, -130, 'player1', function() {
-				highlightButton(1)
-			}, this, 1, 0);
-			background.addChild(player1);
-			break;
-		case 2:
-			player2.kill();
-			player2 = game.add.button(-153, -130, 'player2', function() {
-				highlightButton(2)
-			}, this, 1, 0);
-			background.addChild(player2);
-			break;
-		case 3:
-			player3.kill();
-			player3 = game.add.button(0, -130, 'player3', function() {
-				highlightButton(3)
-			}, this, 1, 0);
-			background.addChild(player3);
-			break;
-		case 4:
-			player4.kill();
-			player4 = game.add.button(153, -130, 'player4', function() {
-				highlightButton(4)
-			}, this, 1, 0);
-			background.addChild(player4);
-			break;
+			case 1:
+				player1.kill();
+				player1 = game.add.button(-306, -130, 'player1', function() {
+					highlightButton(1)
+				}, this, 1, 0);
+				background.addChild(player1);
+				break;
+			case 2:
+				player2.kill();
+				player2 = game.add.button(-153, -130, 'player2', function() {
+					highlightButton(2)
+				}, this, 1, 0);
+				background.addChild(player2);
+				break;
+			case 3:
+				player3.kill();
+				player3 = game.add.button(0, -130, 'player3', function() {
+					highlightButton(3)
+				}, this, 1, 0);
+				background.addChild(player3);
+				break;
+			case 4:
+				player4.kill();
+				player4 = game.add.button(153, -130, 'player4', function() {
+					highlightButton(4)
+				}, this, 1, 0);
+				background.addChild(player4);
+				break;
 		}
 
 	}
 
 	switch (player) {
-	case 1:
-		player1 = game.add.sprite(-306, -130, 'player1');
-		player1.frame = 1;
-		background.addChild(player1);
-		activeAstronaut = 1;
-		break;
-	case 2:
-		player2 = game.add.sprite(-153, -130, 'player2');
-		player2.frame = 1;
-		background.addChild(player2);
-		activeAstronaut = 2;
-		break;
-	case 3:
-		player3 = game.add.sprite(0, -130, 'player3');
-		player3.frame = 1;
-		background.addChild(player3);
-		activeAstronaut = 3;
-		break;
-	case 4:
-		player4 = game.add.sprite(153, -130, 'player4');
-		player4.frame = 1;
-		background.addChild(player4);
-		activeAstronaut = 4;
-		break;
-	default:
-		break;
+		case 1:
+			player1 = game.add.sprite(-306, -130, 'player1');
+			player1.frame = 1;
+			background.addChild(player1);
+			activeAstronaut = 1;
+			break;
+		case 2:
+			player2 = game.add.sprite(-153, -130, 'player2');
+			player2.frame = 1;
+			background.addChild(player2);
+			activeAstronaut = 2;
+			break;
+		case 3:
+			player3 = game.add.sprite(0, -130, 'player3');
+			player3.frame = 1;
+			background.addChild(player3);
+			activeAstronaut = 3;
+			break;
+		case 4:
+			player4 = game.add.sprite(153, -130, 'player4');
+			player4.frame = 1;
+			background.addChild(player4);
+			activeAstronaut = 4;
+			break;
+		default:
+			break;
 	}
 
 }
 
 function readLocal() {
-	// get the highscores object
+	/* get the highscores object */
 	var scores = localStorage.getItem("highScore");
 	scores = JSON.parse(scores);
 
