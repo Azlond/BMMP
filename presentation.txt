@@ -1,7 +1,7 @@
 //Entwicklungsideen:
 
 1. Astronaut auf Planeten
-2. Puzzlespliel einbauen (Zeit zu wenig)
+2. Puzzlespiel einbauen (Zeit zu wenig)
 3. Jump'n'Run
 
 //Grundlegende Idee/ Ansätze:
@@ -20,11 +20,11 @@ Jump'n'Run, Platformer, Gegenstände einsammeln um nächstes Level zu erreichen,
 //Spielidee Ideen:
 
 Story:  Erde hat wichtige Ressourcen verloren durch Umweltkatastrophe
-        auf anderen Planeten müssen nun diese Rohstoffe wieder zurückgebracht werden um diese auf
+        auf anderen Planeten müssen nun diese Rohstoffe wieder zurückgebracht werden um 	 diese auf
         der Erde wieder "anzubauen".
 
-        - Sauerstoff wird zum Überleben des Levels benötigt (Timer) - Flaschen können eingesammelt werden
-        - Raumschiff muss für jedes Level repariert werden mit Tools - diese müssen eingesammelt werden (3 Stück)
+        - Sauerstoff wird zum Überleben des Levels benötigt (Timer) - Flaschen können 	   eingesammelt werden
+        - Raumschiff muss für jedes Level repariert werden mit Tools - diese müssen 	   eingesammelt werden (3 Stück)
         - Aliens und Schluchten als Hindernisse
         - Proben (Ressourcen) werden eingesammel um den Score zu definieren
 
@@ -33,6 +33,13 @@ Story:  Erde hat wichtige Ressourcen verloren durch Umweltkatastrophe
         - Level 3
         - Level 4
         - Bonuslevel
+
+
+Punkte:	- Element: 5 Punkte
+	- Levelabschließen: 25 Punks
+	- jedes verbleibende Leben 50
+		Maximum: 725
+	- Verlust ist möglich im Bonuslevel
 
 man verliert ein Leben:
   - man das Alien berührt
