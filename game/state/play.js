@@ -24,18 +24,6 @@ var completeLevelSound;
 var collideWithAlienSound;
 var gameOverSound;
 
-var jenniferanimation1;
-var carlaanimation1;
-var hectoranimation1;
-var patrickanimation1;
-var jenniferanimation2;
-var carlaanimation2;
-var hectoranimation2;
-var patrickanimation2;
-var jenniferanimation3;
-var carlaanimation3;
-var hectoranimation3;
-var patrickanimation3;
 var videoBackground;
 
 var restartButton;
@@ -45,7 +33,8 @@ var pauseMenu;
 var pauseMenuActive = true;
 var videoOn = false;
 var isPaused = false;
-var enterPressed = false;
+
+var cutscene;
 
 play.prototype = {
 
@@ -81,21 +70,6 @@ play.prototype = {
 		collectOxygenSound = game.add.audio('collectOxygen');
 		completeLevelSound = game.add.audio('completeLevel');
 		collideWithAlienSound = game.add.audio('collideWithAlien');
-
-		jenniferanimation1 = game.add.video('jenniferanimation1');
-		carlaanimation1 = game.add.video('carlaanimation1');
-		hectoranimation1 = game.add.video('hectoranimation1');
-		patrickanimation1 = game.add.video('patrickanimation1');
-		jenniferanimation2 = game.add.video('jenniferanimation2');
-		carlaanimation2 = game.add.video('carlaanimation2');
-		hectoranimation2 = game.add.video('hectoranimation2');
-		patrickanimation2 = game.add.video('patrickanimation2');
-		jenniferanimation3 = game.add.video('jenniferanimation3');
-		carlaanimation3 = game.add.video('carlaanimation3');
-		hectoranimation3 = game.add.video('hectoranimation3');
-		patrickanimation3 = game.add.video('patrickanimation3');
-
-		this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
 	},
 
@@ -289,24 +263,12 @@ play.prototype = {
 			this.timer.resume();
 		}
 
-		if (this.enterKey.isDown && !enterPressed) {
-			enterPressed = true;
-			if (this.levelNumber != this.finalLevel) {
-				this.levelNumber += 1;
-				this.loadLevel("");
-			} else {
-				game.state.start('bonus');
-			}
-		}
-
 	},
 
 	/*
 	 * function to load each level
 	 */
 	loadLevel : function(string) {
-		
-		enterPressed = false;
 
 		/*
 		 * reset values
@@ -584,73 +546,22 @@ play.prototype = {
 		this.timer3.start();
 
 		if (this.levelNumber < this.finalLevel) {
+
 			switch (this.levelNumber) {
 			case 1:
 				videoBackground = game.add.sprite(1600, 8, 'startBackground');
-				switch (activeAstronaut) {
-				case 1:
-					jenniferanimation1.add(videoBackground);
-					jenniferanimation1.play();
-					break;
-				case 2:
-					patrickanimation1.add(videoBackground);
-					patrickanimation1.play();
-					break;
-				case 3:
-					carlaanimation1.add(videoBackground);
-					carlaanimation1.play();
-					break;
-				case 4:
-					hectoranimation1.add(videoBackground);
-					hectoranimation1.play();
-					break;
-				}
 				break;
-
-			case 2:
+			default:
 				videoBackground = game.add.sprite(4000, 8, 'startBackground');
-				switch (activeAstronaut) {
-				case 1:
-					jenniferanimation2.add(videoBackground);
-					jenniferanimation2.play();
-					break;
-				case 2:
-					patrickanimation2.add(videoBackground);
-					patrickanimation2.play();
-					break;
-				case 3:
-					carlaanimation2.add(videoBackground);
-					carlaanimation2.play();
-					break;
-				case 4:
-					hectoranimation2.add(videoBackground);
-					hectoranimation2.play();
-					break;
-				}
-				break;
-
-			case 3:
-				videoBackground = game.add.sprite(4000, 8, 'startBackground');
-				switch (activeAstronaut) {
-				case 1:
-					jenniferanimation3.add(videoBackground);
-					jenniferanimation3.play();
-					break;
-				case 2:
-					patrickanimation3.add(videoBackground);
-					patrickanimation3.play();
-					break;
-				case 3:
-					carlaanimation3.add(videoBackground);
-					carlaanimation3.play();
-					break;
-				case 4:
-					hectoranimation3.add(videoBackground);
-					hectoranimation3.play();
-					break;
-				}
 				break;
 			}
+
+			console.log(charNames[activeAstronaut] + 'animation' + this.levelNumber);
+
+			cutScene = game.add.video(charNames[activeAstronaut] + 'animation' + this.levelNumber);
+			cutScene.add(videoBackground);
+			cutScene.play();
+
 			videoBackground.bringToTop();
 
 		} else if (this.levelNumber == this.finalLevel) {
@@ -664,61 +575,8 @@ play.prototype = {
 
 	endLevel : function(o) {
 		o.timer3.stop();
-		switch (o.levelNumber) {
-		case 1:
-			videoBackground.kill();
-			switch (activeAstronaut) {
-			case 1:
-				jenniferanimation1.stop();
-				break;
-			case 2:
-				patrickanimation1.stop();
-				break;
-			case 3:
-				carlaanimation1.stop();
-				break;
-			case 4:
-				hectoranimation1.stop();
-				break;
-			}
-			break;
 
-		case 2:
-			videoBackground.kill();
-			switch (activeAstronaut) {
-			case 1:
-				jenniferanimation2.stop();
-				break;
-			case 2:
-				patrickanimation2.stop();
-				break;
-			case 3:
-				carlaanimation2.stop();
-				break;
-			case 4:
-				hectoranimation2.stop();
-				break;
-			}
-			break;
-
-		case 3:
-			videoBackground.kill();
-			switch (activeAstronaut) {
-			case 1:
-				jenniferanimation3.stop();
-				break;
-			case 2:
-				patrickanimation3.stop();
-				break;
-			case 3:
-				carlaanimation3.stop();
-				break;
-			case 4:
-				hectoranimation3.stop();
-				break;
-			}
-			break;
-		}
+		cutScene.stop();
 
 		o.levelNumber += 1;
 		o.loadLevel("");

@@ -37,3 +37,10 @@ var amountElements = {
 	"level3" : 35,
 	"level4" : 28
 }
+
+var charNames = {
+	"1" : "jennifer",
+	"2" : "patrick",
+	"3" : "carla",
+	"4" : "hector"
+}
