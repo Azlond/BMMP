@@ -554,6 +554,7 @@ play.prototype = {
 
 	playVideo : function(o) {
 		this.timer2.stop();
+		sound.stop();
 		videoOn = true;
 		pauseMenuActive = false;
 		this.timer3 = game.time.create(false);
