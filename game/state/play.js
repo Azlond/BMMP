@@ -22,6 +22,7 @@ var collectToolSound;
 var collectOxygenSound;
 var completeLevelSound;
 var collideWithAlienSound;
+var gameOverSound;
 
 var jenniferanimation1;
 var carlaanimation1;
@@ -73,6 +74,7 @@ play.prototype = {
 
 		loseLifeSound = game.add.audio('loseLife');
 		collectElementSound = game.add.audio('collectElement');
+		gameOverSound = game.add.audio('gameOver');
 
 		collectToolSound = game.add.audio('collectTool');
 		collectOxygenSound = game.add.audio('collectOxygen');
@@ -196,6 +198,7 @@ play.prototype = {
 			 * check if the player is dead
 			 */
 			if (lifeCounter == 0) {
+				gameOverSound.play();
 				this.game.state.start('gameOver', true, false);
 			}
 
