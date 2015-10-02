@@ -45,6 +45,7 @@ var pauseMenu;
 var pauseMenuActive = true;
 var videoOn = false;
 var isPaused = false;
+var enterPressed = false;
 
 play.prototype = {
 
@@ -288,7 +289,8 @@ play.prototype = {
 			this.timer.resume();
 		}
 
-		if (this.enterKey.isDown) {
+		if (this.enterKey.isDown && !enterPressed) {
+			enterPressed = true;
 			if (this.levelNumber != this.finalLevel) {
 				this.levelNumber += 1;
 				this.loadLevel("");
@@ -303,6 +305,8 @@ play.prototype = {
 	 * function to load each level
 	 */
 	loadLevel : function(string) {
+		
+		enterPressed = false;
 
 		/*
 		 * reset values
