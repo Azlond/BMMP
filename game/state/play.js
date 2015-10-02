@@ -198,7 +198,9 @@ play.prototype = {
 			 * check if the player is dead
 			 */
 			if (lifeCounter == 0) {
-				gameOverSound.play();
+				if (soundIsOn == 1) {
+					gameOverSound.play();
+				}
 				this.game.state.start('gameOver', true, false);
 			}
 
