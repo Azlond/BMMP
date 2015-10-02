@@ -102,84 +102,6 @@ menu.prototype = {
 	}
 };
 
-function startIntro() {
-	var str = playerName.text;
-
-	if (!(str.length < 1) && activeAstronaut != null) {
-		background.kill();
-		introVideo = this.game.add.video('intro');
-		introVideo.play(true);
-		introVideo.loop = false;
-		introVideo.onComplete.add(startGame);
-		introVideo.addToWorld(400, 300, 0.5, 0.5);
-		game.input.keyboard.onUpCallback = function(e) {
-			startGame();
-		}
-		if (musicOn) {
-			background_music.stop();
-		}
-	}
-}
-
-function startGame() {
-	introVideo.stop();
-	missionVideo = game.add.video('mission');
-	missionVideo.play(true);
-	introFinished = false;
-	missionVideo.loop = false;
-	missionVideo.onComplete.add(handleComplete);
-	missionVideo.addToWorld(400, 300, 0.5, 0.5);
-	game.input.keyboard.onUpCallback = function(e) {
-		handleComplete();
-	}
-}
-
-function updateName(e) {
-	var str = playerName.text;
-
-	/* Backspace */
-	if (e.keyCode == 8) {
-		str = str.substring(0, str.length - 1);
-		playerName.text = str;
-	} else if (e.keyCode >= 65 && e.keyCode <= 90 && str.length < 13) {
-		var str = String.fromCharCode(e.keyCode);
-		playerName.text = playerName.text + str;
-	}
-}
-
-function handleComplete() {
-	if (!introFinished) {
-		game.state.start('play', true, false);
-		introFinished = true;
-		missionVideo.stop(true);
-		game.state.start('play');
-	}
-}
-
-function soundOption() {
-
-	popup = game.add.sprite(400, 300, 'soundBackground');
-	popup.alpha = 1.0;
-	popup.anchor.set(0.5);
-
-	soundButton.kill();
-	scoreButton.kill();
-	startButton.kill();
-	player1.kill();
-	player2.kill();
-	player3.kill();
-	player4.kill();
-
-	musicControl = new button(game, mControlX, mControlY, (musicOn ? 1 : 0), changeMusic, 'controlSound');
-	popup.addChild(musicControl);
-
-	soundControl = new button(game, sControlX, sControlY, (soundIsOn ? 1 : 0), changeSound, 'controlSound');
-	popup.addChild(soundControl);
-
-	closeButton = game.add.button(-36, 188, 'closeButton', closeWindow, this, 1, 0);
-	popup.addChild(closeButton);
-}
-
 function changeMusic() {
 	if (soundIsOn) {
 		buttonSound.play('', 0, 0.2);
@@ -189,16 +111,6 @@ function changeMusic() {
 	musicControl = new button(game, mControlX, mControlY, (musicOn ? 1 : 0), changeMusic, 'controlSound');
 	popup.addChild(musicControl);
 	background_music.pause();
-}
-
-function changeSound() {
-	soundIsOn = !soundIsOn;
-	if (soundIsOn) {
-		buttonSound.play('', 0, 0.2);
-	}
-	soundControl.kill();
-	soundControl = new button(game, sControlX, sControlY, (soundIsOn ? 1 : 0), changeSound, 'controlSound');
-	popup.addChild(soundControl);
 }
 
 function scoreOption() {
@@ -253,10 +165,14 @@ function scoreOption() {
 	}
 }
 
-function resetScore() {
-	localStorage.clear();
-	closeWindow();
-	scoreOption();
+function changeSound() {
+	soundIsOn = !soundIsOn;
+	if (soundIsOn) {
+		buttonSound.play('', 0, 0.2);
+	}
+	soundControl.kill();
+	soundControl = new button(game, sControlX, sControlY, (soundIsOn ? 1 : 0), changeSound, 'controlSound');
+	popup.addChild(soundControl);
 }
 
 function closeWindow() {
@@ -327,6 +243,15 @@ function closeWindow() {
 
 }
 
+function handleComplete() {
+	if (!introFinished) {
+		game.state.start('play', true, false);
+		introFinished = true;
+		missionVideo.stop(true);
+		game.state.start('play');
+	}
+}
+
 function highlightButton(player) {
 	if (activeAstronaut != null) {
 		switch (activeAstronaut) {
@@ -394,16 +319,20 @@ function highlightButton(player) {
 }
 
 function readLocal() {
-	/* get the highscores object */
+	/* get the highscore object */
 	var scores = localStorage.getItem("highScore");
 	scores = JSON.parse(scores);
 
 	return scores;
 }
 
-/*
- * bubbleSort
- */
+function resetScore() {
+	localStorage.clear();
+	closeWindow();
+	scoreOption();
+}
+
+/* bubbleSort */
 function sortHighScore(highScoreList) {
 	var swapped;
 
@@ -427,13 +356,83 @@ function sortHighScore(highScoreList) {
 	return highScoreList;
 }
 
-var button = function(game, x, y, frame, option, keyName) {
+function soundOption() {
+
+	popup = game.add.sprite(400, 300, 'soundBackground');
+	popup.alpha = 1.0;
+	popup.anchor.set(0.5);
+
+	soundButton.kill();
+	scoreButton.kill();
+	startButton.kill();
+	player1.kill();
+	player2.kill();
+	player3.kill();
+	player4.kill();
+
+	musicControl = new button(game, mControlX, mControlY, (musicOn ? 1 : 0), changeMusic, 'controlSound');
+	popup.addChild(musicControl);
+
+	soundControl = new button(game, sControlX, sControlY, (soundIsOn ? 1 : 0), changeSound, 'controlSound');
+	popup.addChild(soundControl);
+
+	closeButton = game.add.button(-36, 188, 'closeButton', closeWindow, this, 1, 0);
+	popup.addChild(closeButton);
+}
+
+function startGame() {
+	introVideo.stop();
+	missionVideo = game.add.video('mission');
+	missionVideo.play(true);
+	introFinished = false;
+	missionVideo.loop = false;
+	missionVideo.onComplete.add(handleComplete);
+	missionVideo.addToWorld(400, 300, 0.5, 0.5);
+	game.input.keyboard.onUpCallback = function(e) {
+		handleComplete();
+	}
+}
+
+function startIntro() {
+	var str = playerName.text;
+
+	if (!(str.length < 1) && activeAstronaut != null) {
+		background.kill();
+		introVideo = this.game.add.video('intro');
+		introVideo.play(true);
+		introVideo.loop = false;
+		introVideo.onComplete.add(startGame);
+		introVideo.addToWorld(400, 300, 0.5, 0.5);
+		game.input.keyboard.onUpCallback = function(e) {
+			startGame();
+		}
+		if (musicOn) {
+			background_music.stop();
+		}
+	}
+}
+
+function updateName(e) {
+	var str = playerName.text;
+
+	/* Backspace */
+	if (e.keyCode == 8) {
+		str = str.substring(0, str.length - 1);
+		playerName.text = str;
+	} else if (e.keyCode >= 65 && e.keyCode <= 90 && str.length < 13) {
+		var str = String.fromCharCode(e.keyCode);
+		playerName.text = playerName.text + str;
+	}
+}
+
+function button(game, x, y, frame, option, keyName) {
 	this.game = game;
 	Phaser.Sprite.call(this, this.game, x, y, keyName, frame);
 	this.inputEnabled = true;
 	this.input.priorityID = 1;
 	this.input.useHandCursor = true;
 	this.events.onInputDown.add(option, this);
-};
+}
+
 button.prototype = Object.create(Phaser.Sprite.prototype);
 button.prototype.constructor = button;
