@@ -79,6 +79,7 @@ loading.prototype = {
 		game.load.audio('loseLife', './assets/audio/loseLifeSound.wav');
 		game.load.audio('collectTool', './assets/audio/collectToolSound.wav');
 		game.load.audio('collectElement', './assets/audio/collectElementSound.wav');
+		game.load.audio('gameOver','./assets/audio/gameOverSound.wav');
 
 		game.load.audio('collectOxygen', './assets/audio/collectOxygenSound.wav');
 		game.load.audio('completeLevel', './assets/audio/completeLevelSound.wav');
