@@ -280,7 +280,6 @@ function resetScore() {
 
 function closeWindow() {
 	popup.kill();
-
 	player1 = game.add.button(-306, -130, 'player1', function() {
 		highlightButton(1)
 	}, this, 1, 0);
@@ -300,6 +299,36 @@ function closeWindow() {
 		highlightButton(4)
 	}, this, 1, 0);
 	background.addChild(player4);
+	
+	if (activeAstronaut != null) {
+
+		switch (activeAstronaut) {
+		case 1:
+			player1 = game.add.sprite(-306, -130, 'player1');
+			player1.frame = 1;
+			background.addChild(player1);
+			break;
+		case 2:
+			player2 = game.add.sprite(-153, -130, 'player2');
+			player2.frame = 1;
+			background.addChild(player2);
+			break;
+		case 3:
+			player3 = game.add.sprite(0, -130, 'player3');
+			player3.frame = 1;
+			background.addChild(player3);
+			break;
+		case 4:
+			player4 = game.add.sprite(153, -130, 'player4');
+			player4.frame = 1;
+			background.addChild(player4);
+			break;
+		default:
+			break;
+		}
+
+	}
+	
 
 	/* buttons */
 
@@ -319,7 +348,6 @@ function closeWindow() {
 }
 
 function highlightButton(player) {
-
 	if (activeAstronaut != null) {
 		switch (activeAstronaut) {
 		case 1:
