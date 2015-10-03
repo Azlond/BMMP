@@ -1,7 +1,6 @@
-var oxygen = function(game, x, y) {
-	this.game = game;
-	Phaser.Sprite.call(this, this.game, x, y, 'oxygen');
-	this.game.physics.arcade.enableBody(this);
+var oxygen = function(x, y) {
+	Phaser.Sprite.call(this, game, x, y, 'oxygen');
+	game.physics.arcade.enableBody(this);
 	this.body.allowGravity = false;
 
 }

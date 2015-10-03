@@ -35,7 +35,7 @@ win.prototype = {
 
 		this.timer5.stop();
 		videoOn = false;
-		
+
 		this.cutScene.stop();
 
 		this.game.add.image(0, 0, 'win');

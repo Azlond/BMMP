@@ -1,10 +1,8 @@
-var Tools = function(game, x, y, frame) {
+var Tools = function(x, y, frame) {
 
-	this.game = game;
+	Phaser.Sprite.call(this, game, x, y, 'tools', frame);
 
-	Phaser.Sprite.call(this, this.game, x, y, 'tools', frame);
-
-	this.game.physics.arcade.enableBody(this);
+	game.physics.arcade.enableBody(this);
 
 };
 

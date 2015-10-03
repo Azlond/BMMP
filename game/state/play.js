@@ -238,6 +238,30 @@ play.prototype = {
 		}
 	},
 
+	/* change the sprite for the oxygen counter */
+	changeDisplay : function() {
+		if (oxygenCounter > 3) {
+			oxygenTank.frame = oxygenCounter;
+			--oxygenCounter;
+		} else if (oxygenCounter < 4 && oxygenCounter > 0) {
+			oxygenTank.animations.add('blink1', [ oxygenCounter, 0 ], 5, true);
+			oxygenTank.animations.play('blink1');
+			--oxygenCounter;
+		} else if (oxygenCounter === 0) {
+			oxygenTank.animations.stop();
+			oxygenTank.frame = 0;
+			lifeCounter--;
+			if (soundIsOn) {
+				loseLifeSound.play();
+			}
+			this.checkLifeCounter();
+			this.timer.stop();
+			this.loadLevel("restart");
+		} else {
+			this.timer.stop();
+		}
+	},
+
 	/* check if the player is dead */
 	checkLifeCounter : function() {
 		if (lifeCounter == 0) {
@@ -248,24 +272,147 @@ play.prototype = {
 		}
 	},
 
-	/* stop Astronaut and alien movement */
-	pauseGame : function() {
-		this.astronaut.body.velocity.x = 0;
-		this.astronaut.body.velocity.y = 0;
-		if (this.rocket.body.velocity.y != 0) {
-			this.rocket.body.velocity.y = 0;
-			this.timer2.pause();
-		}
-		this.astronaut.body.allowGravity = false;
-		this.astronaut.animations.play('stop', 6, true);
+	/* collecting an element and removing it from the game */
+	collectElement : function(astronaut, tile) {
 
-		for (i = 0; i < alienGroup.children.length; i++) {
-			var enemy = alienGroup.children[i];
-			enemy.body.velocity.x = 0;
-			if (isPaused == true) {
-				enemy.animations.play('stop');
+		var str = astronaut.key.toString();
+		/* check to see if it is actually the astronaut collecting the element and not an alien */
+		if (str.indexOf("char") != -1) {
+
+			this.map.removeTile(tile.x, tile.y, this.layer);
+			if (soundIsOn) {
+				collectElementSound.play();
 			}
+			score += 5;
+			this.scoreText.text = score;
+
+			/* count up total collecting element for each level - if all elements are collected, the astronaut may get a bonus life */
+			this.astronaut.collected++;
+
+			return false;
 		}
+
+	},
+
+	/*
+	 * collect Oxygen bottles, refill the oxygen tank
+	 */
+	collectOxygen : function(astronaut, oxygenBottle) {
+		oxygenBottle.kill();
+		this.timer.stop();
+		if (soundIsOn) {
+			collectOxygenSound.play();
+		}
+		oxygenCounter = 9;
+		oxygenTank.kill();
+		oxygenTank = game.add.sprite(750, 510, 'tank');
+		oxygenTank.frame = oxygenCounter;
+		oxygenTank.fixedToCamera = true;
+		oxygenCounter--;
+		this.timeDown();
+	},
+
+	/*
+	 * called when the player overlaps with the tools
+	 */
+	collectTools : function(astronaut, tools) {
+
+		if (tools == this.collectpliers) {
+			this.nopliers.kill();
+			if (soundIsOn) {
+				collectToolSound.play();
+			}
+			this.pliers = new Tools(690, 10, 1);
+			this.game.add.existing(this.pliers);
+			this.pliers.fixedToCamera = true;
+		}
+		if (tools == this.collectscrewdriver) {
+			this.noscrewdriver.kill();
+			if (soundIsOn) {
+				collectToolSound.play();
+			}
+			this.screwdriver = new Tools(755, 10, 3);
+			this.game.add.existing(this.screwdriver);
+			this.screwdriver.fixedToCamera = true;
+		}
+		if (tools == this.collectwrench) {
+			this.nowrench.kill();
+			if (soundIsOn) {
+				collectToolSound.play();
+			}
+			this.wrench = new Tools(720, 10, 5);
+			this.game.add.existing(this.wrench);
+			this.wrench.fixedToCamera = true;
+		}
+		tools.kill();
+		this.toolsCollected += 1;
+	},
+
+	/*
+	 * called when player collides with an alien
+	 * 
+	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
+	 */
+	collideWithAlien : function(astronaut, alien) {
+		if (game.time.now > this.lifeTimer) {
+			lifeCounter--;
+			if (soundIsOn) {
+				collideWithAlienSound.play();
+			}
+			showLife(lifeCounter);
+
+			this.lifeTimer = game.time.now + 1000;
+
+			this.checkLifeCounter();
+		}
+	},
+
+	/* go to next level */
+	endLevel : function(o) {
+		o.timer3.stop();
+
+		cutScene.stop();
+
+		o.levelNumber += 1;
+		o.loadLevel("");
+	},
+
+	/*
+	 * called when the player collides with the rocket
+	 * 
+	 * checks if all tools have been collected
+	 * 
+	 * awards 25 points for finishing the level
+	 * 
+	 * awards an extra life if the player has less then 3 and has collected all elements
+	 * 
+	 */
+	hitFinish : function(astronaut, finish) {
+
+		if (this.toolsCollected == 3) {
+			this.astronaut.kill();
+			this.timer.stop();
+			if (soundIsOn) {
+				completeLevelSound.play();
+			}
+			this.rocket.body.immovable = false;
+			this.rocket.body.velocity.y = -150;
+			this.rocket.animations.play('full');
+			score += 25;
+			this.scoreText.text = score;
+
+			if (this.astronaut.collected == amountElements["level" + this.levelNumber] && lifeCounter < 3) {
+				lifeCounter++;
+				showLife(lifeCounter);
+			}
+
+			this.timer2 = game.time.create(false);
+			this.timer2.add(3500, function() {
+				this.playVideo(this)
+			}, this);
+			this.timer2.start();
+		}
+
 	},
 
 	/* function to load each level */
@@ -352,35 +499,32 @@ play.prototype = {
 		this.layer.resizeWorld();
 
 		/* add tool-placeholder icons for toolbar */
-		this.nopliers = new Tools(this.game, 690, 10, 0);
+		this.nopliers = new Tools(690, 10, 0);
 		this.game.add.existing(this.nopliers);
 		this.nopliers.fixedToCamera = true;
 
-		this.nowrench = new Tools(this.game, 720, 10, 4);
+		this.nowrench = new Tools(720, 10, 4);
 		this.game.add.existing(this.nowrench);
 		this.nowrench.fixedToCamera = true;
 
-		this.noscrewdriver = new Tools(this.game, 755, 10, 2);
+		this.noscrewdriver = new Tools(755, 10, 2);
 		this.game.add.existing(this.noscrewdriver);
 		this.noscrewdriver.fixedToCamera = true;
 
 		/* add tools to the levels */
 		this.toolGroup = this.game.add.group();
 
-		this.collectpliers = new Tools(this.game, toolLocations['level' + this.levelNumber + 'PliersX'], toolLocations['level' + this.levelNumber + 'PliersY'],
-				1);
+		this.collectpliers = new Tools(toolLocations['level' + this.levelNumber + 'PliersX'], toolLocations['level' + this.levelNumber + 'PliersY'], 1);
 		this.game.add.existing(this.collectpliers);
 		this.collectpliers.body.allowGravity = false;
 		this.toolGroup.add(this.collectpliers);
 
-		this.collectwrench = new Tools(this.game, toolLocations['level' + this.levelNumber + 'WrenchX'], toolLocations['level' + this.levelNumber + 'WrenchY'],
-				5);
+		this.collectwrench = new Tools(toolLocations['level' + this.levelNumber + 'WrenchX'], toolLocations['level' + this.levelNumber + 'WrenchY'], 5);
 		this.game.add.existing(this.collectwrench);
 		this.collectwrench.body.allowGravity = false;
 		this.toolGroup.add(this.collectwrench);
 
-		this.collectscrewdriver = new Tools(this.game, toolLocations['level' + this.levelNumber + 'ScrewX'], toolLocations['level' + this.levelNumber
-				+ 'ScrewY'], 3);
+		this.collectscrewdriver = new Tools(toolLocations['level' + this.levelNumber + 'ScrewX'], toolLocations['level' + this.levelNumber + 'ScrewY'], 3);
 		this.game.add.existing(this.collectscrewdriver);
 		this.collectscrewdriver.body.allowGravity = false;
 		this.toolGroup.add(this.collectscrewdriver);
@@ -404,7 +548,7 @@ play.prototype = {
 		this.rocket.animations.play('empty');
 
 		/* adds the character */
-		this.astronaut = new Astronaut(this.game, 100, 440);
+		this.astronaut = new Astronaut(100, 440);
 		this.game.add.existing(this.astronaut);
 		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 26, true);
 		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ], 26, true);
@@ -439,7 +583,7 @@ play.prototype = {
 		var alienCoordinates = alienInfo["coordinates"];
 
 		for (i = 1; i <= amountAliens; i++) {
-			this.alien = new Alien(this.game, alienCoordinates["alien" + i][0], alienCoordinates["alien" + i][1], alienCoordinates["alien" + i][2]);
+			this.alien = new Alien(alienCoordinates["alien" + i][0], alienCoordinates["alien" + i][1], alienCoordinates["alien" + i][2]);
 			this.game.add.existing(this.alien);
 			this.alien.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
 			this.alien.animations.add('stop', [ 0 ], 7, true);
@@ -456,7 +600,7 @@ play.prototype = {
 		var oxygenCoordinates = oxygenInfo["coordinates"];
 
 		for (i = 1; i <= amountOxygen; i++) {
-			this.oxygenBottle = new oxygen(this.game, oxygenCoordinates["oxygen" + i][0], oxygenCoordinates["oxygen" + i][1]);
+			this.oxygenBottle = new oxygen(oxygenCoordinates["oxygen" + i][0], oxygenCoordinates["oxygen" + i][1]);
 			this.game.add.existing(this.oxygenBottle);
 			oxygenGroup.add(this.oxygenBottle);
 		}
@@ -475,64 +619,24 @@ play.prototype = {
 		showLife(lifeCounter);
 	},
 
-	/* collecting an element and removing it from the game */
-	collectElement : function(astronaut, tile) {
-
-		var str = astronaut.key.toString();
-		/* check to see if it is actually the astronaut collecting the element and not an alien */
-		if (str.indexOf("char") != -1) {
-
-			this.map.removeTile(tile.x, tile.y, this.layer);
-			if (soundIsOn) {
-				collectElementSound.play();
-			}
-			score += 5;
-			this.scoreText.text = score;
-
-			/* count up total collecting element for each level - if all elements are collected, the astronaut may get a bonus life */
-			this.astronaut.collected++;
-
-			return false;
+	/* stop Astronaut and alien movement */
+	pauseGame : function() {
+		this.astronaut.body.velocity.x = 0;
+		this.astronaut.body.velocity.y = 0;
+		if (this.rocket.body.velocity.y != 0) {
+			this.rocket.body.velocity.y = 0;
+			this.timer2.pause();
 		}
+		this.astronaut.body.allowGravity = false;
+		this.astronaut.animations.play('stop', 6, true);
 
-	},
-
-	/*
-	 * called when the player collides with the rocket
-	 * 
-	 * checks if all tools have been collected
-	 * 
-	 * awards 25 points for finishing the level
-	 * 
-	 * awards an extra life if the player has less then 3 and has collected all elements
-	 * 
-	 */
-	hitFinish : function(astronaut, finish) {
-
-		if (this.toolsCollected == 3) {
-			this.astronaut.kill();
-			this.timer.stop();
-			if (soundIsOn) {
-				completeLevelSound.play();
+		for (i = 0; i < alienGroup.children.length; i++) {
+			var enemy = alienGroup.children[i];
+			enemy.body.velocity.x = 0;
+			if (isPaused == true) {
+				enemy.animations.play('stop');
 			}
-			this.rocket.body.immovable = false;
-			this.rocket.body.velocity.y = -150;
-			this.rocket.animations.play('full');
-			score += 25;
-			this.scoreText.text = score;
-
-			if (this.astronaut.collected == amountElements["level" + this.levelNumber] && lifeCounter < 3) {
-				lifeCounter++;
-				showLife(lifeCounter);
-			}
-
-			this.timer2 = game.time.create(false);
-			this.timer2.add(3500, function() {
-				this.playVideo(this)
-			}, this);
-			this.timer2.start();
 		}
-
 	},
 
 	/* play the cutScene between levels */
@@ -577,87 +681,12 @@ play.prototype = {
 		}
 
 	},
-	/* go to next level */
-	endLevel : function(o) {
-		o.timer3.stop();
 
-		cutScene.stop();
+	/* pause the game */
+	startPauseMenu : function() {
+		pauseMenuActive = true;
+		this.timer4.stop();
 
-		o.levelNumber += 1;
-		o.loadLevel("");
-	},
-
-	/*
-	 * called when player collides with an alien
-	 * 
-	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
-	 */
-	collideWithAlien : function(astronaut, alien) {
-		if (game.time.now > this.lifeTimer) {
-			lifeCounter--;
-			if (soundIsOn) {
-				collideWithAlienSound.play();
-			}
-			showLife(lifeCounter);
-
-			this.lifeTimer = game.time.now + 1000;
-
-			this.checkLifeCounter();
-		}
-	},
-
-	/*
-	 * collect Oxygen bottles, refill the oxygen tank
-	 */
-	collectOxygen : function(astronaut, oxygenBottle) {
-		oxygenBottle.kill();
-		this.timer.stop();
-		if (soundIsOn) {
-			collectOxygenSound.play();
-		}
-		oxygenCounter = 9;
-		oxygenTank.kill();
-		oxygenTank = game.add.sprite(750, 510, 'tank');
-		oxygenTank.frame = oxygenCounter;
-		oxygenTank.fixedToCamera = true;
-		oxygenCounter--;
-		this.timeDown();
-	},
-
-	/*
-	 * called when the player overlaps with the tools
-	 */
-	collectTools : function(astronaut, tools) {
-
-		if (tools == this.collectpliers) {
-			this.nopliers.kill();
-			if (soundIsOn) {
-				collectToolSound.play();
-			}
-			this.pliers = new Tools(this.game, 690, 10, 1);
-			this.game.add.existing(this.pliers);
-			this.pliers.fixedToCamera = true;
-		}
-		if (tools == this.collectscrewdriver) {
-			this.noscrewdriver.kill();
-			if (soundIsOn) {
-				collectToolSound.play();
-			}
-			this.screwdriver = new Tools(this.game, 755, 10, 3);
-			this.game.add.existing(this.screwdriver);
-			this.screwdriver.fixedToCamera = true;
-		}
-		if (tools == this.collectwrench) {
-			this.nowrench.kill();
-			if (soundIsOn) {
-				collectToolSound.play();
-			}
-			this.wrench = new Tools(this.game, 720, 10, 5);
-			this.game.add.existing(this.wrench);
-			this.wrench.fixedToCamera = true;
-		}
-		tools.kill();
-		this.toolsCollected += 1;
 	},
 
 	/*
@@ -670,90 +699,8 @@ play.prototype = {
 		this.timer = game.time.create(false);
 		this.timer.loop(countdown, this.changeDisplay, this);
 		this.timer.start();
-	},
-
-	/*
-	 * change the sprite for the oxygen counter
-	 */
-	changeDisplay : function() {
-		if (oxygenCounter > 3) {
-			oxygenTank.frame = oxygenCounter;
-			--oxygenCounter;
-		} else if (oxygenCounter < 4 && oxygenCounter > 0) {
-			oxygenTank.animations.add('blink1', [ oxygenCounter, 0 ], 5, true);
-			oxygenTank.animations.play('blink1');
-			--oxygenCounter;
-		} else if (oxygenCounter === 0) {
-			oxygenTank.animations.stop();
-			oxygenTank.frame = 0;
-			lifeCounter--;
-			if (soundIsOn) {
-				loseLifeSound.play();
-			}
-			this.checkLifeCounter();
-			this.timer.stop();
-			this.loadLevel("restart");
-		} else {
-			this.timer.stop();
-		}
-	},
-
-	/* pause the game */
-	startPauseMenu : function() {
-		pauseMenuActive = true;
-		this.timer4.stop();
-
 	}
 };
-
-/*
- * show the pause menu
- */
-function createPauseMenu(o) {
-
-	isPaused = true;
-	pauseMenuActive = false;
-
-	pauseMenu = game.add.sprite(400, 300, 'pauseBackground');
-	pauseMenu.alpha = 1.0;
-	pauseMenu.anchor.set(0.5);
-	pauseMenu.fixedToCamera = true;
-
-	musicControl = new button(this.game, 75, -165, (musicOn ? 1 : 0), changeMusicOnPauseMenu, 'controlSound');
-	pauseMenu.addChild(musicControl);
-
-	soundControl = new button(this.game, -20, -70, (soundIsOn ? 1 : 0), changeSoundOnPauseMenu, 'controlSound');
-	pauseMenu.addChild(soundControl);
-
-	restartButton = this.game.add.button(-300, 180, 'restartButton', function() {
-		restart(o)
-	}, this, 1, 0);
-	pauseMenu.addChild(this.restartButton);
-
-	continueButton = this.game.add.button(-50, 180, 'continueButton', function() {
-		continueGame(o)
-	}, this, 1, 0);
-	pauseMenu.addChild(this.continueButton);
-
-	quitButton = this.game.add.button(210, 185, 'quitButton', quitGame, this, 1, 0);
-	pauseMenu.addChild(this.quitButton);
-
-}
-
-/* quits the game - used in the pause menu */
-function quitGame() {
-	isPaused = false;
-	game.state.start('intro');
-	pauseMenuActive = true;
-}
-
-/* restart the level - used in the pause menu */
-function restart(o) {
-	isPaused = false;
-	lifeCounter = 3;
-	o.loadLevel("restart");
-	pauseMenuActive = true;
-}
 
 /* continue the game - used in the pause menu */
 function continueGame(o) {
@@ -803,4 +750,51 @@ function changeSoundOnPauseMenu() {
 	soundControl = new button(game, -20, -70, (soundIsOn ? 1 : 0), changeSoundOnPauseMenu, 'controlSound');
 	pauseMenu.addChild(soundControl);
 
+}
+
+/* show the pause menu */
+function createPauseMenu(o) {
+
+	isPaused = true;
+	pauseMenuActive = false;
+
+	pauseMenu = game.add.sprite(400, 300, 'pauseBackground');
+	pauseMenu.alpha = 1.0;
+	pauseMenu.anchor.set(0.5);
+	pauseMenu.fixedToCamera = true;
+
+	musicControl = new button(this.game, 75, -165, (musicOn ? 1 : 0), changeMusicOnPauseMenu, 'controlSound');
+	pauseMenu.addChild(musicControl);
+
+	soundControl = new button(this.game, -20, -70, (soundIsOn ? 1 : 0), changeSoundOnPauseMenu, 'controlSound');
+	pauseMenu.addChild(soundControl);
+
+	restartButton = this.game.add.button(-300, 180, 'restartButton', function() {
+		restart(o)
+	}, this, 1, 0);
+	pauseMenu.addChild(this.restartButton);
+
+	continueButton = this.game.add.button(-50, 180, 'continueButton', function() {
+		continueGame(o)
+	}, this, 1, 0);
+	pauseMenu.addChild(this.continueButton);
+
+	quitButton = this.game.add.button(210, 185, 'quitButton', quitGame, this, 1, 0);
+	pauseMenu.addChild(this.quitButton);
+
+}
+
+/* quits the game - used in the pause menu */
+function quitGame() {
+	isPaused = false;
+	game.state.start('intro');
+	pauseMenuActive = true;
+}
+
+/* restart the level - used in the pause menu */
+function restart(o) {
+	isPaused = false;
+	lifeCounter = 3;
+	o.loadLevel("restart");
+	pauseMenuActive = true;
 }

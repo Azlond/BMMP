@@ -1,25 +1,23 @@
-var Astronaut = function(game, x, y) {
-
-	this.game = game;
+var Astronaut = function(x, y) {
 
 	switch (activeAstronaut) {
-	case 1: // Jennifer
-		Phaser.Sprite.call(this, this.game, x, y, 'char1');
-		break;
-	case 2: // Patrick
-		Phaser.Sprite.call(this, this.game, x, y, 'char2');
-		break;
-	case 3: // Carla
-		Phaser.Sprite.call(this, this.game, x, y, 'char3');
-		break;
-	case 4: // Hector
-		Phaser.Sprite.call(this, this.game, x, y, 'char4');
-		break;
-	default:
-		break;
+		case 1: // Jennifer
+			Phaser.Sprite.call(this, game, x, y, 'char1');
+			break;
+		case 2: // Patrick
+			Phaser.Sprite.call(this, game, x, y, 'char2');
+			break;
+		case 3: // Carla
+			Phaser.Sprite.call(this, game, x, y, 'char3');
+			break;
+		case 4: // Hector
+			Phaser.Sprite.call(this, game, x, y, 'char4');
+			break;
+		default:
+			break;
 	}
 
-	this.game.physics.arcade.enableBody(this);
+	game.physics.arcade.enableBody(this);
 
 	this.body.gravity.y = 1000;
 	this.body.maxVelocity.y = 500;

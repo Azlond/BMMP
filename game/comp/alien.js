@@ -1,6 +1,5 @@
-var Alien = function(game, x, y, distance) {
+var Alien = function(x, y, distance) {
 
-	this.game = game;
 	this.distance = distance;
 	this.turnLTimer = 0;
 	this.timerLSet = false;
@@ -9,9 +8,9 @@ var Alien = function(game, x, y, distance) {
 
 	this.pathCounter = 0;
 
-	Phaser.Sprite.call(this, this.game, x, y, 'alien');
+	Phaser.Sprite.call(this, game, x, y, 'alien');
 
-	this.game.physics.arcade.enableBody(this);
+	game.physics.arcade.enableBody(this);
 
 	this.body.collideWorldBounds = false;
 	this.body.velocity.x = 50;

@@ -11,7 +11,7 @@ var soundIsOn = true;
 var popup;
 var background;
 var soundControl;
-var musicControl
+var musicControl;
 var background_music;
 var missionVideo;
 var introVideo;
@@ -102,6 +102,15 @@ menu.prototype = {
 	}
 };
 
+function button(game, x, y, frame, option, keyName) {
+	this.game = game;
+	Phaser.Sprite.call(this, this.game, x, y, keyName, frame);
+	this.inputEnabled = true;
+	this.input.priorityID = 1;
+	this.input.useHandCursor = true;
+	this.events.onInputDown.add(option, this);
+}
+
 function changeMusic() {
 	if (soundIsOn) {
 		buttonSound.play('', 0, 0.2);
@@ -111,58 +120,6 @@ function changeMusic() {
 	musicControl = new button(game, mControlX, mControlY, (musicOn ? 1 : 0), changeMusic, 'controlSound');
 	popup.addChild(musicControl);
 	background_music.pause();
-}
-
-function scoreOption() {
-	popup = game.add.sprite(400, 300, 'scoreBackground');
-	popup.alpha = 1.0;
-	popup.anchor.set(0.5);
-
-	soundButton.kill();
-	scoreButton.kill();
-	startButton.kill();
-	player1.kill();
-	player2.kill();
-	player3.kill();
-	player4.kill();
-
-	closeButton = game.add.button(-316, 188, 'closeButton', closeWindow, this, 1, 0);
-	popup.addChild(closeButton);
-
-	resetButton = game.add.button(260, 188, 'resetButton', resetScore, this, 1, 0);
-	popup.addChild(resetButton);
-
-	var highScoreList = readLocal();
-
-	if (highScoreList != null) {
-		highScoreList = sortHighScore(highScoreList);
-
-		var firstPlace = 125;
-
-		highScoreGroup = game.add.group();
-
-		for (i = 0; (i < highScoreList.length) && (i < 10); i++) {
-
-			var p = game.add.text(190, firstPlace, i + 1 + ". ", {
-				font : '30px Raleway',
-				fill : '#ffffff'
-			});
-
-			var n = game.add.text(250, firstPlace, highScoreList[i][0], {
-				font : '30px Raleway',
-				fill : '#ffffff'
-			});
-
-			var s = game.add.text(550, firstPlace, highScoreList[i][1], {
-				font : '30px Raleway',
-				fill : '#ffffff'
-			});
-			highScoreGroup.add(n);
-			highScoreGroup.add(s);
-			highScoreGroup.add(p);
-			firstPlace += 35;
-		}
-	}
 }
 
 function changeSound() {
@@ -332,6 +289,58 @@ function resetScore() {
 	scoreOption();
 }
 
+function scoreOption() {
+	popup = game.add.sprite(400, 300, 'scoreBackground');
+	popup.alpha = 1.0;
+	popup.anchor.set(0.5);
+
+	soundButton.kill();
+	scoreButton.kill();
+	startButton.kill();
+	player1.kill();
+	player2.kill();
+	player3.kill();
+	player4.kill();
+
+	closeButton = game.add.button(-316, 188, 'closeButton', closeWindow, this, 1, 0);
+	popup.addChild(closeButton);
+
+	resetButton = game.add.button(260, 188, 'resetButton', resetScore, this, 1, 0);
+	popup.addChild(resetButton);
+
+	var highScoreList = readLocal();
+
+	if (highScoreList != null) {
+		highScoreList = sortHighScore(highScoreList);
+
+		var firstPlace = 125;
+
+		highScoreGroup = game.add.group();
+
+		for (i = 0; (i < highScoreList.length) && (i < 10); i++) {
+
+			var p = game.add.text(190, firstPlace, i + 1 + ". ", {
+				font : '30px Raleway',
+				fill : '#ffffff'
+			});
+
+			var n = game.add.text(250, firstPlace, highScoreList[i][0], {
+				font : '30px Raleway',
+				fill : '#ffffff'
+			});
+
+			var s = game.add.text(550, firstPlace, highScoreList[i][1], {
+				font : '30px Raleway',
+				fill : '#ffffff'
+			});
+			highScoreGroup.add(n);
+			highScoreGroup.add(s);
+			highScoreGroup.add(p);
+			firstPlace += 35;
+		}
+	}
+}
+
 /* bubbleSort */
 function sortHighScore(highScoreList) {
 	var swapped;
@@ -429,15 +438,6 @@ function updateName(e) {
 		var str = String.fromCharCode(e.keyCode);
 		playerName.text = playerName.text + str;
 	}
-}
-
-function button(game, x, y, frame, option, keyName) {
-	this.game = game;
-	Phaser.Sprite.call(this, this.game, x, y, keyName, frame);
-	this.inputEnabled = true;
-	this.input.priorityID = 1;
-	this.input.useHandCursor = true;
-	this.events.onInputDown.add(option, this);
 }
 
 button.prototype = Object.create(Phaser.Sprite.prototype);
