@@ -34,7 +34,7 @@ var pauseMenuActive = true;
 var videoOn = false;
 var isPaused = false;
 
-var cutscene;
+var cutScene;
 
 play.prototype = {
 
@@ -558,6 +558,11 @@ play.prototype = {
 
 			videoBackground = game.add.sprite(((this.levelNumber == 1) ? 1600 : 4000), 8, 'startBackground');
 			cutScene = game.add.video(charNames[activeAstronaut] + 'animation' + this.levelNumber);
+			if (!soundIsOn) {
+				cutScene.mute = true;
+			} else {
+				cutScene.mute = false;
+			}
 			cutScene.add(videoBackground);
 			cutScene.play();
 

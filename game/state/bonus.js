@@ -1,13 +1,6 @@
 function bonus() {
 }
 
-var jenniferanimation4;
-var carlaanimation4;
-var hectoranimation4;
-var patrickanimation4;
-
-var videoBackground;
-
 bonus.prototype = {
 
 	create : function() {
@@ -35,11 +28,6 @@ bonus.prototype = {
 		this.rocket.animations.play('empty');
 		this.game.camera.follow(this.rocket);
 		this.rocket.body.bounce.set(1.0);
-
-		this.jenniferanimation4 = this.game.add.video('jenniferanimation4');
-		this.carlaanimation4 = this.game.add.video('carlaanimation4');
-		this.hectoranimation4 = this.game.add.video('hectoranimation4');
-		this.patrickanimation4 = this.game.add.video('patrickanimation4');
 
 		this.map = game.add.tilemap('bonusLevel');
 
@@ -131,24 +119,12 @@ bonus.prototype = {
 		this.rocket.body.velocity.y -= 1000;
 	},
 
-	saveLocal : function() {
-		if (score != 0) {
-			var scores = localStorage.getItem('highScore') || [];
-
-			if (scores.length != 0) {
-				scores = JSON.parse(scores);
-			}
-			this.parseJson(scores);
-		}
-	},
-
 	parseJson : function(json) {
 		var pName = playerName.text.toString();
 		var playerExists = false;
 
 		if (json.length == 0) {
-			var tjson = [ pName, score ];
-			json.push(tjson);
+			json.push([ pName, score ]);
 			localStorage.setItem("highScore", JSON.stringify(json));
 		} else {
 			for (i = 0; i < json.length; i++) {
@@ -160,17 +136,24 @@ bonus.prototype = {
 					playerExists = true;
 					if (playerHighScore < score) {
 						json.splice(i, 1);
-						var tjson = [ pName, score ];
-						json.push(tjson);
+						json.push([ pName, score ]);
 						localStorage.setItem("highScore", JSON.stringify(json));
 					}
 				}
 			}
 			if (!playerExists) {
-				var tjson = [ pName, score ];
-				json.push(tjson);
+				json.push([ pName, score ]);
 				localStorage.setItem("highScore", JSON.stringify(json));
 			}
 		}
+	},
+
+	saveLocal : function() {
+		var scores = localStorage.getItem('highScore') || [];
+
+		if (scores.length != 0) {
+			scores = JSON.parse(scores);
+		}
+		this.parseJson(scores);
 	}
 };

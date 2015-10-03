@@ -383,6 +383,9 @@ function soundOption() {
 function startGame() {
 	introVideo.stop();
 	missionVideo = game.add.video('mission');
+	if (!soundIsOn) {
+		missionVideo.mute = true;
+	}
 	missionVideo.play(true);
 	introFinished = false;
 	missionVideo.loop = false;
@@ -399,6 +402,9 @@ function startIntro() {
 	if (!(str.length < 1) && activeAstronaut != null) {
 		background.kill();
 		introVideo = this.game.add.video('intro');
+		if (!soundIsOn) {
+			introVideo.mute = true;
+		}
 		introVideo.play(true);
 		introVideo.loop = false;
 		introVideo.onComplete.add(startGame);
