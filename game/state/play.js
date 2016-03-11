@@ -3,11 +3,10 @@
  * Levels, Player, Collectables and Enemy interactions are happening here
  */
 
-function play() {
-}
+function play() {}
 
 var score;
-var oldScore;// the score at the beginning of a level - needed for restarting a level
+var oldScore; // the score at the beginning of a level - needed for restarting a level
 var lifeCounter; // the amount of lives the player has
 var oxygenCounter;
 var pathCounter = 0;
@@ -38,7 +37,7 @@ var cutScene;
 
 play.prototype = {
 
-	create : function() {
+	create: function () {
 
 		/* Physics for the platforms */
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -76,7 +75,7 @@ play.prototype = {
 
 	},
 
-	update : function() {
+	update: function () {
 
 		/* collision between astronaut/alien/rocket and the platform/ground layer */
 		this.game.physics.arcade.collide(this.astronaut, this.layer);
@@ -173,9 +172,7 @@ play.prototype = {
 				 */
 
 				/* enemy facing right,the Astronaut is within walking distance of the alien and the alien is facing the wrong direction */
-				if ((enemy.scale.x == 1)
-						&& ((this.astronaut.body.x > (enemy.body.x - enemy.pathCounter)) && (this.astronaut.body.x < (enemy.body.x + (enemy.distance - enemy.pathCounter))))
-						&& (this.astronaut.body.x < enemy.body.x)) {
+				if ((enemy.scale.x == 1) && ((this.astronaut.body.x > (enemy.body.x - enemy.pathCounter)) && (this.astronaut.body.x < (enemy.body.x + (enemy.distance - enemy.pathCounter)))) && (this.astronaut.body.x < enemy.body.x)) {
 
 					if (!enemy.timerLSet) {
 						enemy.turnLTimer = game.time.now + 100;
@@ -188,9 +185,7 @@ play.prototype = {
 						enemy.timerLSet = false;
 					}
 					/* enemy facing left,the Astronaut is within walking distance of the alien and the alien is facing the wrong direction */
-				} else if ((enemy.scale.x != 1)
-						&& ((this.astronaut.body.x > (enemy.body.x - (enemy.distance - enemy.pathCounter))) && (this.astronaut.body.x < (enemy.body.x + enemy.pathCounter)))
-						&& (this.astronaut.body.x > enemy.body.x)) {
+				} else if ((enemy.scale.x != 1) && ((this.astronaut.body.x > (enemy.body.x - (enemy.distance - enemy.pathCounter))) && (this.astronaut.body.x < (enemy.body.x + enemy.pathCounter))) && (this.astronaut.body.x > enemy.body.x)) {
 
 					if (!enemy.timerRSet) {
 						enemy.turnRTimer = game.time.now + 100;
@@ -239,12 +234,12 @@ play.prototype = {
 	},
 
 	/* change the sprite for the oxygen counter */
-	changeDisplay : function() {
+	changeDisplay: function () {
 		if (oxygenCounter > 3) {
 			oxygenTank.frame = oxygenCounter;
 			--oxygenCounter;
 		} else if (oxygenCounter < 4 && oxygenCounter > 0) {
-			oxygenTank.animations.add('blink1', [ oxygenCounter, 0 ], 5, true);
+			oxygenTank.animations.add('blink1', [oxygenCounter, 0], 5, true);
 			oxygenTank.animations.play('blink1');
 			--oxygenCounter;
 		} else if (oxygenCounter === 0) {
@@ -263,7 +258,7 @@ play.prototype = {
 	},
 
 	/* check if the player is dead */
-	checkLifeCounter : function() {
+	checkLifeCounter: function () {
 		if (lifeCounter == 0) {
 			if (soundIsOn) {
 				gameOverSound.play();
@@ -273,7 +268,7 @@ play.prototype = {
 	},
 
 	/* collecting an element and removing it from the game */
-	collectElement : function(astronaut, tile) {
+	collectElement: function (astronaut, tile) {
 
 		var str = astronaut.key.toString();
 		/* check to see if it is actually the astronaut collecting the element and not an alien */
@@ -297,7 +292,7 @@ play.prototype = {
 	/*
 	 * collect Oxygen bottles, refill the oxygen tank
 	 */
-	collectOxygen : function(astronaut, oxygenBottle) {
+	collectOxygen: function (astronaut, oxygenBottle) {
 		oxygenBottle.kill();
 		this.timer.stop();
 		if (soundIsOn) {
@@ -315,7 +310,7 @@ play.prototype = {
 	/*
 	 * called when the player overlaps with the tools
 	 */
-	collectTools : function(astronaut, tools) {
+	collectTools: function (astronaut, tools) {
 
 		if (tools == this.collectpliers) {
 			this.nopliers.kill();
@@ -353,7 +348,7 @@ play.prototype = {
 	 * 
 	 * lifeTimer is needed to make the player survive the contact after a life has already been lost
 	 */
-	collideWithAlien : function(astronaut, alien) {
+	collideWithAlien: function (astronaut, alien) {
 		if (game.time.now > this.lifeTimer) {
 			lifeCounter--;
 			if (soundIsOn) {
@@ -368,9 +363,7 @@ play.prototype = {
 	},
 
 	/* go to next level */
-	endLevel : function(o) {
-		o.timer3.stop();
-
+	endLevel: function (o) {
 		cutScene.stop();
 
 		o.levelNumber += 1;
@@ -387,7 +380,7 @@ play.prototype = {
 	 * awards an extra life if the player has less then 3 and has collected all elements
 	 * 
 	 */
-	hitFinish : function(astronaut, finish) {
+	hitFinish: function (astronaut, finish) {
 
 		if (this.toolsCollected == 3) {
 			this.astronaut.kill();
@@ -407,7 +400,7 @@ play.prototype = {
 			}
 
 			this.timer2 = game.time.create(false);
-			this.timer2.add(3500, function() {
+			this.timer2.add(3500, function () {
 				this.playVideo(this)
 			}, this);
 			this.timer2.start();
@@ -416,7 +409,7 @@ play.prototype = {
 	},
 
 	/* function to load each level */
-	loadLevel : function(string) {
+	loadLevel: function (string) {
 
 		/* reset values */
 
@@ -478,7 +471,7 @@ play.prototype = {
 		this.map.setCollisionBetween(1, 39);
 
 		/* player may only collide with platform top, so that it is possible to jump on one from beneath it. */
-		this.map.forEach(function(t) {
+		this.map.forEach(function (t) {
 			if (t) {
 				t.collideDown = false;
 				t.collideLeft = false;
@@ -543,28 +536,28 @@ play.prototype = {
 		this.game.physics.arcade.enableBody(this.rocket);
 		this.rocket.body.allowGravity = false;
 		this.rocket.body.immovable = true;
-		this.rocket.animations.add('empty', [ 0 ], 1, true);
-		this.rocket.animations.add('full', [ 1 ], 1, true);
+		this.rocket.animations.add('empty', [0], 1, true);
+		this.rocket.animations.add('full', [1], 1, true);
 		this.rocket.animations.play('empty');
 
 		/* adds the character */
 		this.astronaut = new Astronaut(100, 440);
 		this.game.add.existing(this.astronaut);
-		this.astronaut.animations.add('walk', [ 1, 2, 3, 4, 5 ], 26, true);
-		this.astronaut.animations.add('jump', [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ], 26, true);
-		this.astronaut.animations.add('stop', [ 0 ], 26, true);
+		this.astronaut.animations.add('walk', [1, 2, 3, 4, 5], 26, true);
+		this.astronaut.animations.add('jump', [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 26, true);
+		this.astronaut.animations.add('stop', [0], 26, true);
 		this.astronaut.anchor.setTo(0.5, 0.5);
 		this.game.camera.follow(this.astronaut);
 
 		/* update the score */
 		score = oldScore;
 
-		/* add core to toolbar */
+		/* add Score to toolbar */
 		this.scoreElement = game.add.image(9, 10, 'elementScore');
 		this.scoreElement.fixedToCamera = true;
 		this.scoreText = game.add.text(45, 10, score, {
-			font : '30px Raleway',
-			fill : '#ffffff'
+			font: '30px Raleway',
+			fill: '#ffffff'
 		});
 		this.scoreText.fixedToCamera = true;
 
@@ -585,8 +578,8 @@ play.prototype = {
 		for (i = 1; i <= amountAliens; i++) {
 			this.alien = new Alien(alienCoordinates["alien" + i][0], alienCoordinates["alien" + i][1], alienCoordinates["alien" + i][2]);
 			this.game.add.existing(this.alien);
-			this.alien.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 7, true);
-			this.alien.animations.add('stop', [ 0 ], 7, true);
+			this.alien.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7], 7, true);
+			this.alien.animations.add('stop', [0], 7, true);
 			this.alien.anchor.setTo(0.5, 0.5);
 			this.alien.animations.play('walk');
 			alienGroup.add(this.alien);
@@ -620,7 +613,7 @@ play.prototype = {
 	},
 
 	/* stop Astronaut and alien movement */
-	pauseGame : function() {
+	pauseGame: function () {
 		this.astronaut.body.velocity.x = 0;
 		this.astronaut.body.velocity.y = 0;
 		if (this.rocket.body.velocity.y != 0) {
@@ -640,7 +633,7 @@ play.prototype = {
 	},
 
 	/* play the cutScene between levels */
-	playVideo : function(o) {
+	playVideo: function (o) {
 		this.timer2.stop();
 		background_music.stop();
 		videoOn = true;
@@ -651,12 +644,6 @@ play.prototype = {
 		if (pauseMenu != null) {
 			pauseMenu.kill();
 		}
-
-		this.timer3 = game.time.create(false);
-		this.timer3.add(20000, function() {
-			o.endLevel(o)
-		}, this);
-		this.timer3.start();
 
 		if (this.levelNumber < this.finalLevel) {
 
@@ -669,6 +656,9 @@ play.prototype = {
 			}
 			cutScene.add(videoBackground);
 			cutScene.play();
+			cutScene.onComplete.add(function () {
+				o.endLevel(o);
+			}, this);
 
 			videoBackground.bringToTop();
 
@@ -683,7 +673,7 @@ play.prototype = {
 	},
 
 	/* pause the game */
-	startPauseMenu : function() {
+	startPauseMenu: function () {
 		pauseMenuActive = true;
 		this.timer4.stop();
 
@@ -694,7 +684,7 @@ play.prototype = {
 	 * 
 	 * Different value for the tutorial, to make reading the instructions easier
 	 */
-	timeDown : function() {
+	timeDown: function () {
 		var countdown = ((this.levelNumber == 1) ? 5000 : 3000);
 		this.timer = game.time.create(false);
 		this.timer.loop(countdown, this.changeDisplay, this);
@@ -769,12 +759,12 @@ function createPauseMenu(o) {
 	soundControl = new button(this.game, -20, -70, (soundIsOn ? 1 : 0), changeSoundOnPauseMenu, 'controlSound');
 	pauseMenu.addChild(soundControl);
 
-	restartButton = this.game.add.button(-300, 180, 'restartButton', function() {
+	restartButton = this.game.add.button(-300, 180, 'restartButton', function () {
 		restart(o)
 	}, this, 1, 0);
 	pauseMenu.addChild(this.restartButton);
 
-	continueButton = this.game.add.button(-50, 180, 'continueButton', function() {
+	continueButton = this.game.add.button(-50, 180, 'continueButton', function () {
 		continueGame(o)
 	}, this, 1, 0);
 	pauseMenu.addChild(this.continueButton);
