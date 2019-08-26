@@ -1328,13 +1328,13 @@ class Menu extends Phaser.State {
             this.media.buttonSound.play('', 0, 0.2);
         }
         this.musicControl.setFrames(+(!this.musicControl.frame), +(!this.musicControl.frame));
-        this.playerConfig.sound.musicOn = !this.playerConfig.sound.musicOn;
         if (this.playerConfig.sound.musicOn) {
             this.media.backgroundMusic.pause();
         }
         else {
-            this.media.backgroundMusic.loopFull();
+            this.media.backgroundMusic.resume();
         }
+        this.playerConfig.sound.musicOn = !this.playerConfig.sound.musicOn;
     }
     changeSound() {
         console.log('MENU_CHANGESOUND');
