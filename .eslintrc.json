@@ -49,7 +49,7 @@
         "jsdoc/require-returns-description": 1,
         "jsdoc/require-returns-type": 1,
         "jsdoc/valid-types": 1,
-        "import/prefer-default-export": false,
+        "import/prefer-default-export": 0,
         "no-plusplus": 0
     },
     "globals": {
