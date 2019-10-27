@@ -15,4 +15,8 @@ export class Button {
         this.button.input.useHandCursor = true;
         // button.events.onInputDown.add(cb, this);
     }
+
+    getButton() {
+        return this.button;
+    }
 }

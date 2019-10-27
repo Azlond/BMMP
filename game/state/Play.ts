@@ -126,9 +126,9 @@ export default class Play extends Phaser.State {
 
     musicOn: boolean;
 
-    musicControl: any;
+    musicControl: Button;
 
-    soundControl: any;
+    soundControl: Button;
 
     life: Phaser.Sprite;
 
@@ -162,9 +162,7 @@ export default class Play extends Phaser.State {
             this.media.buttonSound.play('', 0, 0.2);
         }
         this.musicOn = !this.musicOn;
-        this.musicControl.kill();
-        this.musicControl = new Button(this.game, 75, -165, this.musicOn ? 1 : 0, this.changeMusicOnPauseMenu, 'controlSound');
-        this.pauseMenu.addChild(this.musicControl);
+        this.musicControl.getButton().setFrames(this.musicOn ? 1 : 0);
         this.media.backgroundMusic.resume();
     }
 
@@ -174,9 +172,7 @@ export default class Play extends Phaser.State {
             this.media.buttonSound.play('', 0, 0.2);
         }
         this.soundIsOn = !this.soundIsOn;
-        this.soundControl.kill();
-        this.soundControl = new Button(this.game, -20, -70, this.soundIsOn ? 1 : 0, this.changeSoundOnPauseMenu, 'controlSound');
-        this.pauseMenu.addChild(this.soundControl);
+        this.soundControl.getButton().setFrames(this.soundIsOn ? 1 : 0);
     }
 
     /* check if the player is dead */
@@ -343,11 +339,11 @@ export default class Play extends Phaser.State {
         this.pauseMenu.anchor.set(0.5);
         this.pauseMenu.fixedToCamera = true;
 
-        this.musicControl = new Button(this.game, 75, -165, this.musicOn ? 1 : 0, this.changeMusicOnPauseMenu, 'controlSound');
-        this.pauseMenu.addChild(this.musicControl);
+        this.musicControl = new Button(this.game, 75, -165, this.musicOn ? 1 : 0, () => this.changeMusicOnPauseMenu(), 'controlSound');
+        this.pauseMenu.addChild(this.musicControl.getButton());
 
-        this.soundControl = new Button(this.game, -20, -70, this.soundIsOn ? 1 : 0, this.changeSoundOnPauseMenu, 'controlSound');
-        this.pauseMenu.addChild(this.soundControl);
+        this.soundControl = new Button(this.game, -20, -70, this.soundIsOn ? 1 : 0, () => this.changeSoundOnPauseMenu(), 'controlSound');
+        this.pauseMenu.addChild(this.soundControl.getButton());
 
         this.restartButton = this.game.add.button(
             -300,
