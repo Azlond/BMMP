@@ -382,9 +382,10 @@ class Play extends Phaser.State {
             this.media.buttonSound.play('', 0, 0.2);
         }
         this.musicOn = !this.musicOn;
-        this.musicControl.kill();
-        this.musicControl = new Button_1.Button(this.game, 75, -165, this.musicOn ? 1 : 0, this.changeMusicOnPauseMenu, 'controlSound');
-        this.pauseMenu.addChild(this.musicControl);
+        // this.musicControl.getButton().kill();
+        this.musicControl.getButton().setFrames(this.musicOn ? 1 : 0);
+        // this.musicControl = new Button(this.game, 75, -165, this.musicOn ? 1 : 0, () => this.changeMusicOnPauseMenu(), 'controlSound');
+        // this.pauseMenu.addChild(this.musicControl.getButton());
         this.media.backgroundMusic.resume();
     }
     /* edit the sound settings */
@@ -393,9 +394,10 @@ class Play extends Phaser.State {
             this.media.buttonSound.play('', 0, 0.2);
         }
         this.soundIsOn = !this.soundIsOn;
-        this.soundControl.kill();
-        this.soundControl = new Button_1.Button(this.game, -20, -70, this.soundIsOn ? 1 : 0, this.changeSoundOnPauseMenu, 'controlSound');
-        this.pauseMenu.addChild(this.soundControl);
+        // this.soundControl.getButton().kill();
+        this.soundControl.getButton().setFrames(this.soundIsOn ? 1 : 0);
+        // this.soundControl = new Button(this.game, -20, -70, this.soundIsOn ? 1 : 0, () => this.changeSoundOnPauseMenu(), 'controlSound');
+        // this.pauseMenu.addChild(this.soundControl.getButton());
     }
     /* check if the player is dead */
     checkLifeCounter() {
@@ -541,10 +543,10 @@ class Play extends Phaser.State {
         this.pauseMenu.alpha = 1.0;
         this.pauseMenu.anchor.set(0.5);
         this.pauseMenu.fixedToCamera = true;
-        this.musicControl = new Button_1.Button(this.game, 75, -165, this.musicOn ? 1 : 0, this.changeMusicOnPauseMenu, 'controlSound');
-        this.pauseMenu.addChild(this.musicControl);
-        this.soundControl = new Button_1.Button(this.game, -20, -70, this.soundIsOn ? 1 : 0, this.changeSoundOnPauseMenu, 'controlSound');
-        this.pauseMenu.addChild(this.soundControl);
+        this.musicControl = new Button_1.Button(this.game, 75, -165, this.musicOn ? 1 : 0, () => this.changeMusicOnPauseMenu(), 'controlSound');
+        this.pauseMenu.addChild(this.musicControl.getButton());
+        this.soundControl = new Button_1.Button(this.game, -20, -70, this.soundIsOn ? 1 : 0, () => this.changeSoundOnPauseMenu(), 'controlSound');
+        this.pauseMenu.addChild(this.soundControl.getButton());
         this.restartButton = this.game.add.button(-300, 180, 'restartButton', () => {
             this.restart();
         }, this, 1, 0);
@@ -1063,6 +1065,9 @@ class Button {
         this.button.input.priorityID = 1;
         this.button.input.useHandCursor = true;
         // button.events.onInputDown.add(cb, this);
+    }
+    getButton() {
+        return this.button;
     }
 }
 exports.Button = Button;
