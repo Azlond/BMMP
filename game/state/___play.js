@@ -648,7 +648,7 @@ play.prototype = {
 		if (this.levelNumber < this.finalLevel) {
 
 			videoBackground = game.add.sprite(((this.levelNumber == 1) ? 1600 : 4000), 8, 'startBackground');
-			cutScene = game.add.video(charNames[activeAstronaut] + 'animation' + this.levelNumber);
+			cutScene = game.add.video(`${charNames[activeAstronaut]}animation${this.levelNumber}`, `./assets/videos/${charNames[activeAstronaut]}animation${this.levelNumber}.mkv`);
 			if (!soundIsOn) {
 				cutScene.mute = true;
 			} else {

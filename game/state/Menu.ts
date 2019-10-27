@@ -477,7 +477,7 @@ export default class Menu extends Phaser.State {
         console.log('MENU_STARTGAME');
 
         this.introVideo.stop();
-        this.missionVideo = this.game.add.video('mission');
+        this.missionVideo = this.game.add.video('mission', './assets/videos/Mission.mkv');
         if (!this.playerConfig.sound.soundOn) {
             this.missionVideo.mute = true;
         }
@@ -498,7 +498,7 @@ export default class Menu extends Phaser.State {
 
         if (!(str.length < 1) && this.activeAstronaut != null) {
             this.background.destroy();
-            this.introVideo = this.game.add.video('intro');
+            this.introVideo = this.game.add.video('intro', './assets/videos/Intro.mkv');
             if (!this.playerConfig.sound.soundOn) {
                 this.introVideo.mute = true;
             }

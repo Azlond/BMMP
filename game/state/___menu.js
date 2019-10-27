@@ -391,7 +391,7 @@ function soundOption() {
 
 function startGame() {
 	introVideo.stop();
-	missionVideo = game.add.video('mission');
+	missionVideo = game.add.video('mission', './assets/videos/Mission.mkv');
 	if (!soundIsOn) {
 		missionVideo.mute = true;
 	}
@@ -410,7 +410,7 @@ function startIntro() {
 
 	if (!(str.length < 1) && activeAstronaut != null) {
 		background.kill();
-		introVideo = this.game.add.video('intro');
+		introVideo = this.game.add.video('intro', './assets/videos/Intro.mkv');
 		if (!soundIsOn) {
 			introVideo.mute = true;
 		}
