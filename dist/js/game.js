@@ -189,24 +189,24 @@ class Loading extends Phaser.State {
         //     fill: '#ffffff'
         // });
         /* Videos */
-        this.game.load.video('intro', './assets/videos/Intro.mp4');
-        this.game.load.video('mission', './assets/videos/Mission.mp4');
-        this.game.load.video('jenniferanimation1', './assets/videos/jennifer_animation1.mp4');
-        this.game.load.video('jenniferanimation2', './assets/videos/jennifer_animation2.mp4');
-        this.game.load.video('jenniferanimation3', './assets/videos/jennifer_animation3.mp4');
-        this.game.load.video('jenniferanimation4', './assets/videos/jennifer_animation4.mp4');
-        this.game.load.video('hectoranimation1', './assets/videos/hector_animation1.mp4');
-        this.game.load.video('hectoranimation2', './assets/videos/hector_animation2.mp4');
-        this.game.load.video('hectoranimation3', './assets/videos/hector_animation3.mp4');
-        this.game.load.video('hectoranimation4', './assets/videos/hector_animation4.mp4');
-        this.game.load.video('carlaanimation1', './assets/videos/carla_animation1.mp4');
-        this.game.load.video('carlaanimation2', './assets/videos/carla_animation2.mp4');
-        this.game.load.video('carlaanimation3', './assets/videos/carla_animation3.mp4');
-        this.game.load.video('carlaanimation4', './assets/videos/carla_animation4.mp4');
-        this.game.load.video('patrickanimation1', './assets/videos/patrick_animation1.mp4');
-        this.game.load.video('patrickanimation2', './assets/videos/patrick_animation2.mp4');
-        this.game.load.video('patrickanimation3', './assets/videos/patrick_animation3.mp4');
-        this.game.load.video('patrickanimation4', './assets/videos/patrick_animation4.mp4');
+        this.game.load.video('intro', './assets/videos/Intro.mkv');
+        this.game.load.video('mission', './assets/videos/Mission.mkv');
+        this.game.load.video('jenniferanimation1', './assets/videos/jennifer_animation1.mkv');
+        this.game.load.video('jenniferanimation2', './assets/videos/jennifer_animation2.mkv');
+        this.game.load.video('jenniferanimation3', './assets/videos/jennifer_animation3.mkv');
+        this.game.load.video('jenniferanimation4', './assets/videos/jennifer_animation4.mkv');
+        this.game.load.video('hectoranimation1', './assets/videos/hector_animation1.mkv');
+        this.game.load.video('hectoranimation2', './assets/videos/hector_animation2.mkv');
+        this.game.load.video('hectoranimation3', './assets/videos/hector_animation3.mkv');
+        this.game.load.video('hectoranimation4', './assets/videos/hector_animation4.mkv');
+        this.game.load.video('carlaanimation1', './assets/videos/carla_animation1.mkv');
+        this.game.load.video('carlaanimation2', './assets/videos/carla_animation2.mkv');
+        this.game.load.video('carlaanimation3', './assets/videos/carla_animation3.mkv');
+        this.game.load.video('carlaanimation4', './assets/videos/carla_animation4.mkv');
+        this.game.load.video('patrickanimation1', './assets/videos/patrick_animation1.mkv');
+        this.game.load.video('patrickanimation2', './assets/videos/patrick_animation2.mkv');
+        this.game.load.video('patrickanimation3', './assets/videos/patrick_animation3.mkv');
+        this.game.load.video('patrickanimation4', './assets/videos/patrick_animation4.mkv');
         /* Menu-state images */
         this.game.load.image('startBackground', './assets/menu/startMenu/startBackground.png');
         this.game.load.image('optionBackground', './assets/menu/startMenu/optionBackground.png');
@@ -784,7 +784,7 @@ class Play extends Phaser.State {
         }
         if (this.levelNumber < this.finalLevel) {
             this.videoBackground = this.game.add.sprite(this.levelNumber === 1 ? 1600 : 4000, 8, 'startBackground');
-            this.cutScene = this.game.add.video(`${astronaut_1.charNames[this.activeAstronaut]}animation${this.levelNumber}`);
+            this.cutScene = this.game.add.video(`${astronaut_1.charNames[this.activeAstronaut]}animation${this.levelNumber}`, `./assets/videos/${astronaut_1.charNames[this.activeAstronaut]}animation${this.levelNumber}.mkv`);
             if (!this.soundIsOn) {
                 this.cutScene.mute = true;
             }
@@ -1533,7 +1533,7 @@ class Menu extends Phaser.State {
     startGame() {
         console.log('MENU_STARTGAME');
         this.introVideo.stop();
-        this.missionVideo = this.game.add.video('mission');
+        this.missionVideo = this.game.add.video('mission', './assets/videos/Mission.mkv');
         if (!this.playerConfig.sound.soundOn) {
             this.missionVideo.mute = true;
         }
@@ -1551,7 +1551,7 @@ class Menu extends Phaser.State {
         const str = this.playerNameInputField.text;
         if (!(str.length < 1) && this.activeAstronaut != null) {
             this.background.destroy();
-            this.introVideo = this.game.add.video('intro');
+            this.introVideo = this.game.add.video('intro', './assets/videos/Intro.mkv');
             if (!this.playerConfig.sound.soundOn) {
                 this.introVideo.mute = true;
             }
@@ -1778,7 +1778,7 @@ class Win extends Phaser.State {
     create() {
         this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
-        this.cutScene = this.game.add.video(`${astronaut_1.charNames[this.activeAstronaut]}animation4`);
+        this.cutScene = this.game.add.video(`${astronaut_1.charNames[this.activeAstronaut]}animation4`, `./assets/videos/${astronaut_1.charNames[this.activeAstronaut]}animation4.mkv`);
         this.videoBackground = this.game.add.sprite(0, 0, 'startBackground');
         this.cutScene.add(this.videoBackground);
         this.cutScene.play();
