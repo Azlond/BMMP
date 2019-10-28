@@ -26,8 +26,8 @@ export const amountElements: { [key: string]: number } = {
 };
 
 export const charNames: { [key: number]: string } = {
-    1: 'jennifer',
-    2: 'patrick',
-    3: 'carla',
-    4: 'hector'
+    0: 'jennifer',
+    1: 'patrick',
+    2: 'carla',
+    3: 'hector'
 };
