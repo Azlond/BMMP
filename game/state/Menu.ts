@@ -484,7 +484,7 @@ export default class Menu extends Phaser.State {
         this.missionVideo.play(true);
         this.introFinished = false;
         this.missionVideo.loop = false;
-        this.missionVideo.onComplete.add(this.handleComplete);
+        this.missionVideo.onComplete.add(() => this.handleComplete());
         this.missionVideo.addToWorld(400, 300, 0.5, 0.5);
         this.game.input.keyboard.onUpCallback = (e: KeyboardEvent) => {
             this.handleComplete();
@@ -504,7 +504,7 @@ export default class Menu extends Phaser.State {
             }
             this.introVideo.play(true);
             this.introVideo.loop = false;
-            this.introVideo.onComplete.add(this.startGame);
+            this.introVideo.onComplete.add(() => this.startGame());
             this.introVideo.addToWorld(400, 300, 0.5, 0.5);
             this.game.input.keyboard.onUpCallback = (e: KeyboardEvent) => {
                 this.startGame();

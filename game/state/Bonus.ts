@@ -56,6 +56,8 @@ export default class Bonus extends Phaser.State {
 
     media: Media;
 
+    activeAstronaut: number;
+
     collision() {
         if (this.game.time.now > this.collisionTimer) {
             this.score -= 10;
@@ -134,9 +136,10 @@ export default class Bonus extends Phaser.State {
         this.rocket.body.velocity.y -= 1000;
     }
 
-    init(playerConfig: PlayerConfig, media: Media, score: number) {
+    init(playerConfig: PlayerConfig, media: Media, activeAstronaut: number, score: number) {
         this.playerConfig = playerConfig;
         this.media = media;
+        this.activeAstronaut = activeAstronaut;
         this.score = score;
     }
 
@@ -198,7 +201,7 @@ export default class Bonus extends Phaser.State {
             }
 
             if (this.rocket.body.y <= -100) {
-                this.game.state.start('win');
+                this.game.state.start('win', false, false, this.playerConfig, this.media, this.activeAstronaut);
             }
 
             if (this.rocket.body.velocity.y !== -300 && this.game.time.now > this.collisionTimer) {

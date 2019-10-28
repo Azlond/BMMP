@@ -11,6 +11,10 @@ export default class Win extends Phaser.State {
 
     activeAstronaut: number
 
+    playerConfig: PlayerConfig;
+
+    media: Media;
+
     constructor() {
         super();
         this.videoOn = false;
@@ -25,7 +29,7 @@ export default class Win extends Phaser.State {
         this.videoBackground = this.game.add.sprite(0, 0, 'startBackground');
         this.cutScene.add(this.videoBackground);
         this.cutScene.play();
-        this.cutScene.onComplete.add(this.endIntro, this);
+        this.cutScene.onComplete.add(() => this.endIntro(), this);
     }
 
     endIntro() {
@@ -37,6 +41,12 @@ export default class Win extends Phaser.State {
 
         // var restartButton = this.game.add.button(345.5, 570, 'restartButton', restartGame, this, 1, 0);
         // background.addChild(startButton);
+    }
+
+    init(playerConfig: PlayerConfig, media: Media, activeAstronaut: number) {
+        this.playerConfig = playerConfig;
+        this.media = media;
+        this.activeAstronaut = activeAstronaut;
     }
 
     update() {

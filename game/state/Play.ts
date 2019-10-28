@@ -680,7 +680,7 @@ export default class Play extends Phaser.State {
         } else {
             /* award points for remaining lives */
             this.score += 50 * this.lifeCounter;
-            this.game.state.start('bonus', false, false, this.playerConfig, this.media, this.score);
+            this.game.state.start('bonus', false, false, this.playerConfig, this.media, this.activeAstronaut, this.score);
         }
     }
 
