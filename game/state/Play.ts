@@ -709,7 +709,7 @@ export default class Play extends Phaser.State {
     /* quits thethis.game - used in the pause menu */
     quitGame() {
         this.isPaused = false;
-        this.game.state.start('intro');
+        this.game.state.start('intro', true, false, this.playerConfig, this.media);
         this.pauseMenuActive = true;
     }
 

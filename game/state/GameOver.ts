@@ -24,7 +24,7 @@ export default class GameOver extends Phaser.State {
     }
 
     restartGame() {
-        this.game.state.start('menu', true, false);
+        this.game.state.start('menu', true, false, this.playerConfig, this.media);
         this.introFinished = false;
         if (this.playerConfig.sound.musicOn) {
             this.media.backgroundMusic.play();
