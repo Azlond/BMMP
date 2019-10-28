@@ -382,10 +382,7 @@ class Play extends Phaser.State {
             this.media.buttonSound.play('', 0, 0.2);
         }
         this.musicOn = !this.musicOn;
-        // this.musicControl.getButton().kill();
         this.musicControl.getButton().setFrames(this.musicOn ? 1 : 0);
-        // this.musicControl = new Button(this.game, 75, -165, this.musicOn ? 1 : 0, () => this.changeMusicOnPauseMenu(), 'controlSound');
-        // this.pauseMenu.addChild(this.musicControl.getButton());
         this.media.backgroundMusic.resume();
     }
     /* edit the sound settings */
@@ -394,10 +391,7 @@ class Play extends Phaser.State {
             this.media.buttonSound.play('', 0, 0.2);
         }
         this.soundIsOn = !this.soundIsOn;
-        // this.soundControl.getButton().kill();
         this.soundControl.getButton().setFrames(this.soundIsOn ? 1 : 0);
-        // this.soundControl = new Button(this.game, -20, -70, this.soundIsOn ? 1 : 0, () => this.changeSoundOnPauseMenu(), 'controlSound');
-        // this.pauseMenu.addChild(this.soundControl.getButton());
     }
     /* check if the player is dead */
     checkLifeCounter() {
@@ -786,7 +780,7 @@ class Play extends Phaser.State {
         }
         if (this.levelNumber < this.finalLevel) {
             this.videoBackground = this.game.add.sprite(this.levelNumber === 1 ? 1600 : 4000, 8, 'startBackground');
-            this.cutScene = this.game.add.video(`${astronaut_1.charNames[this.activeAstronaut]}animation${this.levelNumber}`, `./assets/videos/${astronaut_1.charNames[this.activeAstronaut]}animation${this.levelNumber}.mkv`);
+            this.cutScene = this.game.add.video(`${astronaut_1.charNames[this.activeAstronaut]}animation${this.levelNumber}`, `./assets/videos/${astronaut_1.charNames[this.activeAstronaut]}_animation${this.levelNumber}.mkv`);
             if (!this.soundIsOn) {
                 this.cutScene.mute = true;
             }
@@ -1139,10 +1133,10 @@ exports.amountElements = {
     level4: 28
 };
 exports.charNames = {
-    1: 'jennifer',
-    2: 'patrick',
-    3: 'carla',
-    4: 'hector'
+    0: 'jennifer',
+    1: 'patrick',
+    2: 'carla',
+    3: 'hector'
 };
 
 
@@ -1783,7 +1777,7 @@ class Win extends Phaser.State {
     create() {
         this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
-        this.cutScene = this.game.add.video(`${astronaut_1.charNames[this.activeAstronaut]}animation4`, `./assets/videos/${astronaut_1.charNames[this.activeAstronaut]}animation4.mkv`);
+        this.cutScene = this.game.add.video(`${astronaut_1.charNames[this.activeAstronaut]}animation4`, `./assets/videos/${astronaut_1.charNames[this.activeAstronaut]}_animation4.mkv`);
         this.videoBackground = this.game.add.sprite(0, 0, 'startBackground');
         this.cutScene.add(this.videoBackground);
         this.cutScene.play();
