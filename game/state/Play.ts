@@ -664,7 +664,7 @@ export default class Play extends Phaser.State {
 
         if (this.levelNumber < this.finalLevel) {
             this.videoBackground = this.game.add.sprite(this.levelNumber === 1 ? 1600 : 4000, 8, 'startBackground');
-            this.cutScene = this.game.add.video(`${charNames[this.activeAstronaut]}animation${this.levelNumber}`, `./assets/videos/${charNames[this.activeAstronaut]}animation${this.levelNumber}.mkv`);
+            this.cutScene = this.game.add.video(`${charNames[this.activeAstronaut]}animation${this.levelNumber}`, `./assets/videos/${charNames[this.activeAstronaut]}_animation${this.levelNumber}.mkv`);
             if (!this.soundIsOn) {
                 this.cutScene.mute = true;
             } else {

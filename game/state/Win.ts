@@ -20,7 +20,7 @@ export default class Win extends Phaser.State {
         this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
 
-        this.cutScene = this.game.add.video(`${charNames[this.activeAstronaut]}animation4`, `./assets/videos/${charNames[this.activeAstronaut]}animation4.mkv`);
+        this.cutScene = this.game.add.video(`${charNames[this.activeAstronaut]}animation4`, `./assets/videos/${charNames[this.activeAstronaut]}_animation4.mkv`);
 
         this.videoBackground = this.game.add.sprite(0, 0, 'startBackground');
         this.cutScene.add(this.videoBackground);
