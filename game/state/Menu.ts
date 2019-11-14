@@ -1,3 +1,4 @@
+import { Key } from 'ts-key-enum'; //eslint-disable-line
 import { PlayerNames } from './enums'; // eslint-disable-line
 import { Button } from '../comp/Button'; // eslint-disable-line
 /*
@@ -234,10 +235,13 @@ export default class Menu extends Phaser.State {
         );
 
         /* The RegEx only allows letters and backspace */
-        this.game.input.keyboard.onUpCallback = (e: KeyboardEvent) => {
-            if (/8|6[5-9]|7[0-9]|8[0-9]|90/.test(String(e.keyCode))) {
-                //TODO: check regex
-                this.updateName(e);
+        this.game.input.keyboard.onDownCallback = (event: KeyboardEvent) => {
+            const playerName = this.playerNameInputField.text;
+            if (event.key === Key.Backspace) {
+                event.preventDefault();
+                this.playerNameInputField.text = playerName.slice(0, -1);
+            } else if (new RegExp('[a-z]', 'i').test(String.fromCharCode(event.keyCode)) && playerName.length < 13) { //only allow letters, up to a length of 13 characters
+                this.playerNameInputField.text += event.key.toUpperCase();
             }
         };
     }
@@ -352,7 +356,7 @@ export default class Menu extends Phaser.State {
             this.closeWindow,
             this,
             1,
-            0,
+            0
         );
         this.popup.addChild(this.closeButton);
 
@@ -512,21 +516,6 @@ export default class Menu extends Phaser.State {
             if (this.playerConfig.sound.musicOn) {
                 this.media.backgroundMusic.stop();
             }
-        }
-    }
-
-    updateName(e: KeyboardEvent) {
-        console.log('MENU_UPDATENAME');
-
-        let string = this.playerNameInputField.text;
-
-        /* Backspace */
-        if (e.keyCode === 8) {
-            string = string.substring(0, string.length - 1);
-            this.playerNameInputField.text = string;
-        } else if (e.keyCode >= 65 && e.keyCode <= 90 && string.length < 13) {
-            string = String.fromCharCode(e.keyCode);
-            this.playerNameInputField.text = this.playerNameInputField.text + string;
         }
     }
 }
