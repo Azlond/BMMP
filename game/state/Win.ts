@@ -37,10 +37,17 @@ export default class Win extends Phaser.State {
 
         this.cutScene.stop();
 
-        this.game.add.image(0, 0, 'win');
-
-        // var restartButton = this.game.add.button(345.5, 570, 'restartButton', restartGame, this, 1, 0);
-        // background.addChild(startButton);
+        const background = this.game.add.image(0, 0, 'win');
+        const restartButton = this.game.add.button(
+            345.5,
+            570,
+            'restartButton',
+            () => this.game.state.start('intro', true, false, this.playerConfig, this.media),
+            this,
+            1,
+            0
+        );
+        background.addChild(restartButton);
     }
 
     init(playerConfig: PlayerConfig, media: Media, activeAstronaut: number) {
