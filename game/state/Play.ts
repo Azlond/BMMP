@@ -122,10 +122,6 @@ export default class Play extends Phaser.State {
 
     quitButton: Phaser.Button;
 
-    soundIsOn: boolean;
-
-    musicOn: boolean;
-
     musicControl: Button;
 
     soundControl: Button;
@@ -145,7 +141,7 @@ export default class Play extends Phaser.State {
             this.oxygenTank.animations.stop();
             this.oxygenTank.frame = 0;
             this.lifeCounter -= 1;
-            if (this.soundIsOn) {
+            if (this.playerConfig.sound.soundOn) {
                 this.media.loseLifeSound.play();
             }
             this.checkLifeCounter();
@@ -158,27 +154,25 @@ export default class Play extends Phaser.State {
 
     /* edit the music settings */
     changeMusicOnPauseMenu() {
-        if (this.soundIsOn) {
+        if (this.playerConfig.sound.soundOn) {
             this.media.buttonSound.play('', 0, 0.2);
         }
-        this.musicOn = !this.musicOn;
-        this.musicControl.getButton().setFrames(this.musicOn ? 1 : 0);
+        this.musicControl.getButton().setFrames(this.playerConfig.sound.musicOn ? 1 : 0);
         this.media.backgroundMusic.resume();
     }
 
     /* edit the sound settings */
     changeSoundOnPauseMenu() {
-        if (this.soundIsOn) {
+        if (this.playerConfig.sound.soundOn) {
             this.media.buttonSound.play('', 0, 0.2);
         }
-        this.soundIsOn = !this.soundIsOn;
-        this.soundControl.getButton().setFrames(this.soundIsOn ? 1 : 0);
+        this.soundControl.getButton().setFrames(this.playerConfig.sound.soundOn ? 1 : 0);
     }
 
     /* check if the player is dead */
     checkLifeCounter() {
         if (this.lifeCounter === 0) {
-            if (this.soundIsOn) {
+            if (this.playerConfig.sound.soundOn) {
                 this.media.gameOverSound.play();
             }
             this.game.state.start('gameOver', true, false, this.playerConfig, this.media);
@@ -191,7 +185,7 @@ export default class Play extends Phaser.State {
         /* check to see if it is actually the astronaut collecting the element and not an alien */
         if (str.indexOf('char') !== -1) {
             this.map.removeTile(tile.x, tile.y, this.layer);
-            if (this.soundIsOn) {
+            if (this.playerConfig.sound.soundOn) {
                 this.media.collectElementSound.play();
             }
             this.score += 5;
@@ -210,7 +204,7 @@ export default class Play extends Phaser.State {
     collectOxygen(astronaut: Astronaut, oxygenBottle: Phaser.Sprite) {
         oxygenBottle.kill();
         this.timer.stop();
-        if (this.soundIsOn) {
+        if (this.playerConfig.sound.soundOn) {
             this.media.collectOxygenSound.play();
         }
         this.oxygenCounter = 9;
@@ -228,7 +222,7 @@ export default class Play extends Phaser.State {
     collectTools(astronaut: Astronaut, tools: Phaser.Sprite) {
         if (tools === this.collectpliers) {
             this.nopliers.kill();
-            if (this.soundIsOn) {
+            if (this.playerConfig.sound.soundOn) {
                 this.media.collectToolSound.play();
             }
             this.pliers = new Tools(this.game, 690, 10, 1);
@@ -237,7 +231,7 @@ export default class Play extends Phaser.State {
         }
         if (tools === this.collectscrewdriver) {
             this.noscrewdriver.kill();
-            if (this.soundIsOn) {
+            if (this.playerConfig.sound.soundOn) {
                 this.media.collectToolSound.play();
             }
             this.screwdriver = new Tools(this.game, 755, 10, 3);
@@ -246,7 +240,7 @@ export default class Play extends Phaser.State {
         }
         if (tools === this.collectwrench) {
             this.nowrench.kill();
-            if (this.soundIsOn) {
+            if (this.playerConfig.sound.soundOn) {
                 this.media.collectToolSound.play();
             }
             this.wrench = new Tools(this.game, 720, 10, 5);
@@ -265,7 +259,7 @@ export default class Play extends Phaser.State {
     collideWithAlien(astronaut: Astronaut, alien: Alien) {
         if (this.game.time.now > this.lifeTimer) {
             this.lifeCounter -= 1;
-            if (this.soundIsOn) {
+            if (this.playerConfig.sound.soundOn) {
                 this.media.collideWithAlienSound.play();
             }
             this.showLife(this.lifeCounter);
@@ -339,10 +333,10 @@ export default class Play extends Phaser.State {
         this.pauseMenu.anchor.set(0.5);
         this.pauseMenu.fixedToCamera = true;
 
-        this.musicControl = new Button(this.game, 75, -165, this.musicOn ? 1 : 0, () => this.changeMusicOnPauseMenu(), 'controlSound');
+        this.musicControl = new Button(this.game, 75, -165, this.playerConfig.sound.musicOn ? 1 : 0, () => this.changeMusicOnPauseMenu(), 'controlSound');
         this.pauseMenu.addChild(this.musicControl.getButton());
 
-        this.soundControl = new Button(this.game, -20, -70, this.soundIsOn ? 1 : 0, () => this.changeSoundOnPauseMenu(), 'controlSound');
+        this.soundControl = new Button(this.game, -20, -70, this.playerConfig.sound.soundOn ? 1 : 0, () => this.changeSoundOnPauseMenu(), 'controlSound');
         this.pauseMenu.addChild(this.soundControl.getButton());
 
         this.restartButton = this.game.add.button(
@@ -397,7 +391,7 @@ export default class Play extends Phaser.State {
         if (this.toolsCollected === 3) {
             this.astronaut.kill();
             this.timer.stop();
-            if (this.soundIsOn) {
+            if (this.playerConfig.sound.soundOn) {
                 this.media.completeLevelSound.play();
             }
             this.rocket.body.immovable = false;
@@ -456,7 +450,7 @@ export default class Play extends Phaser.State {
         this.timer4.add(300, this.startPauseMenu, this);
         this.timer4.start();
 
-        if (this.musicOn) {
+        if (this.playerConfig.sound.musicOn) {
             this.media.backgroundMusic.play();
             this.media.backgroundMusic.loopFull();
         }
@@ -665,7 +659,7 @@ export default class Play extends Phaser.State {
         if (this.levelNumber < this.finalLevel) {
             this.videoBackground = this.game.add.sprite(this.levelNumber === 1 ? 1600 : 4000, 8, 'startBackground');
             this.cutScene = this.game.add.video(`${charNames[this.activeAstronaut]}animation${this.levelNumber}`, `./assets/videos/${charNames[this.activeAstronaut]}_animation${this.levelNumber}.mkv`);
-            if (!this.soundIsOn) {
+            if (!this.playerConfig.sound.soundOn) {
                 this.cutScene.mute = true;
             } else {
                 this.cutScene.mute = false;
@@ -934,7 +928,7 @@ export default class Play extends Phaser.State {
          */
         if (this.astronaut.body.y > 600 && !this.fallen) {
             this.lifeCounter -= 1;
-            if (this.soundIsOn) {
+            if (this.playerConfig.sound.soundOn) {
                 this.media.loseLifeSound.play();
             }
             this.showLife(this.lifeCounter);
