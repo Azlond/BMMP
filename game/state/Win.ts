@@ -17,7 +17,7 @@ export default class Win extends Phaser.State {
 
     constructor() {
         super();
-        this.videoOn = false;
+        this.videoOn = true;
     }
 
     create() {
