@@ -226,7 +226,7 @@ export default class Menu extends Phaser.State {
 
         this.playerNameInputField = this.game.add.text(
             375,
-            78,
+            137,
             this.playerConfig.name,
             {
                 font: '27px Raleway',

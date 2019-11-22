@@ -584,7 +584,7 @@ export default class Play extends Phaser.State {
         /* add Score to toolbar */
         this.scoreElement = this.game.add.image(9, 10, 'elementScore');
         this.scoreElement.fixedToCamera = true;
-        this.scoreText = this.game.add.text(45, -45, String(this.score), {
+        this.scoreText = this.game.add.text(45, 12, String(this.score), {
             font: '30px Raleway',
             fill: '#ffffff'
         });
