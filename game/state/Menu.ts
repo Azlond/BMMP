@@ -263,6 +263,7 @@ export default class Menu extends Phaser.State {
         console.log('MENU_HANDLECOMPELTE');
 
         if (!this.introFinished) {
+            this.game.input.keyboard.removeCallbacks();
             this.playerConfig.name = this.playerNameInputField.text;
             this.game.state.start(
                 'play',
